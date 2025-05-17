@@ -1,0 +1,11 @@
+{
+  "package_name": "egocentric_msg",
+  "output_dir": "/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_generator_type_description/egocentric_msg",
+  "idl_tuples": [
+    "/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_adapter/egocentric_msg:msg/GazeData.idl"
+  ],
+  "include_paths": [
+    "std_msgs:/opt/ros/jazzy/share/std_msgs",
+    "builtin_interfaces:/opt/ros/jazzy/share/builtin_interfaces"
+  ]
+}

@@ -1,0 +1,22 @@
+[1.487s] Invoking command in '/home/olhamelnyk/colcon_venv/src/pupil_labs_wrapper': AMENT_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/egocentric_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/egocentric_msg:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/olhamelnyk/colcon_venv/src/build/pupil_labs_wrapper/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/olhamelnyk/colcon_venv/src/install/pupil_labs_wrapper/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/pupil_labs_wrapper build --build-base /home/olhamelnyk/colcon_venv/src/build/pupil_labs_wrapper/build install --record /home/olhamelnyk/colcon_venv/src/build/pupil_labs_wrapper/install.log --single-version-externally-managed install_data
+[1.902s] running egg_info
+[1.934s] writing ../build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/PKG-INFO
+[1.935s] writing dependency_links to ../build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/dependency_links.txt
+[1.935s] writing entry points to ../build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/entry_points.txt
+[1.935s] writing requirements to ../build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/requires.txt
+[1.936s] writing top-level names to ../build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/top_level.txt
+[2.001s] reading manifest file '../build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/SOURCES.txt'
+[2.002s] adding license file 'LICENSE'
+[2.002s] writing manifest file '../build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/SOURCES.txt'
+[2.003s] running build
+[2.003s] running build_py
+[2.003s] running install
+[2.010s] running install_lib
+[2.047s] running install_data
+[2.048s] running install_egg_info
+[2.081s] removing '/home/olhamelnyk/colcon_venv/src/install/pupil_labs_wrapper/lib/python3.12/site-packages/pupil_labs_wrapper-0.0.0-py3.12.egg-info' (and everything under it)
+[2.081s] Copying ../build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info to /home/olhamelnyk/colcon_venv/src/install/pupil_labs_wrapper/lib/python3.12/site-packages/pupil_labs_wrapper-0.0.0-py3.12.egg-info
+[2.083s] running install_scripts
+[2.292s] Installing wrapper script to /home/olhamelnyk/colcon_venv/src/install/pupil_labs_wrapper/lib/pupil_labs_wrapper
+[2.293s] writing list of installed files to '/home/olhamelnyk/colcon_venv/src/build/pupil_labs_wrapper/install.log'
+[2.329s] Invoked command in '/home/olhamelnyk/colcon_venv/src/pupil_labs_wrapper' returned '0': AMENT_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/egocentric_msg:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/egocentric_msg:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/olhamelnyk/colcon_venv/src/build/pupil_labs_wrapper/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/olhamelnyk/colcon_venv/src/install/pupil_labs_wrapper/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/pupil_labs_wrapper build --build-base /home/olhamelnyk/colcon_venv/src/build/pupil_labs_wrapper/build install --record /home/olhamelnyk/colcon_venv/src/build/pupil_labs_wrapper/install.log --single-version-externally-managed install_data

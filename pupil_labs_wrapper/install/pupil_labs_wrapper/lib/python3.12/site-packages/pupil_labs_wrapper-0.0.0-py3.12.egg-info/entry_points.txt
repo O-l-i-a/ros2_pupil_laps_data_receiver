@@ -1,0 +1,2 @@
+[console_scripts]
+wrapper = pupil_labs_wrapper.wrapper:main

@@ -1,0 +1,4 @@
+import sys
+if sys.prefix == '/usr':
+    sys.real_prefix = sys.prefix
+    sys.prefix = sys.exec_prefix = '/home/olhamelnyk/colcon_venv/pupil_labs_ros2_wrapper/pupil_labs_wrapper/install/pupil_labs_wrapper'

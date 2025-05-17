@@ -1,0 +1,22 @@
+running egg_info
+writing ../build/gaze_video_recorder/gaze_video_recorder.egg-info/PKG-INFO
+writing dependency_links to ../build/gaze_video_recorder/gaze_video_recorder.egg-info/dependency_links.txt
+writing entry points to ../build/gaze_video_recorder/gaze_video_recorder.egg-info/entry_points.txt
+writing requirements to ../build/gaze_video_recorder/gaze_video_recorder.egg-info/requires.txt
+writing top-level names to ../build/gaze_video_recorder/gaze_video_recorder.egg-info/top_level.txt
+reading manifest file '../build/gaze_video_recorder/gaze_video_recorder.egg-info/SOURCES.txt'
+writing manifest file '../build/gaze_video_recorder/gaze_video_recorder.egg-info/SOURCES.txt'
+running build
+running build_py
+copying gaze_video_recorder/gaze_video_recorder.py -> /home/olhamelnyk/colcon_venv/src/build/gaze_video_recorder/build/lib/gaze_video_recorder
+running install
+running install_lib
+copying /home/olhamelnyk/colcon_venv/src/build/gaze_video_recorder/build/lib/gaze_video_recorder/gaze_video_recorder.py -> /home/olhamelnyk/colcon_venv/src/install/gaze_video_recorder/lib/python3.12/site-packages/gaze_video_recorder
+byte-compiling /home/olhamelnyk/colcon_venv/src/install/gaze_video_recorder/lib/python3.12/site-packages/gaze_video_recorder/gaze_video_recorder.py to gaze_video_recorder.cpython-312.pyc
+running install_data
+running install_egg_info
+removing '/home/olhamelnyk/colcon_venv/src/install/gaze_video_recorder/lib/python3.12/site-packages/gaze_video_recorder-0.0.0-py3.12.egg-info' (and everything under it)
+Copying ../build/gaze_video_recorder/gaze_video_recorder.egg-info to /home/olhamelnyk/colcon_venv/src/install/gaze_video_recorder/lib/python3.12/site-packages/gaze_video_recorder-0.0.0-py3.12.egg-info
+running install_scripts
+Installing gaze_video_recorder script to /home/olhamelnyk/colcon_venv/src/install/gaze_video_recorder/lib/gaze_video_recorder
+writing list of installed files to '/home/olhamelnyk/colcon_venv/src/build/gaze_video_recorder/install.log'

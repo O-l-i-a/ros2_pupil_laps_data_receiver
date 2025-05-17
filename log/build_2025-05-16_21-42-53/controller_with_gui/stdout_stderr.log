@@ -1,0 +1,31 @@
+running egg_info
+creating ../build/controller_with_gui/controller_with_gui.egg-info
+writing ../build/controller_with_gui/controller_with_gui.egg-info/PKG-INFO
+writing dependency_links to ../build/controller_with_gui/controller_with_gui.egg-info/dependency_links.txt
+writing requirements to ../build/controller_with_gui/controller_with_gui.egg-info/requires.txt
+writing top-level names to ../build/controller_with_gui/controller_with_gui.egg-info/top_level.txt
+writing manifest file '../build/controller_with_gui/controller_with_gui.egg-info/SOURCES.txt'
+reading manifest file '../build/controller_with_gui/controller_with_gui.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../build/controller_with_gui/controller_with_gui.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/olhamelnyk/colcon_venv/src/build/controller_with_gui/build
+creating /home/olhamelnyk/colcon_venv/src/build/controller_with_gui/build/lib
+creating /home/olhamelnyk/colcon_venv/src/build/controller_with_gui/build/lib/controller_with_gui
+copying controller_with_gui/__init__.py -> /home/olhamelnyk/colcon_venv/src/build/controller_with_gui/build/lib/controller_with_gui
+running install
+running install_lib
+creating /home/olhamelnyk/colcon_venv/src/install/controller_with_gui/lib/python3.12/site-packages/controller_with_gui
+copying /home/olhamelnyk/colcon_venv/src/build/controller_with_gui/build/lib/controller_with_gui/__init__.py -> /home/olhamelnyk/colcon_venv/src/install/controller_with_gui/lib/python3.12/site-packages/controller_with_gui
+byte-compiling /home/olhamelnyk/colcon_venv/src/install/controller_with_gui/lib/python3.12/site-packages/controller_with_gui/__init__.py to __init__.cpython-312.pyc
+running install_data
+creating /home/olhamelnyk/colcon_venv/src/install/controller_with_gui/share/ament_index
+creating /home/olhamelnyk/colcon_venv/src/install/controller_with_gui/share/ament_index/resource_index
+creating /home/olhamelnyk/colcon_venv/src/install/controller_with_gui/share/ament_index/resource_index/packages
+copying resource/controller_with_gui -> /home/olhamelnyk/colcon_venv/src/install/controller_with_gui/share/ament_index/resource_index/packages
+copying package.xml -> /home/olhamelnyk/colcon_venv/src/install/controller_with_gui/share/controller_with_gui
+running install_egg_info
+Copying ../build/controller_with_gui/controller_with_gui.egg-info to /home/olhamelnyk/colcon_venv/src/install/controller_with_gui/lib/python3.12/site-packages/controller_with_gui-0.0.0-py3.12.egg-info
+running install_scripts
+writing list of installed files to '/home/olhamelnyk/colcon_venv/src/build/controller_with_gui/install.log'

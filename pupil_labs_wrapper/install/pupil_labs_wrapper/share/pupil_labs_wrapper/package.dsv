@@ -1,0 +1,6 @@
+source;share/pupil_labs_wrapper/hook/pythonpath.ps1
+source;share/pupil_labs_wrapper/hook/pythonpath.dsv
+source;share/pupil_labs_wrapper/hook/pythonpath.sh
+source;share/pupil_labs_wrapper/hook/ament_prefix_path.ps1
+source;share/pupil_labs_wrapper/hook/ament_prefix_path.dsv
+source;share/pupil_labs_wrapper/hook/ament_prefix_path.sh

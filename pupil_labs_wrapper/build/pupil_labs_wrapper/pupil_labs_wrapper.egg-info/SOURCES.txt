@@ -1,0 +1,17 @@
+LICENSE
+package.xml
+setup.cfg
+setup.py
+build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/PKG-INFO
+build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/SOURCES.txt
+build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/dependency_links.txt
+build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/entry_points.txt
+build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/requires.txt
+build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/top_level.txt
+build/pupil_labs_wrapper/pupil_labs_wrapper.egg-info/zip-safe
+pupil_labs_wrapper/__init__.py
+pupil_labs_wrapper/wrapper.py
+resource/pupil_labs_wrapper
+test/test_copyright.py
+test/test_flake8.py
+test/test_pep257.py

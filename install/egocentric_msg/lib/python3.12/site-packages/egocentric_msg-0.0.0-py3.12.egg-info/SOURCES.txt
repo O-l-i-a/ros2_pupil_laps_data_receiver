@@ -1,0 +1,8 @@
+setup.py
+egocentric_msg/__init__.py
+egocentric_msg.egg-info/PKG-INFO
+egocentric_msg.egg-info/SOURCES.txt
+egocentric_msg.egg-info/dependency_links.txt
+egocentric_msg.egg-info/top_level.txt
+egocentric_msg/msg/__init__.py
+egocentric_msg/msg/_gaze_data.py
