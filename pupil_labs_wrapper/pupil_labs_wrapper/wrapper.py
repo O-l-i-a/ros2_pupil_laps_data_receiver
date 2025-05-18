@@ -18,7 +18,7 @@ def populate_image_message(pl_image_msg, timestamp):
     ros_img.width = pl_image_msg.bgr_pixels.shape[1]
     ros_img.data = pl_image_msg.bgr_pixels.tobytes()
     # Set the encoding (e.g., "bgr8" for OpenCV BGR images)
-    ros_img.encoding = "rgb8"  # or "rgb8" depending on your image format
+    ros_img.encoding = "bgr8"  # or "rgb8" depending on your image format
     return ros_img
 
 def populate_sensor_message(pl_gaze_msg, timestamp):
@@ -63,7 +63,8 @@ class PupilLabsWrapper(Node):
         self.pub_gaze = self.create_publisher(GazeData, 'pupil_labs/gaze', 10)
         self.pub_rgb = self.create_publisher(Image, 'pupil_labs/scene_img', 10)
         self.pub_eyes = self.create_publisher(Image, 'pupil_labs/eye_img', 10)
-        
+        # hier ist die Frequenz wie oft es geschickt wird, laut pupillabs es ist 120Hz 
+        # für OnePlus8 aber ich habe ja 6, deswegen TODO (vieleicht on message)
         self.timer = self.create_timer(0.5 / 30.0, self.publish_pupil_labs_data)
         
 
@@ -73,6 +74,7 @@ class PupilLabsWrapper(Node):
             #pupil_labs_msg_scene, gaze_sample = self.device.receive_matched_scene_and_eyes_video_frames_and_gaze(10)
             scene_sample, gaze_sample = self.device.receive_matched_scene_video_frame_and_gaze()
             # Get current time for timestamp
+            # TODO "use_sim_time" for simulation time - then it is published in /clock topic
             current_time = self.get_clock().now().to_msg()
             # Populate and publish messages
             self.pub_gaze.publish(populate_sensor_message(gaze_sample, current_time))

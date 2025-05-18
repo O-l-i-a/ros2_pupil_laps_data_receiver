@@ -1,4 +1,4 @@
-+std_msgs/Header header           # Zeitstempel + frame_id
+std_msgs/Header header           # Zeitstempel + frame_id
 float32 x
 float32 y
 bool worn

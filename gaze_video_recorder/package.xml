@@ -7,6 +7,16 @@
   <maintainer email="olhamelnyk@todo.todo">olhamelnyk</maintainer>
   <license>TODO: License declaration</license>
 
+  
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>message_filters</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>egocentric_msg</exec_depend>
+  <!-- Pupil-Labs Realtime-API  (rosdep-Key; sonst via pip installieren) -->
+  <exec_depend>python3-pupil-labs-realtime-api</exec_depend>
+
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
   <test_depend>ament_pep257</test_depend>
