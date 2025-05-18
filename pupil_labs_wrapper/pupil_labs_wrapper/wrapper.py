@@ -13,7 +13,6 @@ from std_srvs.srv import SetBool
 from std_msgs.msg import Bool
 from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
 from concurrent.futures import ThreadPoolExecutor
-from pupil_labs.realtime_api.simple import Device
 
 
 def populate_image_message(pl_image_msg, timestamp):
@@ -86,8 +85,11 @@ class PupilLabsWrapper(Node):
 
         # ThreadPool für blockierende API-Calls
         self.api_pool = ThreadPoolExecutor(max_workers=1)
-        self.publish_pupil_labs_data()
-        
+        self.timer = self.create_timer(
+            1.0 / 30.0,              # 30 Hz – Szene-Bild des OnePlus 6
+            self.publish_pupil_labs_data)  
+
+
     def _srv_cb(self, req, resp):
         want_start = bool(req.data)
         if want_start == self.recording:
