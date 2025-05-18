@@ -9,6 +9,12 @@ from rclpy.node import Node
 from pupil_labs.realtime_api.simple import discover_one_device
 from egocentric_msg.msg import GazeData
 from sensor_msgs.msg import Image
+from std_srvs.srv import SetBool
+from std_msgs.msg import Bool
+from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
+from concurrent.futures import ThreadPoolExecutor
+from pupil_labs.realtime_api.simple import Device
+
 
 def populate_image_message(pl_image_msg, timestamp):
     ros_img = Image()
@@ -65,8 +71,49 @@ class PupilLabsWrapper(Node):
         self.pub_eyes = self.create_publisher(Image, 'pupil_labs/eye_img', 10)
         # hier ist die Frequenz wie oft es geschickt wird, laut pupillabs es ist 120Hz 
         # für OnePlus8 aber ich habe ja 6, deswegen TODO (vieleicht on message)
-        self.timer = self.create_timer(0.5 / 30.0, self.publish_pupil_labs_data)
+        # Latching-QoS für Status-Topic
+        latch_qos = QoSProfile(
+            depth=1,
+            reliability=ReliabilityPolicy.RELIABLE,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL)
+
+        self.recording = False
+        self.state_pub = self.create_publisher(Bool, 'recording_state', latch_qos)
+        self.state_pub.publish(Bool(data=False))          # initial
+
+        # Service »/record«
+        self.create_service(SetBool, 'record', self._srv_cb)
+
+        # ThreadPool für blockierende API-Calls
+        self.api_pool = ThreadPoolExecutor(max_workers=1)
+        self.publish_pupil_labs_data()
         
+    def _srv_cb(self, req, resp):
+        want_start = bool(req.data)
+        if want_start == self.recording:
+            resp.success = False; resp.message = 'No change'; return resp
+
+    # API-Aufruf in externem Thread
+        ok = self.api_pool.submit(self._pupil_record_cmd, want_start).result()
+        if not ok:
+            resp.success = False; resp.message = 'API failed'; return resp
+
+        self.recording = want_start
+        self.state_pub.publish(Bool(data=self.recording))
+        resp.success = True
+        resp.message = 'started' if want_start else 'stopped'
+        return resp
+    def _pupil_record_cmd(self, start: bool) -> bool:
+        try:
+            if start:
+                self.device.recording_start()
+            else:
+                self.device.recording_stop_and_save()
+            return True
+        except Exception as e:
+            self.get_logger().error(f'Pupil-API error: {e}')
+            return False
+
 
     def publish_pupil_labs_data(self):
         try:
