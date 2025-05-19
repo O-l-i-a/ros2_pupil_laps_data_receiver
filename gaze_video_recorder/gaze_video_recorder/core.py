@@ -1,20 +1,42 @@
-#!/usr/bin/env python3
-import contextlib, csv, pathlib, cv2, rclpy
-from rclpy.node import Node
-from rclpy.qos import QoSProfile, DurabilityPolicy, ReliabilityPolicy, qos_profile_sensor_data
-from std_msgs.msg import Bool
-from sensor_msgs.msg import Image
-#from cv_bridge import CvBridge, CvBridgeError
-from message_filters import Subscriber, ApproximateTimeSynchronizer
-from egocentric_msg.msg import GazeData
+# Software License Agreement (BSD License)
+#
+# Copyright (c) 2011, Willow Garage, Inc.
+# Copyright (c) 2016, Tal Regev.
+# Copyright (c) 2018 Intel Corporation.
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+#  * Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#  * Redistributions in binary form must reproduce the above
+#    copyright notice, this list of conditions and the following
+#    disclaimer in the documentation and/or other materials provided
+#    with the distribution.
+#  * Neither the name of Willow Garage, Inc. nor the names of its
+#    contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+# FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+# COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+# BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+# LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+# LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+# ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+####################################################################
+
 import sys
 
 import sensor_msgs.msg
-LATCH_QOS = QoSProfile(
-    depth=1,
-    reliability=ReliabilityPolicy.RELIABLE,
-    durability=DurabilityPolicy.TRANSIENT_LOCAL,
-)
+
 
 class CvBridgeError(TypeError):
     """This is the error raised by :class:`cv_bridge.CvBridge` methods when they fail."""
@@ -174,126 +196,89 @@ class CvBridge(object):
             raise CvBridgeError(e)
 
         return res
-    
-class GazeVideoRecorder(Node):
-    def __init__(self):
-        super().__init__("gaze_video_recorder")
 
-        # -------------------- Parameter & Dateien -------------------------
-        self.declare_parameter("out_dir", "recording")
-        self.declare_parameter("fps", 30.0)
-        self.out_dir = pathlib.Path(self.get_parameter("out_dir").value)
-        self.out_dir.mkdir(parents=True, exist_ok=True)
-        self.fps = float(self.get_parameter("fps").value)
+    def cv2_to_compressed_imgmsg(self, cvim, dst_format='jpg'):
+        """
+        Convert an OpenCV :cpp:type:`cv::Mat` type to a ROS sensor_msgs::CompressedImage message.
 
-        self.bridge = CvBridge()
-        self.video = None
-        self.csv = open(self.out_dir / "gaze_log.csv", "w", newline="")
-        self.writer = csv.writer(self.csv)
-        self.writer.writerow(
-            ["frame_idx", "sec", "nsec", "gaze_x_px", "gaze_y_px"]
-        )
-        self.frame_idx = 0
-        self.recording = False
+        :param cvim:      An OpenCV :cpp:type:`cv::Mat`
+        :param dst_format:  The format of the image data, one of the following strings:
 
-        # -------------------- Topics --------------------------------------
-        self.create_subscription(
-            Bool, "recording_state", self._state_cb, qos_profile=LATCH_QOS
-        )
+        http://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html
+        http://docs.opencv.org/2.4/modules/highgui/doc/reading_and_writing_images_and_video.html#Mat
+        * imread(const string& filename, int flags)
+           * bmp, dib
+           * jpeg, jpg, jpe
+           * jp2
+           * png
+           * pbm, pgm, ppm
+           * sr, ras
+           * tiff, tif
 
-        img_sub = Subscriber(
-            self, Image, "/pupil_labs/scene_img", qos_profile=qos_profile_sensor_data
-        )
-        gaze_sub = Subscriber(
-            self, GazeData, "/pupil_labs/gaze", qos_profile=qos_profile_sensor_data
-        )
-        self.sync = ApproximateTimeSynchronizer([img_sub, gaze_sub], 60, 0.05)
-        self.sync.registerCallback(self._sync_cb)
+        :rtype:           A sensor_msgs.msg.CompressedImage message
+        :raises CvBridgeError: when the ``cvim`` has a type that is incompatible with ``format``
 
-    # -------------------- Status-Callback --------------------------------
-    def _state_cb(self, msg: Bool):
-        self.recording = bool(msg.data)
-        self.get_logger().info(f"Recording flag set to {self.recording}")
-        if not self.recording:
-            self._stop_local()  # Video/CSV schließen
 
-    # -------------------- Sync-Callback ----------------------------------
-    def _sync_cb(self, img: Image, gaze: GazeData):
-        if not self.recording:
-            return
-        print(cv2.getBuildInformation())
-        # ---- robustes Decodieren ----------------------------------------
+        This function returns a sensor_msgs::Image message on success,
+        or raises :exc:`cv_bridge.CvBridgeError` on failure.
+        """
+        import cv2
+        import numpy as np
+        if not isinstance(cvim, (np.ndarray, np.generic)):
+            raise TypeError('Your input type is not a numpy array')
+        cmprs_img_msg = sensor_msgs.msg.CompressedImage()
+        cmprs_img_msg.format = dst_format
+        ext_format = '.' + dst_format
         try:
-            frame = self.bridge.imgmsg_to_cv2(img, desired_encoding="bgr8")
-        except CvBridgeError as e:
-            self.get_logger().warning(f"cv_bridge conversion failed: {e}")
-            return
+            cmprs_img_msg.data.frombytes(np.array(cv2.imencode(ext_format, cvim)[1]).tobytes())
+        except RuntimeError as e:
+            raise CvBridgeError(e)
 
-        if frame is None:
-            self.get_logger().warning("cv_bridge returned None despite bgr8")
-            return
+        return cmprs_img_msg
 
-        # (Optional) Logge mal, um sicherzugehen:
-        self.get_logger().info(f"Decoded frame.shape = {frame.shape}")
+    def cv2_to_imgmsg(self, cvim, encoding='passthrough', header = None):
+        """
+        Convert an OpenCV :cpp:type:`cv::Mat` type to a ROS sensor_msgs::Image message.
 
-        # ---- VideoWriter erst jetzt öffnen ------------------------------
-        if self.video is None:
-            h, w = frame.shape[:2]
-            fourcc = cv2.VideoWriter_fourcc(*"MP4V")    # z.B. MP4-Container mit MP4V            filename = self.out_dir / "scene.mp4"
-            vw = cv2.VideoWriter(str(filename), fourcc, self.fps, (w, h))
-            filename = self.out_dir / "scene.mp4"
-            vw = cv2.VideoWriter(str(filename), fourcc, self.fps, (w, h))
-            if not vw.isOpened():
-                self.get_logger().warning("MP4V nicht verfügbar – weiche auf MJPG aus")
-                fourcc = cv2.VideoWriter_fourcc(*"MJPG")
-                filename = self.out_dir / "scene.avi"
-                vw = cv2.VideoWriter(str(filename),cv2.CAP_FFMPEG,  fourcc, self.fps, (w, h))
+        :param cvim:      An OpenCV :cpp:type:`cv::Mat`
+        :param encoding:  The encoding of the image data, one of the following strings:
 
-            self.video = vw
-            self.frame_idx = 0  # neu zählen pro Take
-            self.get_logger().info(f"VideoWriter opened → {filename.name}")
+           * ``"passthrough"``
+           * one of the standard strings in sensor_msgs/image_encodings.h
+        :param header:    A std_msgs.msg.Header message
 
-        # ---- Frame schreiben --------------------------------------------
-        if not self.video.write(frame):
-            self.get_logger().error("VideoWriter refused the frame!")
-            return
+        :rtype:           A sensor_msgs.msg.Image message
+        :raises CvBridgeError: when the ``cvim`` has a type that is incompatible with ``encoding``
 
-        self.writer.writerow(
-            [
-                self.frame_idx,
-                gaze.header.stamp.sec,
-                gaze.header.stamp.nanosec,
-                gaze.x,
-                gaze.y,
-            ]
-        )
-        self.frame_idx += 1
+        If encoding is ``"passthrough"``, then the message has the same encoding as the image's
+        OpenCV type. Otherwise desired_encoding must be one of the standard image encodings
 
-    # -------------------- Aufräumen --------------------------------------
-    def _stop_local(self):
-        if self.video:
-            self.video.release()
-            self.video = None
-        self.csv.flush()
+        This function returns a sensor_msgs::Image message on success,
+        or raises :exc:`cv_bridge.CvBridgeError` on failure.
+        """
+        import numpy as np
+        if not isinstance(cvim, (np.ndarray, np.generic)):
+            raise TypeError('Your input type is not a numpy array')
+        img_msg = sensor_msgs.msg.Image()
+        img_msg.height = cvim.shape[0]
+        img_msg.width = cvim.shape[1]
+        if header is not None:
+            img_msg.header = header
+        if len(cvim.shape) < 3:
+            cv_type = self.dtype_with_channels_to_cvtype2(cvim.dtype, 1)
+        else:
+            cv_type = self.dtype_with_channels_to_cvtype2(cvim.dtype, cvim.shape[2])
+        if encoding == 'passthrough':
+            img_msg.encoding = cv_type
+        else:
+            img_msg.encoding = encoding
+            # Verify that the supplied encoding is compatible with the type of the OpenCV image
+            if self.cvtype_to_name[self.encoding_to_cvtype2(encoding)] != cv_type:
+                raise CvBridgeError('encoding specified as %s, but image has incompatible type %s'
+                                    % (encoding, cv_type))
+        if cvim.dtype.byteorder == '>':
+            img_msg.is_bigendian = True
+        img_msg.data.frombytes(cvim.tobytes())
+        img_msg.step = len(img_msg.data) // img_msg.height
 
-    def destroy_node(self):
-        self._stop_local()
-        super().destroy_node()
-
-
-# -------------------- main -----------------------------------------------
-def main(args=None):
-    rclpy.init(args=args)
-    node = GazeVideoRecorder()
-    try:
-        rclpy.spin(node)
-    except KeyboardInterrupt:
-        pass
-    finally:
-        with contextlib.suppress(Exception):
-            rclpy.shutdown()
-        node.destroy_node()
-
-
-if __name__ == "__main__":
-    main()
+        return img_msg
