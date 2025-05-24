@@ -2,10 +2,15 @@
 // with input from egocentric_msg/msg/GazeData.msg
 // generated code does not contain a copyright notice
 
+#include "std_msgs/msg/Header.idl"
 
 module egocentric_msg {
   module msg {
     struct GazeData {
+      @verbatim (language="comment", text=
+        "Zeitstempel + frame_id")
+      std_msgs::msg::Header header;
+
       float x;
 
       float y;

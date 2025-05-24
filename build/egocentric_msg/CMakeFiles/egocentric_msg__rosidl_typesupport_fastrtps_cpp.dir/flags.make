@@ -6,5 +6,5 @@ CXX_DEFINES = -DFASTCDR_DYN_LINK -DROSIDL_TYPESUPPORT_FASTRTPS_CPP_BUILDING_DLL_
 
 CXX_INCLUDES = -I/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_typesupport_fastrtps_cpp -I/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_generator_c -I/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_generator_cpp -isystem /opt/ros/jazzy/include/fastcdr -isystem /opt/ros/jazzy/include/rmw -isystem /opt/ros/jazzy/include/rcutils -isystem /opt/ros/jazzy/include/rosidl_dynamic_typesupport -isystem /opt/ros/jazzy/include/rosidl_runtime_c -isystem /opt/ros/jazzy/include/rosidl_typesupport_interface -isystem /opt/ros/jazzy/include/rosidl_runtime_cpp -isystem /opt/ros/jazzy/include/rosidl_typesupport_fastrtps_cpp -isystem /opt/ros/jazzy/include/std_msgs -isystem /opt/ros/jazzy/include/builtin_interfaces
 
-CXX_FLAGS = -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -Wredundant-decls
+CXX_FLAGS = -O3 -DNDEBUG -std=gnu++17 -fPIC -Wall -Wextra -Wpedantic -Wredundant-decls
 

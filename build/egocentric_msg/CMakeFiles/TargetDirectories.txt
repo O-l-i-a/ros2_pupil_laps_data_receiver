@@ -10,7 +10,7 @@
 /home/olhamelnyk/colcon_venv/src/build/egocentric_msg/CMakeFiles/egocentric_msg__rosidl_typesupport_fastrtps_cpp.dir
 /home/olhamelnyk/colcon_venv/src/build/egocentric_msg/CMakeFiles/egocentric_msg__rosidl_typesupport_introspection_cpp.dir
 /home/olhamelnyk/colcon_venv/src/build/egocentric_msg/CMakeFiles/egocentric_msg__rosidl_typesupport_cpp.dir
-/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/CMakeFiles/ament_cmake_python_copy_egocentric_msg.dir
+/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/CMakeFiles/ament_cmake_python_symlink_egocentric_msg.dir
 /home/olhamelnyk/colcon_venv/src/build/egocentric_msg/CMakeFiles/ament_cmake_python_build_egocentric_msg_egg.dir
 /home/olhamelnyk/colcon_venv/src/build/egocentric_msg/CMakeFiles/egocentric_msg__rosidl_generator_py.dir
 /home/olhamelnyk/colcon_venv/src/build/egocentric_msg/CMakeFiles/egocentric_msg_s__rosidl_typesupport_fastrtps_c.dir

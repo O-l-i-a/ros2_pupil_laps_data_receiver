@@ -6,5 +6,5 @@ C_DEFINES = -DFASTCDR_DYN_LINK -DROS_PACKAGE_NAME=\"egocentric_msg\" -Degocentri
 
 C_INCLUDES = -I/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_generator_c -I/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_generator_py -I/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_typesupport_fastrtps_c -isystem /opt/ros/jazzy/include/rmw -isystem /usr/include/python3.12 -isystem /opt/ros/jazzy/include/fastcdr -isystem /opt/ros/jazzy/include/rosidl_runtime_c -isystem /opt/ros/jazzy/include/rcutils -isystem /opt/ros/jazzy/include/rosidl_typesupport_interface -isystem /opt/ros/jazzy/include/rosidl_runtime_cpp -isystem /opt/ros/jazzy/include/rosidl_typesupport_fastrtps_cpp -isystem /opt/ros/jazzy/include/rosidl_dynamic_typesupport -isystem /opt/ros/jazzy/include/rosidl_typesupport_fastrtps_c -isystem /opt/ros/jazzy/include/std_msgs -isystem /opt/ros/jazzy/include/builtin_interfaces -isystem /opt/ros/jazzy/include/rosidl_typesupport_c
 
-C_FLAGS = -fPIC -Wall -Wextra
+C_FLAGS = -O3 -DNDEBUG -fPIC -Wall -Wextra
 

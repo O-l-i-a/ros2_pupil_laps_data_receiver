@@ -1,0 +1,325 @@
+[0.111s] DEBUG:colcon:Command line arguments: ['/usr/bin/colcon', 'build', '--symlink-install', '--cmake-args=-DCMAKE_BUILD_TYPE=Release', '--parallel-workers', '16']
+[0.111s] DEBUG:colcon:Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=True, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=16, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=None, packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=['-DCMAKE_BUILD_TYPE=Release'], cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x72224499ac90>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x722244ab2d50>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x722244ab2d50>>)
+[0.150s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) check parameters
+[0.151s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) check parameters
+[0.151s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) check parameters
+[0.151s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) check parameters
+[0.151s] Level 1:colcon.colcon_core.package_discovery:discover_packages(colcon_meta) discover
+[0.151s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) discover
+[0.151s] INFO:colcon.colcon_core.package_discovery:Crawling recursively for packages in '/home/olhamelnyk/colcon_venv/src'
+[0.151s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.151s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore'
+[0.151s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ignore_ament_install'
+[0.151s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_pkg']
+[0.151s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_pkg'
+[0.151s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['colcon_meta']
+[0.151s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'colcon_meta'
+[0.151s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['ros']
+[0.151s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'ros'
+[0.175s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['cmake', 'python']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'cmake'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extensions ['python_setup_py']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(.) by extension 'python_setup_py'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(build) by extension 'ignore'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(build) ignored
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(egocentric_msg) by extensions ['ignore', 'ignore_ament_install']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(egocentric_msg) by extension 'ignore'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(egocentric_msg) by extension 'ignore_ament_install'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(egocentric_msg) by extensions ['colcon_pkg']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(egocentric_msg) by extension 'colcon_pkg'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(egocentric_msg) by extensions ['colcon_meta']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(egocentric_msg) by extension 'colcon_meta'
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(egocentric_msg) by extensions ['ros']
+[0.176s] Level 1:colcon.colcon_core.package_identification:_identify(egocentric_msg) by extension 'ros'
+[0.179s] DEBUG:colcon.colcon_core.package_identification:Package 'egocentric_msg' with type 'ros.ament_cmake' and name 'egocentric_msg'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(gaze_video_recorder) by extensions ['ignore', 'ignore_ament_install']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(gaze_video_recorder) by extension 'ignore'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(gaze_video_recorder) by extension 'ignore_ament_install'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(gaze_video_recorder) by extensions ['colcon_pkg']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(gaze_video_recorder) by extension 'colcon_pkg'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(gaze_video_recorder) by extensions ['colcon_meta']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(gaze_video_recorder) by extension 'colcon_meta'
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(gaze_video_recorder) by extensions ['ros']
+[0.179s] Level 1:colcon.colcon_core.package_identification:_identify(gaze_video_recorder) by extension 'ros'
+[0.179s] DEBUG:colcon.colcon_core.package_identification:Package 'gaze_video_recorder' with type 'ros.ament_python' and name 'gaze_video_recorder'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(install) by extension 'ignore'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(install) ignored
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(log) by extension 'ignore'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(log) ignored
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(pupil_labs_wrapper) by extensions ['ignore', 'ignore_ament_install']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(pupil_labs_wrapper) by extension 'ignore'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(pupil_labs_wrapper) by extension 'ignore_ament_install'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(pupil_labs_wrapper) by extensions ['colcon_pkg']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(pupil_labs_wrapper) by extension 'colcon_pkg'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(pupil_labs_wrapper) by extensions ['colcon_meta']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(pupil_labs_wrapper) by extension 'colcon_meta'
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(pupil_labs_wrapper) by extensions ['ros']
+[0.180s] Level 1:colcon.colcon_core.package_identification:_identify(pupil_labs_wrapper) by extension 'ros'
+[0.181s] DEBUG:colcon.colcon_core.package_identification:Package 'pupil_labs_wrapper' with type 'ros.ament_python' and name 'pupil_labs_wrapper'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extensions ['ignore', 'ignore_ament_install']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extension 'ignore'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extension 'ignore_ament_install'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extensions ['colcon_pkg']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extension 'colcon_pkg'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extensions ['colcon_meta']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extension 'colcon_meta'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extensions ['ros']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extension 'ros'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extensions ['cmake', 'python']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extension 'cmake'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extension 'python'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extensions ['python_setup_py']
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(recording) by extension 'python_setup_py'
+[0.181s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extensions ['ignore', 'ignore_ament_install']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extension 'ignore'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extension 'ignore_ament_install'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extensions ['colcon_pkg']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extension 'colcon_pkg'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extensions ['colcon_meta']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extension 'colcon_meta'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extensions ['ros']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extension 'ros'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extensions ['cmake', 'python']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extension 'cmake'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extension 'python'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extensions ['python_setup_py']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller) by extension 'python_setup_py'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller/system_controller) by extensions ['ignore', 'ignore_ament_install']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller/system_controller) by extension 'ignore'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller/system_controller) by extension 'ignore_ament_install'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller/system_controller) by extensions ['colcon_pkg']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller/system_controller) by extension 'colcon_pkg'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller/system_controller) by extensions ['colcon_meta']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller/system_controller) by extension 'colcon_meta'
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller/system_controller) by extensions ['ros']
+[0.182s] Level 1:colcon.colcon_core.package_identification:_identify(system_controller/system_controller) by extension 'ros'
+[0.183s] DEBUG:colcon.colcon_core.package_identification:Package 'system_controller/system_controller' with type 'ros.ament_python' and name 'system_controller'
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extensions ['ignore', 'ignore_ament_install']
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extension 'ignore'
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extension 'ignore_ament_install'
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extensions ['colcon_pkg']
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extension 'colcon_pkg'
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extensions ['colcon_meta']
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extension 'colcon_meta'
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extensions ['ros']
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extension 'ros'
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extensions ['cmake', 'python']
+[0.183s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extension 'cmake'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extension 'python'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extensions ['python_setup_py']
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(testing_realtime_api) by extension 'python_setup_py'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['ignore', 'ignore_ament_install']
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'ignore'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'ignore_ament_install'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['colcon_pkg']
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'colcon_pkg'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['colcon_meta']
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'colcon_meta'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['ros']
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'ros'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['cmake', 'python']
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'cmake'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'python'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extensions ['python_setup_py']
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper) by extension 'python_setup_py'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extensions ['ignore', 'ignore_ament_install']
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extension 'ignore'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extension 'ignore_ament_install'
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extensions ['colcon_pkg']
+[0.184s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extension 'colcon_pkg'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extensions ['colcon_meta']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extension 'colcon_meta'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extensions ['ros']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extension 'ros'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extensions ['cmake', 'python']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extension 'cmake'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extension 'python'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extensions ['python_setup_py']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/docker) by extension 'python_setup_py'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['ignore', 'ignore_ament_install']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'ignore'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'ignore_ament_install'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['colcon_pkg']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'colcon_pkg'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['colcon_meta']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'colcon_meta'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['ros']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'ros'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['cmake', 'python']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'cmake'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'python'
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extensions ['python_setup_py']
+[0.185s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/images) by extension 'python_setup_py'
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extensions ['ignore', 'ignore_ament_install']
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'ignore'
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'ignore_ament_install'
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extensions ['colcon_pkg']
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'colcon_pkg'
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extensions ['colcon_meta']
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'colcon_meta'
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extensions ['ros']
+[0.186s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_components) by extension 'ros'
+[0.187s] DEBUG:colcon.colcon_core.package_identification:Package 'zed-ros2-wrapper/zed_components' with type 'ros.ament_cmake' and name 'zed_components'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extensions ['ignore', 'ignore_ament_install']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'ignore'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'ignore_ament_install'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extensions ['colcon_pkg']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'colcon_pkg'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extensions ['colcon_meta']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'colcon_meta'
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extensions ['ros']
+[0.187s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_ros2) by extension 'ros'
+[0.188s] DEBUG:colcon.colcon_core.package_identification:Package 'zed-ros2-wrapper/zed_ros2' with type 'ros.ament_cmake' and name 'zed_ros2'
+[0.188s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extensions ['ignore', 'ignore_ament_install']
+[0.188s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'ignore'
+[0.188s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'ignore_ament_install'
+[0.188s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extensions ['colcon_pkg']
+[0.188s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'colcon_pkg'
+[0.188s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extensions ['colcon_meta']
+[0.188s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'colcon_meta'
+[0.188s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extensions ['ros']
+[0.188s] Level 1:colcon.colcon_core.package_identification:_identify(zed-ros2-wrapper/zed_wrapper) by extension 'ros'
+[0.189s] DEBUG:colcon.colcon_core.package_identification:Package 'zed-ros2-wrapper/zed_wrapper' with type 'ros.ament_cmake' and name 'zed_wrapper'
+[0.189s] Level 1:colcon.colcon_core.package_discovery:discover_packages(recursive) using defaults
+[0.189s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) discover
+[0.189s] Level 1:colcon.colcon_core.package_discovery:discover_packages(ignore) using defaults
+[0.189s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) discover
+[0.189s] Level 1:colcon.colcon_core.package_discovery:discover_packages(path) using defaults
+[0.207s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) check parameters
+[0.207s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) discover
+[0.210s] DEBUG:colcon.colcon_installed_package_information.package_discovery:Found 364 installed packages in /opt/ros/jazzy
+[0.212s] Level 1:colcon.colcon_core.package_discovery:discover_packages(prefix_path) using defaults
+[0.264s] Level 5:colcon.colcon_core.verb:set package 'egocentric_msg' build argument 'cmake_args' from command line to '['-DCMAKE_BUILD_TYPE=Release']'
+[0.264s] Level 5:colcon.colcon_core.verb:set package 'egocentric_msg' build argument 'cmake_target' from command line to 'None'
+[0.264s] Level 5:colcon.colcon_core.verb:set package 'egocentric_msg' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.264s] Level 5:colcon.colcon_core.verb:set package 'egocentric_msg' build argument 'cmake_clean_cache' from command line to 'False'
+[0.264s] Level 5:colcon.colcon_core.verb:set package 'egocentric_msg' build argument 'cmake_clean_first' from command line to 'False'
+[0.264s] Level 5:colcon.colcon_core.verb:set package 'egocentric_msg' build argument 'cmake_force_configure' from command line to 'False'
+[0.264s] Level 5:colcon.colcon_core.verb:set package 'egocentric_msg' build argument 'ament_cmake_args' from command line to 'None'
+[0.264s] Level 5:colcon.colcon_core.verb:set package 'egocentric_msg' build argument 'catkin_cmake_args' from command line to 'None'
+[0.264s] Level 5:colcon.colcon_core.verb:set package 'egocentric_msg' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.264s] DEBUG:colcon.colcon_core.verb:Building package 'egocentric_msg' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCMAKE_BUILD_TYPE=Release'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg', 'merge_install': False, 'path': '/home/olhamelnyk/colcon_venv/src/egocentric_msg', 'symlink_install': True, 'test_result_base': None}
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'zed_components' build argument 'cmake_args' from command line to '['-DCMAKE_BUILD_TYPE=Release']'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'zed_components' build argument 'cmake_target' from command line to 'None'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'zed_components' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'zed_components' build argument 'cmake_clean_cache' from command line to 'False'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'zed_components' build argument 'cmake_clean_first' from command line to 'False'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'zed_components' build argument 'cmake_force_configure' from command line to 'False'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'zed_components' build argument 'ament_cmake_args' from command line to 'None'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'zed_components' build argument 'catkin_cmake_args' from command line to 'None'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'zed_components' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.265s] DEBUG:colcon.colcon_core.verb:Building package 'zed_components' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/olhamelnyk/colcon_venv/src/build/zed_components', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCMAKE_BUILD_TYPE=Release'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/olhamelnyk/colcon_venv/src/install/zed_components', 'merge_install': False, 'path': '/home/olhamelnyk/colcon_venv/src/zed-ros2-wrapper/zed_components', 'symlink_install': True, 'test_result_base': None}
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'gaze_video_recorder' build argument 'cmake_args' from command line to '['-DCMAKE_BUILD_TYPE=Release']'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'gaze_video_recorder' build argument 'cmake_target' from command line to 'None'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'gaze_video_recorder' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'gaze_video_recorder' build argument 'cmake_clean_cache' from command line to 'False'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'gaze_video_recorder' build argument 'cmake_clean_first' from command line to 'False'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'gaze_video_recorder' build argument 'cmake_force_configure' from command line to 'False'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'gaze_video_recorder' build argument 'ament_cmake_args' from command line to 'None'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'gaze_video_recorder' build argument 'catkin_cmake_args' from command line to 'None'
+[0.265s] Level 5:colcon.colcon_core.verb:set package 'gaze_video_recorder' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.265s] DEBUG:colcon.colcon_core.verb:Building package 'gaze_video_recorder' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/olhamelnyk/colcon_venv/src/build/gaze_video_recorder', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCMAKE_BUILD_TYPE=Release'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/olhamelnyk/colcon_venv/src/install/gaze_video_recorder', 'merge_install': False, 'path': '/home/olhamelnyk/colcon_venv/src/gaze_video_recorder', 'symlink_install': True, 'test_result_base': None}
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'pupil_labs_wrapper' build argument 'cmake_args' from command line to '['-DCMAKE_BUILD_TYPE=Release']'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'pupil_labs_wrapper' build argument 'cmake_target' from command line to 'None'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'pupil_labs_wrapper' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'pupil_labs_wrapper' build argument 'cmake_clean_cache' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'pupil_labs_wrapper' build argument 'cmake_clean_first' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'pupil_labs_wrapper' build argument 'cmake_force_configure' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'pupil_labs_wrapper' build argument 'ament_cmake_args' from command line to 'None'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'pupil_labs_wrapper' build argument 'catkin_cmake_args' from command line to 'None'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'pupil_labs_wrapper' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.266s] DEBUG:colcon.colcon_core.verb:Building package 'pupil_labs_wrapper' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/olhamelnyk/colcon_venv/src/build/pupil_labs_wrapper', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCMAKE_BUILD_TYPE=Release'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/olhamelnyk/colcon_venv/src/install/pupil_labs_wrapper', 'merge_install': False, 'path': '/home/olhamelnyk/colcon_venv/src/pupil_labs_wrapper', 'symlink_install': True, 'test_result_base': None}
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'system_controller' build argument 'cmake_args' from command line to '['-DCMAKE_BUILD_TYPE=Release']'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'system_controller' build argument 'cmake_target' from command line to 'None'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'system_controller' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'system_controller' build argument 'cmake_clean_cache' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'system_controller' build argument 'cmake_clean_first' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'system_controller' build argument 'cmake_force_configure' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'system_controller' build argument 'ament_cmake_args' from command line to 'None'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'system_controller' build argument 'catkin_cmake_args' from command line to 'None'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'system_controller' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.266s] DEBUG:colcon.colcon_core.verb:Building package 'system_controller' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/olhamelnyk/colcon_venv/src/build/system_controller', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCMAKE_BUILD_TYPE=Release'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/olhamelnyk/colcon_venv/src/install/system_controller', 'merge_install': False, 'path': '/home/olhamelnyk/colcon_venv/src/system_controller/system_controller', 'symlink_install': True, 'test_result_base': None}
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'zed_wrapper' build argument 'cmake_args' from command line to '['-DCMAKE_BUILD_TYPE=Release']'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'zed_wrapper' build argument 'cmake_target' from command line to 'None'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'zed_wrapper' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'zed_wrapper' build argument 'cmake_clean_cache' from command line to 'False'
+[0.266s] Level 5:colcon.colcon_core.verb:set package 'zed_wrapper' build argument 'cmake_clean_first' from command line to 'False'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_wrapper' build argument 'cmake_force_configure' from command line to 'False'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_wrapper' build argument 'ament_cmake_args' from command line to 'None'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_wrapper' build argument 'catkin_cmake_args' from command line to 'None'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_wrapper' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.267s] DEBUG:colcon.colcon_core.verb:Building package 'zed_wrapper' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/olhamelnyk/colcon_venv/src/build/zed_wrapper', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCMAKE_BUILD_TYPE=Release'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/olhamelnyk/colcon_venv/src/install/zed_wrapper', 'merge_install': False, 'path': '/home/olhamelnyk/colcon_venv/src/zed-ros2-wrapper/zed_wrapper', 'symlink_install': True, 'test_result_base': None}
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_ros2' build argument 'cmake_args' from command line to '['-DCMAKE_BUILD_TYPE=Release']'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_ros2' build argument 'cmake_target' from command line to 'None'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_ros2' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_ros2' build argument 'cmake_clean_cache' from command line to 'False'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_ros2' build argument 'cmake_clean_first' from command line to 'False'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_ros2' build argument 'cmake_force_configure' from command line to 'False'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_ros2' build argument 'ament_cmake_args' from command line to 'None'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_ros2' build argument 'catkin_cmake_args' from command line to 'None'
+[0.267s] Level 5:colcon.colcon_core.verb:set package 'zed_ros2' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.267s] DEBUG:colcon.colcon_core.verb:Building package 'zed_ros2' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/olhamelnyk/colcon_venv/src/build/zed_ros2', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCMAKE_BUILD_TYPE=Release'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/olhamelnyk/colcon_venv/src/install/zed_ros2', 'merge_install': False, 'path': '/home/olhamelnyk/colcon_venv/src/zed-ros2-wrapper/zed_ros2', 'symlink_install': True, 'test_result_base': None}
+[0.267s] INFO:colcon.colcon_core.executor:Executing jobs using 'parallel' executor
+[0.268s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete
+[0.268s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/olhamelnyk/colcon_venv/src/egocentric_msg' with build type 'ament_cmake'
+[0.268s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/olhamelnyk/colcon_venv/src/egocentric_msg'
+[0.271s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.271s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.271s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.276s] INFO:colcon.colcon_ros.task.ament_cmake.build:Building ROS package in '/home/olhamelnyk/colcon_venv/src/zed-ros2-wrapper/zed_components' with build type 'ament_cmake'
+[0.276s] INFO:colcon.colcon_cmake.task.cmake.build:Building CMake package in '/home/olhamelnyk/colcon_venv/src/zed-ros2-wrapper/zed_components'
+[0.277s] INFO:colcon.colcon_core.shell:Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.277s] DEBUG:colcon.colcon_core.shell:Skip shell extension 'dsv' for command environment
+[0.286s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/olhamelnyk/colcon_venv/src/egocentric_msg -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/egocentric_msg
+[0.290s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/olhamelnyk/colcon_venv/src/build/zed_components': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/olhamelnyk/colcon_venv/src/zed-ros2-wrapper/zed_components -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/zed_components
+[1.932s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/olhamelnyk/colcon_venv/src/egocentric_msg -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/egocentric_msg
+[1.934s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoking command in '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/olhamelnyk/colcon_venv/src/build/egocentric_msg -- -j16 -l16
+[2.270s] DEBUG:colcon.colcon_core.event_handler.log_command:Invoked command in '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/olhamelnyk/colcon_venv/src/build/egocentric_msg -- -j16 -l16
+[2.271s] Level 1:colcon.colcon_core.environment:create_environment_scripts_only(egocentric_msg)
+[2.277s] Level 1:colcon.colcon_core.environment:checking '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg' for CMake module files
+[2.280s] Level 1:colcon.colcon_core.environment:checking '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg' for CMake config files
+[2.282s] Level 1:colcon.colcon_core.shell:create_environment_hook('egocentric_msg', 'cmake_prefix_path')
+[2.282s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/hook/cmake_prefix_path.ps1'
+[2.283s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/hook/cmake_prefix_path.dsv'
+[2.283s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/hook/cmake_prefix_path.sh'
+[2.284s] Level 1:colcon.colcon_core.environment:checking '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/lib'
+[2.285s] Level 1:colcon.colcon_core.shell:create_environment_hook('egocentric_msg', 'ld_library_path_lib')
+[2.285s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/hook/ld_library_path_lib.ps1'
+[2.285s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/hook/ld_library_path_lib.dsv'
+[2.286s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/hook/ld_library_path_lib.sh'
+[2.287s] Level 1:colcon.colcon_core.environment:checking '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/bin'
+[2.287s] Level 1:colcon.colcon_core.environment:checking '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/lib/pkgconfig/egocentric_msg.pc'
+[2.288s] Level 1:colcon.colcon_core.environment:checking '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/lib/python3.12/site-packages'
+[2.288s] Level 1:colcon.colcon_core.shell:create_environment_hook('egocentric_msg', 'pythonpath')
+[2.288s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/hook/pythonpath.ps1'
+[2.289s] INFO:colcon.colcon_core.shell:Creating environment descriptor '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/hook/pythonpath.dsv'
+[2.290s] INFO:colcon.colcon_core.shell:Creating environment hook '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/hook/pythonpath.sh'
+[2.292s] Level 1:colcon.colcon_core.environment:checking '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/bin'
+[2.292s] INFO:colcon.colcon_core.shell:Creating package script '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/package.ps1'
+[2.294s] INFO:colcon.colcon_core.shell:Creating package descriptor '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/package.dsv'
+[2.296s] INFO:colcon.colcon_core.shell:Creating package script '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/package.sh'
+[2.298s] INFO:colcon.colcon_core.shell:Creating package script '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/package.bash'
+[2.299s] INFO:colcon.colcon_core.shell:Creating package script '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/egocentric_msg/package.zsh'
+[2.301s] Level 1:colcon.colcon_core.environment:create_file_with_runtime_dependencies(/home/olhamelnyk/colcon_venv/src/install/egocentric_msg/share/colcon-core/packages/egocentric_msg)
+[3.473s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:closing loop
+[3.473s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:loop closed
+[3.473s] DEBUG:colcon.colcon_parallel_executor.executor.parallel:run_until_complete finished with '2'
+[3.473s] DEBUG:colcon.colcon_core.event_reactor:joining thread
+[3.490s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[3.490s] INFO:colcon.colcon_core.plugin_system:Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[3.490s] INFO:colcon.colcon_notification.desktop_notification:Sending desktop notification using 'notify2'
+[3.522s] DEBUG:colcon.colcon_core.event_reactor:joined thread
+[3.523s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/olhamelnyk/colcon_venv/src/install/local_setup.ps1'
+[3.525s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/olhamelnyk/colcon_venv/src/install/_local_setup_util_ps1.py'
+[3.528s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/olhamelnyk/colcon_venv/src/install/setup.ps1'
+[3.531s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/olhamelnyk/colcon_venv/src/install/local_setup.sh'
+[3.532s] INFO:colcon.colcon_core.shell:Creating prefix util module '/home/olhamelnyk/colcon_venv/src/install/_local_setup_util_sh.py'
+[3.533s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/olhamelnyk/colcon_venv/src/install/setup.sh'
+[3.536s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/olhamelnyk/colcon_venv/src/install/local_setup.bash'
+[3.537s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/olhamelnyk/colcon_venv/src/install/setup.bash'
+[3.539s] INFO:colcon.colcon_core.shell:Creating prefix script '/home/olhamelnyk/colcon_venv/src/install/local_setup.zsh'
+[3.540s] INFO:colcon.colcon_core.shell:Creating prefix chain script '/home/olhamelnyk/colcon_venv/src/install/setup.zsh'

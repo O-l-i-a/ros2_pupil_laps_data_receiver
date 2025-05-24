@@ -6,5 +6,5 @@ C_DEFINES = -DROS_PACKAGE_NAME=\"egocentric_msg\" -Degocentric_msg_s__rosidl_typ
 
 C_INCLUDES = -I/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_generator_c -I/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_generator_py -I/opt/ros/jazzy/include/rmw -I/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_typesupport_introspection_c -isystem /usr/include/python3.12 -isystem /opt/ros/jazzy/include/std_msgs -isystem /opt/ros/jazzy/include/builtin_interfaces -isystem /opt/ros/jazzy/include/rosidl_runtime_c -isystem /opt/ros/jazzy/include/rcutils -isystem /opt/ros/jazzy/include/rosidl_typesupport_interface -isystem /opt/ros/jazzy/include/rosidl_typesupport_introspection_c -isystem /opt/ros/jazzy/include/rosidl_typesupport_c -isystem /opt/ros/jazzy/include/rosidl_dynamic_typesupport
 
-C_FLAGS = -fPIC -Wall -Wextra
+C_FLAGS = -O3 -DNDEBUG -fPIC -Wall -Wextra
 

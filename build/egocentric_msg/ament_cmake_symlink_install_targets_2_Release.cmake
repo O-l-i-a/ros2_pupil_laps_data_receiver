@@ -1,0 +1,1 @@
+ament_cmake_symlink_install_targets("TARGET_FILES" "/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/rosidl_generator_py/egocentric_msg/egocentric_msg_s__rosidl_typesupport_c.so" "TARGETS" "egocentric_msg_s__rosidl_typesupport_c" "DESTINATION" "lib/python3.12/site-packages/egocentric_msg")

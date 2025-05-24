@@ -1,0 +1,242 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Release-2f07b19d8fab32270a88.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "egocentric_msg__py",
+					"jsonFile" : "directory-egocentric_msg__py-Release-1f3bb62d9ebdccea2395.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/egocentric_msg__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "Release",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "egocentric_msg",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_egocentric_msg_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_egocentric_msg_egg-Release-fc8e7bcfcaf8eca8cc5f.json",
+					"name" : "ament_cmake_python_build_egocentric_msg_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_symlink_egocentric_msg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_symlink_egocentric_msg-Release-f99e0a81a74e07b81e3d.json",
+					"name" : "ament_cmake_python_symlink_egocentric_msg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg-Release-8c8ac2fcd0bda9b27343.json",
+					"name" : "egocentric_msg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__cpp-Release-41aeeb5962c992617142.json",
+					"name" : "egocentric_msg__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "egocentric_msg__py::@a5987ae81ce86fcf9ae8",
+					"jsonFile" : "target-egocentric_msg__py-Release-41775384d06293b8938b.json",
+					"name" : "egocentric_msg__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__rosidl_generator_c-Release-4e71a12e6e0d5489320a.json",
+					"name" : "egocentric_msg__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__rosidl_generator_py-Release-d5e7d87ca2376f92944e.json",
+					"name" : "egocentric_msg__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__rosidl_generator_type_description-Release-7310668fe63a2c3e2137.json",
+					"name" : "egocentric_msg__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__rosidl_typesupport_c-Release-8b3f35d154986e75b664.json",
+					"name" : "egocentric_msg__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__rosidl_typesupport_cpp-Release-b725bedc180759df3600.json",
+					"name" : "egocentric_msg__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__rosidl_typesupport_fastrtps_c-Release-448ee720495c19a37858.json",
+					"name" : "egocentric_msg__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__rosidl_typesupport_fastrtps_cpp-Release-3fcef86571f1e2e1d033.json",
+					"name" : "egocentric_msg__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__rosidl_typesupport_introspection_c-Release-152c3f4718c3c3655b71.json",
+					"name" : "egocentric_msg__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg__rosidl_typesupport_introspection_cpp-Release-3152e8428df4d5c130e3.json",
+					"name" : "egocentric_msg__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg_s__rosidl_typesupport_c-Release-07eebbde07227f49118d.json",
+					"name" : "egocentric_msg_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg_s__rosidl_typesupport_fastrtps_c-Release-6b2cd9eb7b80686d1e69.json",
+					"name" : "egocentric_msg_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg_s__rosidl_typesupport_introspection_c-Release-f803e0bdddc6a507c85f.json",
+					"name" : "egocentric_msg_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "egocentric_msg_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-egocentric_msg_uninstall-Release-0c5a1a97edb6b8907ea7.json",
+					"name" : "egocentric_msg_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-Release-b76cf1b1b84881a5f134.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/olhamelnyk/colcon_venv/src/build/egocentric_msg",
+		"source" : "/home/olhamelnyk/colcon_venv/src/egocentric_msg"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

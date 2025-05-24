@@ -1,0 +1,147 @@
+[0.013s] Invoking command in '/home/olhamelnyk/colcon_venv/src/build/zed_components': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/olhamelnyk/colcon_venv/src/zed-ros2-wrapper/zed_components -DCMAKE_BUILD_TYPE=Release -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/zed_components
+[0.113s] -- The C compiler identification is GNU 13.3.0
+[0.191s] -- The CXX compiler identification is GNU 13.3.0
+[0.231s] -- Detecting C compiler ABI info
+[0.401s] -- Detecting C compiler ABI info - done
+[0.427s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.428s] -- Detecting C compile features
+[0.429s] -- Detecting C compile features - done
+[0.451s] -- Detecting CXX compiler ABI info
+[0.612s] -- Detecting CXX compiler ABI info - done
+[0.625s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.625s] -- Detecting CXX compile features
+[0.625s] -- Detecting CXX compile features - done
+[0.633s] -- Looking for sgemm_
+[0.778s] -- Looking for sgemm_ - not found
+[0.780s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+[0.922s] -- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+[0.924s] -- Found Threads: TRUE  
+[1.012s] -- Looking for sgemm_
+[1.179s] -- Looking for sgemm_ - found
+[1.179s] -- Found BLAS: /usr/lib/x86_64-linux-gnu/libopenblas.so  
+[1.180s] [33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:73 (find_package):
+[1.180s]   Policy CMP0146 is not set: The FindCUDA module is removed.  Run "cmake
+[1.180s]   --help-policy CMP0146" for policy details.  Use the cmake_policy command to
+[1.180s]   set the policy and suppress this warning.
+[1.180s] 
+[1.180s] Call Stack (most recent call first):
+[1.180s]   CMakeLists.txt:84 (find_package)
+[1.180s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.181s] [0m
+[1.224s] -- Found CUDA: /usr/local/cuda (found suitable version "12.9", minimum required is "12") 
+[1.225s] [33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:78 (exec_program):
+[1.225s]   Policy CMP0153 is not set: The exec_program command should not be called.
+[1.225s]   Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy
+[1.225s]   command to set the policy and suppress this warning.
+[1.226s] 
+[1.226s]   Use execute_process() instead.
+[1.226s] Call Stack (most recent call first):
+[1.226s]   CMakeLists.txt:84 (find_package)
+[1.226s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.226s] [0m
+[1.232s] [33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:79 (exec_program):
+[1.232s]   Policy CMP0153 is not set: The exec_program command should not be called.
+[1.232s]   Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy
+[1.232s]   command to set the policy and suppress this warning.
+[1.232s] 
+[1.232s]   Use execute_process() instead.
+[1.232s] Call Stack (most recent call first):
+[1.232s]   CMakeLists.txt:84 (find_package)
+[1.232s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.232s] [0m
+[1.238s] [33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:95 (exec_program):
+[1.238s]   Policy CMP0153 is not set: The exec_program command should not be called.
+[1.238s]   Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy
+[1.238s]   command to set the policy and suppress this warning.
+[1.239s] 
+[1.239s]   Use execute_process() instead.
+[1.239s] Call Stack (most recent call first):
+[1.239s]   CMakeLists.txt:84 (find_package)
+[1.239s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.239s] [0m
+[1.248s] [33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:115 (exec_program):
+[1.248s]   Policy CMP0153 is not set: The exec_program command should not be called.
+[1.248s]   Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy
+[1.248s]   command to set the policy and suppress this warning.
+[1.248s] 
+[1.248s]   Use execute_process() instead.
+[1.248s] Call Stack (most recent call first):
+[1.249s]   CMakeLists.txt:84 (find_package)
+[1.249s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.249s] [0m
+[1.287s] [33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:117 (exec_program):
+[1.288s]   Policy CMP0153 is not set: The exec_program command should not be called.
+[1.288s]   Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy
+[1.288s]   command to set the policy and suppress this warning.
+[1.288s] 
+[1.288s]   Use execute_process() instead.
+[1.288s] Call Stack (most recent call first):
+[1.288s]   CMakeLists.txt:84 (find_package)
+[1.288s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.288s] [0m
+[1.534s] [33mCMake Warning (dev) at CMakeLists.txt:86 (exec_program):
+[1.535s]   Policy CMP0153 is not set: The exec_program command should not be called.
+[1.535s]   Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy
+[1.535s]   command to set the policy and suppress this warning.
+[1.535s] 
+[1.535s]   Use execute_process() instead.
+[1.535s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.535s] [0m
+[1.541s] [33mCMake Warning (dev) at CMakeLists.txt:91 (find_package):
+[1.541s]   Policy CMP0146 is not set: The FindCUDA module is removed.  Run "cmake
+[1.541s]   --help-policy CMP0146" for policy details.  Use the cmake_policy command to
+[1.541s]   set the policy and suppress this warning.
+[1.541s] 
+[1.541s] This warning is for project developers.  Use -Wno-dev to suppress it.
+[1.541s] [0m
+[1.565s] -- Found CUDA: /usr/local/cuda (found version "12.9") 
+[1.574s] -- Found ament_cmake_auto: 2.5.4 (/opt/ros/jazzy/share/ament_cmake_auto/cmake)
+[1.795s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.877s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[2.137s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[2.160s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[2.184s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[2.210s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[2.318s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[2.323s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[2.486s] -- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  
+[2.517s] -- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") 
+[2.547s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[3.000s] -- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)
+[3.001s] -- Found Eigen3: TRUE (found version "3.4.0") 
+[3.001s] -- Ensuring Eigen3 include directory is part of orocos-kdl CMake target
+[3.155s] [33mCMake Warning at CMakeLists.txt:122 (find_package):
+[3.155s]   By not providing "Findzed_msgs.cmake" in CMAKE_MODULE_PATH this project has
+[3.155s]   asked CMake to find a package configuration file provided by "zed_msgs",
+[3.155s]   but CMake did not find one.
+[3.156s] 
+[3.156s]   Could not find a package configuration file provided by "zed_msgs" with any
+[3.156s]   of the following names:
+[3.156s] 
+[3.157s]     zed_msgsConfig.cmake
+[3.157s]     zed_msgs-config.cmake
+[3.157s] 
+[3.157s]   Add the installation prefix of "zed_msgs" to CMAKE_PREFIX_PATH or set
+[3.157s]   "zed_msgs_DIR" to a directory containing one of the above files.  If
+[3.158s]   "zed_msgs" provides a separate development package or SDK, be sure it has
+[3.158s]   been installed.
+[3.158s] 
+[3.158s] [0m
+[3.170s] [31mCMake Error at CMakeLists.txt:133 (find_package):
+[3.171s]   By not providing "Findnmea_msgs.cmake" in CMAKE_MODULE_PATH this project
+[3.171s]   has asked CMake to find a package configuration file provided by
+[3.171s]   "nmea_msgs", but CMake did not find one.
+[3.171s] 
+[3.171s]   Could not find a package configuration file provided by "nmea_msgs" with
+[3.172s]   any of the following names:
+[3.172s] 
+[3.172s]     nmea_msgsConfig.cmake
+[3.172s]     nmea_msgs-config.cmake
+[3.173s] 
+[3.173s]   Add the installation prefix of "nmea_msgs" to CMAKE_PREFIX_PATH or set
+[3.173s]   "nmea_msgs_DIR" to a directory containing one of the above files.  If
+[3.173s]   "nmea_msgs" provides a separate development package or SDK, be sure it has
+[3.173s]   been installed.
+[3.174s] 
+[3.174s] [0m
+[3.174s] -- Configuring incomplete, errors occurred!

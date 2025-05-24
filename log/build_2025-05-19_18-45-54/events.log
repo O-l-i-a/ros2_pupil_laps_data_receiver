@@ -1,0 +1,230 @@
+[0.000000] (-) TimerEvent: {}
+[0.000772] (egocentric_msg) JobQueued: {'identifier': 'egocentric_msg', 'dependencies': OrderedDict()}
+[0.000868] (zed_components) JobQueued: {'identifier': 'zed_components', 'dependencies': OrderedDict()}
+[0.000996] (gaze_video_recorder) JobQueued: {'identifier': 'gaze_video_recorder', 'dependencies': OrderedDict({'egocentric_msg': '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg'})}
+[0.001058] (pupil_labs_wrapper) JobQueued: {'identifier': 'pupil_labs_wrapper', 'dependencies': OrderedDict({'egocentric_msg': '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg'})}
+[0.001109] (system_controller) JobQueued: {'identifier': 'system_controller', 'dependencies': OrderedDict({'egocentric_msg': '/home/olhamelnyk/colcon_venv/src/install/egocentric_msg'})}
+[0.001155] (zed_wrapper) JobQueued: {'identifier': 'zed_wrapper', 'dependencies': OrderedDict({'zed_components': '/home/olhamelnyk/colcon_venv/src/install/zed_components'})}
+[0.001197] (zed_ros2) JobQueued: {'identifier': 'zed_ros2', 'dependencies': OrderedDict({'zed_components': '/home/olhamelnyk/colcon_venv/src/install/zed_components', 'zed_wrapper': '/home/olhamelnyk/colcon_venv/src/install/zed_wrapper'})}
+[0.001242] (egocentric_msg) JobStarted: {'identifier': 'egocentric_msg'}
+[0.008690] (zed_components) JobStarted: {'identifier': 'zed_components'}
+[0.013175] (egocentric_msg) JobProgress: {'identifier': 'egocentric_msg', 'progress': 'cmake'}
+[0.016229] (egocentric_msg) Command: {'cmd': ['/usr/bin/cmake', '/home/olhamelnyk/colcon_venv/src/egocentric_msg', '-DCMAKE_BUILD_TYPE=Release', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/egocentric_msg'], 'cwd': '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'olhamelnyk', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/olhamelnyk', 'OLDPWD': '/home/olhamelnyk/colcon_venv', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2518', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1001/bus', 'COLORTERM': 'truecolor', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'olhamelnyk', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1001.slice/user@1001.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'olhamelnyk', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/piplab-X470-AORUS-ULTRA-GAMING:@/tmp/.ICE-unix/2470,unix/piplab-X470-AORUS-ULTRA-GAMING:/tmp/.ICE-unix/2470', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/1705d798_d383_4220_8134_aa30942b1d38', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1001', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1001/.mutter-Xwaylandauth.BVPN62', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.130', 'SSH_AUTH_SOCK': '/run/user/1001/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[0.019695] (zed_components) JobProgress: {'identifier': 'zed_components', 'progress': 'cmake'}
+[0.020360] (zed_components) Command: {'cmd': ['/usr/bin/cmake', '/home/olhamelnyk/colcon_venv/src/zed-ros2-wrapper/zed_components', '-DCMAKE_BUILD_TYPE=Release', '-DAMENT_CMAKE_SYMLINK_INSTALL=1', '-DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/zed_components'], 'cwd': '/home/olhamelnyk/colcon_venv/src/build/zed_components', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'olhamelnyk', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/olhamelnyk', 'OLDPWD': '/home/olhamelnyk/colcon_venv', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2518', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1001/bus', 'COLORTERM': 'truecolor', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'olhamelnyk', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1001.slice/user@1001.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'olhamelnyk', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/piplab-X470-AORUS-ULTRA-GAMING:@/tmp/.ICE-unix/2470,unix/piplab-X470-AORUS-ULTRA-GAMING:/tmp/.ICE-unix/2470', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/1705d798_d383_4220_8134_aa30942b1d38', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1001', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1001/.mutter-Xwaylandauth.BVPN62', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.130', 'SSH_AUTH_SOCK': '/run/user/1001/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/olhamelnyk/colcon_venv/src/build/zed_components', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[0.046703] (egocentric_msg) StdoutLine: {'line': b'-- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)\n'}
+[0.078596] (egocentric_msg) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter \n'}
+[0.099658] (-) TimerEvent: {}
+[0.121392] (zed_components) StdoutLine: {'line': b'-- The C compiler identification is GNU 13.3.0\n'}
+[0.160789] (egocentric_msg) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[0.176510] (egocentric_msg) StdoutLine: {'line': b'-- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)\n'}
+[0.181555] (egocentric_msg) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.199449] (zed_components) StdoutLine: {'line': b'-- The CXX compiler identification is GNU 13.3.0\n'}
+[0.199783] (-) TimerEvent: {}
+[0.223560] (egocentric_msg) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[0.239747] (zed_components) StdoutLine: {'line': b'-- Detecting C compiler ABI info\n'}
+[0.258761] (egocentric_msg) StdoutLine: {'line': b'-- Found rosidl_adapter: 4.6.5 (/opt/ros/jazzy/share/rosidl_adapter/cmake)\n'}
+[0.262311] (egocentric_msg) StdoutLine: {'line': b'-- Found std_msgs: 5.3.6 (/opt/ros/jazzy/share/std_msgs/cmake)\n'}
+[0.299895] (-) TimerEvent: {}
+[0.400195] (-) TimerEvent: {}
+[0.409832] (zed_components) StdoutLine: {'line': b'-- Detecting C compiler ABI info - done\n'}
+[0.436120] (zed_components) StdoutLine: {'line': b'-- Check for working C compiler: /usr/bin/cc - skipped\n'}
+[0.436791] (zed_components) StdoutLine: {'line': b'-- Detecting C compile features\n'}
+[0.437888] (zed_components) StdoutLine: {'line': b'-- Detecting C compile features - done\n'}
+[0.459871] (zed_components) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info\n'}
+[0.500324] (-) TimerEvent: {}
+[0.600712] (-) TimerEvent: {}
+[0.620726] (zed_components) StdoutLine: {'line': b'-- Detecting CXX compiler ABI info - done\n'}
+[0.633101] (zed_components) StdoutLine: {'line': b'-- Check for working CXX compiler: /usr/bin/c++ - skipped\n'}
+[0.633426] (zed_components) StdoutLine: {'line': b'-- Detecting CXX compile features\n'}
+[0.634020] (zed_components) StdoutLine: {'line': b'-- Detecting CXX compile features - done\n'}
+[0.641243] (zed_components) StdoutLine: {'line': b'-- Looking for sgemm_\n'}
+[0.686651] (egocentric_msg) StdoutLine: {'line': b'-- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)\n'}
+[0.700826] (-) TimerEvent: {}
+[0.786057] (zed_components) StdoutLine: {'line': b'-- Looking for sgemm_ - not found\n'}
+[0.788497] (zed_components) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD\n'}
+[0.800934] (-) TimerEvent: {}
+[0.857696] (egocentric_msg) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[0.901021] (-) TimerEvent: {}
+[0.930254] (zed_components) StdoutLine: {'line': b'-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success\n'}
+[0.932550] (zed_components) StdoutLine: {'line': b'-- Found Threads: TRUE  \n'}
+[1.001100] (-) TimerEvent: {}
+[1.020734] (zed_components) StdoutLine: {'line': b'-- Looking for sgemm_\n'}
+[1.063273] (egocentric_msg) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[1.068662] (egocentric_msg) StdoutLine: {'line': b'-- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)\n'}
+[1.101187] (-) TimerEvent: {}
+[1.187639] (zed_components) StdoutLine: {'line': b'-- Looking for sgemm_ - found\n'}
+[1.187838] (zed_components) StdoutLine: {'line': b'-- Found BLAS: /usr/lib/x86_64-linux-gnu/libopenblas.so  \n'}
+[1.188370] (zed_components) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:73 (find_package):\n'}
+[1.188528] (zed_components) StderrLine: {'line': b'  Policy CMP0146 is not set: The FindCUDA module is removed.  Run "cmake\n'}
+[1.188647] (zed_components) StderrLine: {'line': b'  --help-policy CMP0146" for policy details.  Use the cmake_policy command to\n'}
+[1.188750] (zed_components) StderrLine: {'line': b'  set the policy and suppress this warning.\n'}
+[1.188852] (zed_components) StderrLine: {'line': b'\n'}
+[1.188953] (zed_components) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[1.189053] (zed_components) StderrLine: {'line': b'  CMakeLists.txt:84 (find_package)\n'}
+[1.189151] (zed_components) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.189251] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[1.202248] (-) TimerEvent: {}
+[1.232525] (zed_components) StdoutLine: {'line': b'-- Found CUDA: /usr/local/cuda (found suitable version "12.9", minimum required is "12") \n'}
+[1.233807] (zed_components) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:78 (exec_program):\n'}
+[1.233939] (zed_components) StderrLine: {'line': b'  Policy CMP0153 is not set: The exec_program command should not be called.\n'}
+[1.234042] (zed_components) StderrLine: {'line': b'  Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy\n'}
+[1.234142] (zed_components) StderrLine: {'line': b'  command to set the policy and suppress this warning.\n'}
+[1.234243] (zed_components) StderrLine: {'line': b'\n'}
+[1.234343] (zed_components) StderrLine: {'line': b'  Use execute_process() instead.\n'}
+[1.234443] (zed_components) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[1.234571] (zed_components) StderrLine: {'line': b'  CMakeLists.txt:84 (find_package)\n'}
+[1.234677] (zed_components) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.234778] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[1.240173] (zed_components) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:79 (exec_program):\n'}
+[1.240301] (zed_components) StderrLine: {'line': b'  Policy CMP0153 is not set: The exec_program command should not be called.\n'}
+[1.240401] (zed_components) StderrLine: {'line': b'  Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy\n'}
+[1.240500] (zed_components) StderrLine: {'line': b'  command to set the policy and suppress this warning.\n'}
+[1.240616] (zed_components) StderrLine: {'line': b'\n'}
+[1.240718] (zed_components) StderrLine: {'line': b'  Use execute_process() instead.\n'}
+[1.240818] (zed_components) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[1.240916] (zed_components) StderrLine: {'line': b'  CMakeLists.txt:84 (find_package)\n'}
+[1.241015] (zed_components) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.241115] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[1.246853] (zed_components) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:95 (exec_program):\n'}
+[1.246986] (zed_components) StderrLine: {'line': b'  Policy CMP0153 is not set: The exec_program command should not be called.\n'}
+[1.247087] (zed_components) StderrLine: {'line': b'  Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy\n'}
+[1.247186] (zed_components) StderrLine: {'line': b'  command to set the policy and suppress this warning.\n'}
+[1.247286] (zed_components) StderrLine: {'line': b'\n'}
+[1.247385] (zed_components) StderrLine: {'line': b'  Use execute_process() instead.\n'}
+[1.247484] (zed_components) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[1.247602] (zed_components) StderrLine: {'line': b'  CMakeLists.txt:84 (find_package)\n'}
+[1.247704] (zed_components) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.247803] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[1.256659] (zed_components) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:115 (exec_program):\n'}
+[1.256762] (zed_components) StderrLine: {'line': b'  Policy CMP0153 is not set: The exec_program command should not be called.\n'}
+[1.256841] (zed_components) StderrLine: {'line': b'  Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy\n'}
+[1.256919] (zed_components) StderrLine: {'line': b'  command to set the policy and suppress this warning.\n'}
+[1.256996] (zed_components) StderrLine: {'line': b'\n'}
+[1.257072] (zed_components) StderrLine: {'line': b'  Use execute_process() instead.\n'}
+[1.257149] (zed_components) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[1.257226] (zed_components) StderrLine: {'line': b'  CMakeLists.txt:84 (find_package)\n'}
+[1.257314] (zed_components) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.257392] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[1.296121] (zed_components) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at /usr/local/zed/zed-config.cmake:117 (exec_program):\n'}
+[1.296256] (zed_components) StderrLine: {'line': b'  Policy CMP0153 is not set: The exec_program command should not be called.\n'}
+[1.296335] (zed_components) StderrLine: {'line': b'  Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy\n'}
+[1.296411] (zed_components) StderrLine: {'line': b'  command to set the policy and suppress this warning.\n'}
+[1.296488] (zed_components) StderrLine: {'line': b'\n'}
+[1.296589] (zed_components) StderrLine: {'line': b'  Use execute_process() instead.\n'}
+[1.296669] (zed_components) StderrLine: {'line': b'Call Stack (most recent call first):\n'}
+[1.296757] (zed_components) StderrLine: {'line': b'  CMakeLists.txt:84 (find_package)\n'}
+[1.296834] (zed_components) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.296912] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[1.302318] (-) TimerEvent: {}
+[1.402534] (-) TimerEvent: {}
+[1.502807] (-) TimerEvent: {}
+[1.505706] (egocentric_msg) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed \n'}
+[1.543135] (zed_components) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at CMakeLists.txt:86 (exec_program):\n'}
+[1.543251] (zed_components) StderrLine: {'line': b'  Policy CMP0153 is not set: The exec_program command should not be called.\n'}
+[1.543326] (zed_components) StderrLine: {'line': b'  Run "cmake --help-policy CMP0153" for policy details.  Use the cmake_policy\n'}
+[1.543398] (zed_components) StderrLine: {'line': b'  command to set the policy and suppress this warning.\n'}
+[1.543470] (zed_components) StderrLine: {'line': b'\n'}
+[1.543557] (zed_components) StderrLine: {'line': b'  Use execute_process() instead.\n'}
+[1.543637] (zed_components) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.543710] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[1.547680] (egocentric_msg) StdoutLine: {'line': b'-- Found ament_lint_auto: 0.17.2 (/opt/ros/jazzy/share/ament_lint_auto/cmake)\n'}
+[1.549347] (zed_components) StderrLine: {'line': b'\x1b[33mCMake Warning (dev) at CMakeLists.txt:91 (find_package):\n'}
+[1.549437] (zed_components) StderrLine: {'line': b'  Policy CMP0146 is not set: The FindCUDA module is removed.  Run "cmake\n'}
+[1.549531] (zed_components) StderrLine: {'line': b'  --help-policy CMP0146" for policy details.  Use the cmake_policy command to\n'}
+[1.549614] (zed_components) StderrLine: {'line': b'  set the policy and suppress this warning.\n'}
+[1.549687] (zed_components) StderrLine: {'line': b'\n'}
+[1.549759] (zed_components) StderrLine: {'line': b'This warning is for project developers.  Use -Wno-dev to suppress it.\n'}
+[1.549830] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[1.571774] (egocentric_msg) StdoutLine: {'line': b"-- Added test 'lint_cmake' to check CMake code style\n"}
+[1.573125] (egocentric_msg) StdoutLine: {'line': b"-- Added test 'xmllint' to check XML markup files\n"}
+[1.573889] (zed_components) StdoutLine: {'line': b'-- Found CUDA: /usr/local/cuda (found version "12.9") \n'}
+[1.577660] (egocentric_msg) StdoutLine: {'line': b'-- Configuring done (1.5s)\n'}
+[1.582335] (zed_components) StdoutLine: {'line': b'-- Found ament_cmake_auto: 2.5.4 (/opt/ros/jazzy/share/ament_cmake_auto/cmake)\n'}
+[1.602855] (-) TimerEvent: {}
+[1.639777] (egocentric_msg) StdoutLine: {'line': b'-- Generating done (0.1s)\n'}
+[1.654036] (egocentric_msg) StdoutLine: {'line': b'-- Build files have been written to: /home/olhamelnyk/colcon_venv/src/build/egocentric_msg\n'}
+[1.662926] (egocentric_msg) CommandEnded: {'returncode': 0}
+[1.663753] (egocentric_msg) JobProgress: {'identifier': 'egocentric_msg', 'progress': 'build'}
+[1.664871] (egocentric_msg) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg', '--', '-j16', '-l16'], 'cwd': '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg', 'env': OrderedDict({'LESSOPEN': '| /usr/bin/lesspipe %s', 'USER': 'olhamelnyk', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'XDG_SESSION_TYPE': 'wayland', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '1', 'LD_LIBRARY_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/olhamelnyk', 'OLDPWD': '/home/olhamelnyk/colcon_venv', 'DESKTOP_SESSION': 'ubuntu', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'SYSTEMD_EXEC_PID': '2518', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1001/bus', 'COLORTERM': 'truecolor', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'IM_CONFIG_PHASE': '1', 'WAYLAND_DISPLAY': 'wayland-0', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'olhamelnyk', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1001.slice/user@1001.service/session.slice/org.gnome.Shell@wayland.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'USERNAME': 'olhamelnyk', 'TERM': 'xterm-256color', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'PATH': '/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin', 'SESSION_MANAGER': 'local/piplab-X470-AORUS-ULTRA-GAMING:@/tmp/.ICE-unix/2470,unix/piplab-X470-AORUS-ULTRA-GAMING:/tmp/.ICE-unix/2470', 'XDG_MENU_PREFIX': 'gnome-', 'GNOME_TERMINAL_SCREEN': '/org/gnome/Terminal/screen/1705d798_d383_4220_8134_aa30942b1d38', 'GNOME_SETUP_DISPLAY': ':1', 'XDG_RUNTIME_DIR': '/run/user/1001', 'DISPLAY': ':0', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1001/.mutter-Xwaylandauth.BVPN62', 'LS_COLORS': 'rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=00:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.avif=01;35:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.webp=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:*~=00;90:*#=00;90:*.bak=00;90:*.crdownload=00;90:*.dpkg-dist=00;90:*.dpkg-new=00;90:*.dpkg-old=00;90:*.dpkg-tmp=00;90:*.old=00;90:*.orig=00;90:*.part=00;90:*.rej=00;90:*.rpmnew=00;90:*.rpmorig=00;90:*.rpmsave=00;90:*.swp=00;90:*.tmp=00;90:*.ucf-dist=00;90:*.ucf-new=00;90:*.ucf-old=00;90:', 'GNOME_TERMINAL_SERVICE': ':1.130', 'SSH_AUTH_SOCK': '/run/user/1001/keyring/ssh', 'AMENT_PREFIX_PATH': '/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'IGN_GAZEBO_RESOURCE_PATH': '/opt/ros/jazzy/share', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'VTE_VERSION': '7600', 'CMAKE_PREFIX_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/opt/ros/jazzy'}), 'shell': False}
+[1.702975] (-) TimerEvent: {}
+[1.750384] (egocentric_msg) StdoutLine: {'line': b'[  2%] \x1b[34m\x1b[1mGenerating type hashes for ROS interfaces\x1b[0m\n'}
+[1.750666] (egocentric_msg) StderrLine: {'line': b"failed to create symbolic link '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/ament_cmake_python/egocentric_msg/egocentric_msg' because existing path cannot be removed: Is a directory\n"}
+[1.752130] (egocentric_msg) StderrLine: {'line': b'gmake[2]: *** [CMakeFiles/ament_cmake_python_symlink_egocentric_msg.dir/build.make:70: CMakeFiles/ament_cmake_python_symlink_egocentric_msg] Error 1\n'}
+[1.752419] (egocentric_msg) StderrLine: {'line': b'gmake[1]: *** [CMakeFiles/Makefile2:452: CMakeFiles/ament_cmake_python_symlink_egocentric_msg.dir/all] Error 2\n'}
+[1.752550] (egocentric_msg) StderrLine: {'line': b'gmake[1]: *** Waiting for unfinished jobs....\n'}
+[1.803063] (-) TimerEvent: {}
+[1.803372] (zed_components) StdoutLine: {'line': b'-- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter \n'}
+[1.885523] (zed_components) StdoutLine: {'line': b'-- Override CMake install command with custom implementation using symlinks instead of copying resources\n'}
+[1.903122] (-) TimerEvent: {}
+[1.994350] (egocentric_msg) StdoutLine: {'line': b'[  2%] Built target egocentric_msg__rosidl_generator_type_description\n'}
+[1.996415] (egocentric_msg) StderrLine: {'line': b'gmake: *** [Makefile:146: all] Error 2\n'}
+[2.001687] (egocentric_msg) CommandEnded: {'returncode': 2}
+[2.003384] (-) TimerEvent: {}
+[2.033185] (egocentric_msg) JobEnded: {'identifier': 'egocentric_msg', 'rc': 2}
+[2.103500] (-) TimerEvent: {}
+[2.145494] (zed_components) StdoutLine: {'line': b'-- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)\n'}
+[2.168157] (zed_components) StdoutLine: {'line': b'-- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)\n'}
+[2.192215] (zed_components) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c\n'}
+[2.203581] (-) TimerEvent: {}
+[2.218775] (zed_components) StdoutLine: {'line': b'-- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp\n'}
+[2.303702] (-) TimerEvent: {}
+[2.326690] (zed_components) StdoutLine: {'line': b'-- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)\n'}
+[2.331778] (zed_components) StdoutLine: {'line': b'-- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)\n'}
+[2.403823] (-) TimerEvent: {}
+[2.494504] (zed_components) StdoutLine: {'line': b'-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.13")  \n'}
+[2.503912] (-) TimerEvent: {}
+[2.525850] (zed_components) StdoutLine: {'line': b'-- Found FastRTPS: /opt/ros/jazzy/include (Required is at least version "2.13") \n'}
+[2.555405] (zed_components) StdoutLine: {'line': b"-- Using RMW implementation 'rmw_fastrtps_cpp' as default\n"}
+[2.603973] (-) TimerEvent: {}
+[2.704217] (-) TimerEvent: {}
+[2.804614] (-) TimerEvent: {}
+[2.905029] (-) TimerEvent: {}
+[3.005418] (-) TimerEvent: {}
+[3.008130] (zed_components) StdoutLine: {'line': b'-- Found eigen3_cmake_module: 0.3.0 (/opt/ros/jazzy/share/eigen3_cmake_module/cmake)\n'}
+[3.009421] (zed_components) StdoutLine: {'line': b'-- Found Eigen3: TRUE (found version "3.4.0") \n'}
+[3.009736] (zed_components) StdoutLine: {'line': b'-- Ensuring Eigen3 include directory is part of orocos-kdl CMake target\n'}
+[3.105608] (-) TimerEvent: {}
+[3.163216] (zed_components) StderrLine: {'line': b'\x1b[33mCMake Warning at CMakeLists.txt:122 (find_package):\n'}
+[3.163622] (zed_components) StderrLine: {'line': b'  By not providing "Findzed_msgs.cmake" in CMAKE_MODULE_PATH this project has\n'}
+[3.163872] (zed_components) StderrLine: {'line': b'  asked CMake to find a package configuration file provided by "zed_msgs",\n'}
+[3.164088] (zed_components) StderrLine: {'line': b'  but CMake did not find one.\n'}
+[3.164298] (zed_components) StderrLine: {'line': b'\n'}
+[3.164505] (zed_components) StderrLine: {'line': b'  Could not find a package configuration file provided by "zed_msgs" with any\n'}
+[3.164751] (zed_components) StderrLine: {'line': b'  of the following names:\n'}
+[3.164961] (zed_components) StderrLine: {'line': b'\n'}
+[3.165163] (zed_components) StderrLine: {'line': b'    zed_msgsConfig.cmake\n'}
+[3.165365] (zed_components) StderrLine: {'line': b'    zed_msgs-config.cmake\n'}
+[3.165598] (zed_components) StderrLine: {'line': b'\n'}
+[3.165821] (zed_components) StderrLine: {'line': b'  Add the installation prefix of "zed_msgs" to CMAKE_PREFIX_PATH or set\n'}
+[3.165991] (zed_components) StderrLine: {'line': b'  "zed_msgs_DIR" to a directory containing one of the above files.  If\n'}
+[3.166156] (zed_components) StderrLine: {'line': b'  "zed_msgs" provides a separate development package or SDK, be sure it has\n'}
+[3.166346] (zed_components) StderrLine: {'line': b'  been installed.\n'}
+[3.166512] (zed_components) StderrLine: {'line': b'\n'}
+[3.166717] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[3.178759] (zed_components) StderrLine: {'line': b'\x1b[31mCMake Error at CMakeLists.txt:133 (find_package):\n'}
+[3.179160] (zed_components) StderrLine: {'line': b'  By not providing "Findnmea_msgs.cmake" in CMAKE_MODULE_PATH this project\n'}
+[3.179369] (zed_components) StderrLine: {'line': b'  has asked CMake to find a package configuration file provided by\n'}
+[3.179614] (zed_components) StderrLine: {'line': b'  "nmea_msgs", but CMake did not find one.\n'}
+[3.179838] (zed_components) StderrLine: {'line': b'\n'}
+[3.180040] (zed_components) StderrLine: {'line': b'  Could not find a package configuration file provided by "nmea_msgs" with\n'}
+[3.180267] (zed_components) StderrLine: {'line': b'  any of the following names:\n'}
+[3.180473] (zed_components) StderrLine: {'line': b'\n'}
+[3.180714] (zed_components) StderrLine: {'line': b'    nmea_msgsConfig.cmake\n'}
+[3.180924] (zed_components) StderrLine: {'line': b'    nmea_msgs-config.cmake\n'}
+[3.181124] (zed_components) StderrLine: {'line': b'\n'}
+[3.181323] (zed_components) StderrLine: {'line': b'  Add the installation prefix of "nmea_msgs" to CMAKE_PREFIX_PATH or set\n'}
+[3.181540] (zed_components) StderrLine: {'line': b'  "nmea_msgs_DIR" to a directory containing one of the above files.  If\n'}
+[3.181840] (zed_components) StderrLine: {'line': b'  "nmea_msgs" provides a separate development package or SDK, be sure it has\n'}
+[3.182051] (zed_components) StderrLine: {'line': b'  been installed.\n'}
+[3.182257] (zed_components) StderrLine: {'line': b'\n'}
+[3.182482] (zed_components) StderrLine: {'line': b'\x1b[0m\n'}
+[3.182772] (zed_components) StdoutLine: {'line': b'-- Configuring incomplete, errors occurred!\n'}
+[3.194411] (zed_components) JobEnded: {'identifier': 'zed_components', 'rc': 'SIGINT'}
+[3.205481] (gaze_video_recorder) JobSkipped: {'identifier': 'gaze_video_recorder'}
+[3.205679] (-) TimerEvent: {}
+[3.205860] (pupil_labs_wrapper) JobSkipped: {'identifier': 'pupil_labs_wrapper'}
+[3.205916] (system_controller) JobSkipped: {'identifier': 'system_controller'}
+[3.206066] (zed_wrapper) JobSkipped: {'identifier': 'zed_wrapper'}
+[3.206113] (zed_ros2) JobSkipped: {'identifier': 'zed_ros2'}
+[3.206156] (-) EventReactorShutdown: {}
