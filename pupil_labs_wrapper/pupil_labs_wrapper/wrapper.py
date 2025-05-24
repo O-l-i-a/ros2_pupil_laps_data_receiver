@@ -14,6 +14,16 @@ from rclpy.qos import QoSProfile, ReliabilityPolicy, DurabilityPolicy
 from concurrent.futures import ThreadPoolExecutor
 
 def populate_image_message(pl_image_msg, timestamp):
+    """
+    Convert a Pupil Labs scene frame to a ROS2 Image message for further publishing in a topic.
+
+    :param pl_image_msg: Object containing `bgr_pixels` 
+    :type pl_image_msg: SimpleSceneFrame
+    :param timestamp: ROS2 time stamp to assign to header.stamp
+    :type timestamp: builtin_interfaces.msg.Time
+    :returns: ROS2 Image message with BGR8 encoding and raw pixel data
+    :rtype: sensor_msgs.msg.Image
+    """
     ros_img = Image()
     ros_img.header.stamp.sec = timestamp.sec
     ros_img.header.stamp.nanosec = timestamp.nanosec
@@ -24,6 +34,16 @@ def populate_image_message(pl_image_msg, timestamp):
     return ros_img
 
 def populate_sensor_message(pl_gaze_msg, timestamp):
+    """
+    Create a GazeData message from a Pupil Labs gaze sample.
+
+    :param pl_gaze_msg: Object with `x`, `y` (pixel coordinates) and `worn` (bool)
+    :type pl_gaze_msg: SimpleGaze
+    :param timestamp: ROS2 time stamp to assign to header.stamp
+    :type timestamp: builtin_interfaces.msg.Time
+    :returns: GazeData message populated with gaze coordinates and worn flag
+    :rtype: egocentric_msg.msg.GazeData
+    """
     msg = GazeData()
     msg.header.stamp.sec = timestamp.sec
     msg.header.stamp.nanosec = timestamp.nanosec
@@ -33,8 +53,25 @@ def populate_sensor_message(pl_gaze_msg, timestamp):
     return msg
 
 class PupilLabsWrapper(Node):
+    """
+    ROS2 node that wraps Pupil Labs eye-tracking device,
+    publishes gaze and scene image topics, and optionally records data to files.
+    """
     def __init__(self):
+        """
+        Initialize the node:
+         - Discover and connect to a Pupil Labs device
+         - Create publishers for gaze, scene image, and recording state
+         - Create the '/record' service
+         - Start a ThreadPoolExecutor for blocking API calls
+         - Start a timer at 30 Hz for data publishing
+         - Initialize recording file handles
+
+        :raises SystemExit: If no Pupil Labs device is found within the timeout
+        """
+        # Connecting to device
         super().__init__('pupil_labs_wrapper')
+
         self.get_logger().info("Looking for the next best device...")
         self.device = discover_one_device(max_search_duration_seconds=10)
         if self.device is None:
@@ -45,17 +82,17 @@ class PupilLabsWrapper(Node):
         self.pub_gaze = self.create_publisher(GazeData, 'pupil_labs/gaze', 10)
         self.pub_rgb  = self.create_publisher(Image,    'pupil_labs/scene_img', 10)
 
-        latch_qos = QoSProfile(depth=1,
+        latch_qos = QoSProfile(depth=1, # only the current state is saved, 
                                reliability=ReliabilityPolicy.RELIABLE,
                                durability=DurabilityPolicy.TRANSIENT_LOCAL)
         self.state_pub    = self.create_publisher(Bool, 'recording_state', latch_qos)
         self.state_pub.publish(Bool(data=False))
 
         self.create_service(SetBool, 'record', self._srv_cb)
-        self.api_pool = ThreadPoolExecutor(max_workers=1)
-        self.timer    = self.create_timer(1.0/30.0, self.publish_pupil_labs_data)
+        self.api_pool = ThreadPoolExecutor(max_workers=1) # to handle the delay in responses from API
+        self.timer    = self.create_timer(1.0/30.0, self.publish_pupil_labs_data) # publish_pupil_labs_data() will be called every 1/30 of sec
 
-        # Aufnahme-Handles initialisieren
+        # initialise the recording handles
         self.recording       = False
         self.scene_writer    = None
         self.overlay_writer  = None
@@ -63,6 +100,7 @@ class PupilLabsWrapper(Node):
         self.csv_writer      = None
 
     def _srv_cb(self, req, resp):
+       
         want_start = bool(req.data)
         if want_start == self.recording:
             resp.success = False; resp.message = 'No change'
@@ -86,6 +124,14 @@ class PupilLabsWrapper(Node):
         return resp
 
     def _pupil_record_cmd(self, start: bool) -> bool:
+        """
+        Execute Pupil Labs API recording start/stop command. The recording on the phone starts too and it vibrates when it starts and ends
+
+        :param start: True to start recording, False to stop and save
+        :type start: bool
+        :returns: True on success, False if an exception occurred
+        :rtype: bool
+        """
         try:
             if start:
                 self.device.recording_start()
@@ -97,31 +143,43 @@ class PupilLabsWrapper(Node):
             return False
 
     def _start_file_recording(self): #TODO ins getrennter Ordner packen
-        """Öffnet VideoWriter und CSV-Writer"""
+        """
+        Open video and CSV writers for file recording.
+        Creates 'recordings/' directory if necessary and initializes:
+         - scene video (1088×1080, 30 FPS)
+         - gaze CSV with header ['sec','nanosec','x','y','worn']
+         - overlay video with gaze overlay
+        """
         ts = self.get_clock().now().to_msg()
-        prefix = f"{ts.sec}.{ts.nanosec}"
-        os.makedirs('recordings', exist_ok=True)
-
+        prefix = f"{ts.sec}"
+        #base folder
+        base_dir = 'recordings'
+        os.makedirs(base_dir, exist_ok=True)
+        #session folder
+        session_dir = os.path.join(base_dir, f"recording_{ts.sec}")
+        session_dir = os.path.join(base_dir, f"recording_{ts.sec}")
         # Szene-Video 1088x1080px laut docs
         width, height = 1088, 1080  # anpassen falls nötig
         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
         fps    = 30.0
         self.scene_writer = cv2.VideoWriter(
-            f"recordings/{prefix}_scene.mp4", fourcc, fps, (width, height)
+            os.path.join(session_dir, f"{prefix}_scene.mp4"), fourcc, fps, (width, height)
         )  # :contentReference[oaicite:3]{index=3}
 
         # Overlay-Video
         self.overlay_writer = cv2.VideoWriter(
-            f"recordings/{prefix}_scene_with_gaze.mp4", fourcc, fps, (width, height)
+            os.path.join(session_dir, f"{prefix}_scene_with_gaze.mp4"), fourcc, fps, (width, height)
         )
 
         # Gaze-CSV
-        self.csv_file   = open(f"recordings/{prefix}_gaze.csv", 'w', newline='')
+        self.csv_file   = open(os.path.join(session_dir, f"{prefix}_gaze.csv"), 'w', newline='')
         self.csv_writer = csv.writer(self.csv_file)  # :contentReference[oaicite:4]{index=4}
         self.csv_writer.writerow(['sec','nanosec','x','y','worn'])
 
     def _stop_file_recording(self):
-        """Schließt alle Datei-Handles"""
+        """
+        Close all open file handles (video writers and CSV file).
+        """
         if self.scene_writer:
             self.scene_writer.release()
         if self.overlay_writer:
@@ -130,13 +188,18 @@ class PupilLabsWrapper(Node):
             self.csv_file.close()
 
     def publish_pupil_labs_data(self):
+        """
+        Read synchronized scene and gaze data from the device and publish them.
+        If recording is active, write video frames and gaze data to files.
+
+        :raises: Logs any exception encountered during receive or publish
+        """
         try:
             scene_sample, gaze_sample = (
                 self.device.receive_matched_scene_video_frame_and_gaze()
-            )  # :contentReference[oaicite:5]{index=5}
-            #TODO: Fragen ob es dann genau ist oder nicht
-            #TODO: convertieren die zeit aus der Brille zum msg 
-            current_time = self.get_clock().now().to_msg() #- das ist der timestramp von ROS2
+            )  
+           
+            current_time = self.get_clock().now().to_msg() #timestramp of ROS2
             # ROS-Publish
             self.pub_gaze.publish(populate_sensor_message(gaze_sample, current_time))
             self.pub_rgb.publish(populate_image_message(scene_sample, current_time))
@@ -170,6 +233,9 @@ class PupilLabsWrapper(Node):
             self.get_logger().error(f"Error receiving or publishing data: {e}")
 
 def main(args=None):
+    """
+    Entry point: initialize ROS2 and start the PupilLabsWrapper node.
+    """
     rclpy.init(args=args)
     node = PupilLabsWrapper()
     try:
