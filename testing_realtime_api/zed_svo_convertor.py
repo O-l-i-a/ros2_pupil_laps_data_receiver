@@ -111,21 +111,25 @@ def main(opt):
     # Start SVO conversion to AVI/SEQUENCE
     sys.stdout.write("Converting SVO... Use Ctrl-C to interrupt conversion.\n")
     # Testing csv with tomestamps
-    #csv_file_path = os.path.join(output_dir, "timestamps.csv")
-    #csv_file = open(csv_file_path, mode='w', newline='')
-    #csv_writer = csv.writer(csv_file)
-    #csv_writer.writerow(["Frame_Index", "Timestamp_ms"])
+    csv_file_path = os.path.join(output_dir, "timestamps.csv")
+    csv_file = open(csv_file_path, mode='w', newline='')
+    csv_writer = csv.writer(csv_file)
+    csv_writer.writerow(["Frame_Index", "sec", "nanosec"])
     nb_frames = zed.get_svo_number_of_frames()
-    #timestamp = zed.get_timestamp(sl.TIME_REFERENCE.IMAGE) # TODO Platz dafür noch finden 
-#csv_writer.writerow([svo_position, timestamp.get_milliseconds()])
+    print("test")
+    #csv_writer.writerow([svo_position, timestamp.get_milliseconds()])
     while True:
         err = zed.grab(rt_param)
         if err == sl.ERROR_CODE.SUCCESS:
             svo_position = zed.get_svo_position()
-
+            # Experiment - get a timestramp and write it in csv
+            ts = zed.get_timestamp(sl.TIME_REFERENCE.IMAGE)
+            total_ns = ts.get_nanoseconds()
+            sec = ts.get_seconds()
+            nsec = int(total_ns - sec * 1_000_000_000)
+            csv_writer.writerow([svo_position,sec, nsec])
             # Retrieve SVO images
             zed.retrieve_image(left_image, sl.VIEW.LEFT)
-
             if app_type == AppType.LEFT_AND_RIGHT:
                 zed.retrieve_image(right_image, sl.VIEW.RIGHT)
             elif app_type == AppType.LEFT_AND_DEPTH:
@@ -168,9 +172,15 @@ def main(opt):
             break
     if output_as_video:
         # Close the video writer
+        print("before release ")
         video_writer.release()
-
+        print("after release ")
+            # Experiment - get a timestramp and write it in csv
+    print("before scv close")
+    csv_file.close()
+    print("after scv close")
     zed.close()
+    print("after zed close")
     return 0
 
 

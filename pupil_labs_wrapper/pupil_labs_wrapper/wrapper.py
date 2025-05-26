@@ -142,7 +142,7 @@ class PupilLabsWrapper(Node):
             self.get_logger().error(f'Pupil-API error: {e}')
             return False
 
-    def _start_file_recording(self): #TODO ins getrennter Ordner packen
+    def _start_file_recording(self): 
         """
         Open video and CSV writers for file recording.
         Creates 'recordings/' directory if necessary and initializes:
