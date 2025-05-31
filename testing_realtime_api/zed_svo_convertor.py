@@ -29,13 +29,21 @@ import os
 import csv
 
 class AppType(enum.Enum):
+    """Enumeration of output modes for SVO conversion."""
     LEFT_AND_RIGHT = 1
     LEFT_AND_DEPTH = 2
     LEFT_AND_DEPTH_16 = 3
 
 
 def progress_bar(percent_done, bar_length=50):
-    #Display a progress bar
+    """
+    Display a textual progress bar in the console.
+
+    :param percent_done: Percentage of work completed (0–100).
+    :type percent_done: float or int
+    :param bar_length: Total width of the progress bar in characters.
+    :type bar_length: int
+    """
     done_length = int(bar_length * percent_done / 100)
     bar = '=' * done_length + '-' * (bar_length - done_length)
     sys.stdout.write('[%s] %i%s\r' % (bar, percent_done, '%'))
@@ -43,6 +51,16 @@ def progress_bar(percent_done, bar_length=50):
 
 
 def main(opt):
+    """
+    Convert an SVO/SVO2 file into either a side-by-side MP4 or an image sequence,
+    while extracting per-frame timestamps into a CSV.
+
+    :param opt: Parsed command‐line arguments.
+    :type opt: argparse.Namespace
+    :raises SystemExit: On file open or writer initialization failure.
+    :return: Exit code (0 on success).
+    :rtype: int
+    """
     # Get input parameters
     svo_input_path = opt.input_svo_file
     output_dir = opt.output_path_dir
@@ -110,14 +128,12 @@ def main(opt):
 
     # Start SVO conversion to AVI/SEQUENCE
     sys.stdout.write("Converting SVO... Use Ctrl-C to interrupt conversion.\n")
-    # Testing csv with tomestamps
+    # Testing csv with timestamps - these are recorden from ros to zed file
     csv_file_path = os.path.join(output_dir, "timestamps.csv")
     csv_file = open(csv_file_path, mode='w', newline='')
     csv_writer = csv.writer(csv_file)
     csv_writer.writerow(["Frame_Index", "sec", "nanosec"])
     nb_frames = zed.get_svo_number_of_frames()
-    print("test")
-    #csv_writer.writerow([svo_position, timestamp.get_milliseconds()])
     while True:
         err = zed.grab(rt_param)
         if err == sl.ERROR_CODE.SUCCESS:
@@ -172,15 +188,10 @@ def main(opt):
             break
     if output_as_video:
         # Close the video writer
-        print("before release ")
         video_writer.release()
-        print("after release ")
             # Experiment - get a timestramp and write it in csv
-    print("before scv close")
     csv_file.close()
-    print("after scv close")
     zed.close()
-    print("after zed close")
     return 0
 
 
