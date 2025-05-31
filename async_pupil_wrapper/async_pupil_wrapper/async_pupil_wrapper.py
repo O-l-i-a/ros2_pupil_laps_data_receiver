@@ -11,7 +11,7 @@ from pupil_labs.realtime_api import Network, Device, receive_gaze_data, receive_
                                   # ■ siehe Code-Beispiel Scene Camera Video :contentReference[oaicite:1]{index=1}
 
 # Eigene Nachrichtendefinition für Blickdaten
-from async_pupil_wrapper.msg import GazeDataAsync
+from gaze_interface.msg import GazeDataAsync
 
 
 class PupilAsyncNode(Node):
@@ -33,7 +33,6 @@ class PupilAsyncNode(Node):
             msg.header.frame_id = 'pupil_gaze'
             msg.norm_pos_x = gaze.x
             msg.norm_pos_y = gaze.y
-            msg.worn = gaze.worn
             self.gaze_pub.publish(msg)
 
     async def scene_stream(self, url: str):
@@ -41,12 +40,11 @@ class PupilAsyncNode(Node):
         self.get_logger().info(f'Starting scene stream: {url}')
         restart_on_disconnect = True
         async for frame in receive_video_frames(url, run_loop=restart_on_disconnect):
+            ros_img.header.stamp = self.get_clock().now().to_msg()
             img = frame.bgr_buffer()  # numpy-Array HxWx3 BGR
             ros_img = self.bridge.cv2_to_imgmsg(img, encoding='bgr8')
-            ros_img.header.stamp = self.get_clock().now().to_msg()
             ros_img.header.frame_id = 'pupil_scene'
             self.scene_pub.publish(ros_img)
-
             info = CameraInfo()
             info.header = ros_img.header
             info.height = img.shape[0]
@@ -57,10 +55,11 @@ class PupilAsyncNode(Node):
         # 1) Gerät finden
         self.get_logger().info('Discovering Pupil device...')
         async with Network() as network:
-            dev_info = await network.wait_for_new_device(timeout_seconds=5)
+            dev_info = await network.wait_for_new_device(timeout_seconds=20)
         if dev_info is None:
             self.get_logger().error('No Pupil device found, aborting')
             return
+        else:  self.get_logger().info('connected')
 
         # 2) Mit dem Device verbinden
         async with Device.from_discovered_device(dev_info) as device:

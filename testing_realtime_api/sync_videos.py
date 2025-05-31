@@ -2,28 +2,25 @@ import cv2
 import pandas as pd
 import numpy as np
 import argparse
+import sys
 
 # ----------------------------------------------------------------------------
 # Python-Skript: Zwei Videos basierend auf Zeitstempeln (sec + nanosec) synchron nebeneinander abspielen
-#
-# Anpassungen:
-# - CSVs haben unterschiedliche Formate (mit Header und zusätzlichen Spalten).
-# - Ermittlung des Frame-Zeitstempels als sec + nanosec*1e-9.
-# - Übergabe der Dateipfade für Videos und CSVs über Kommandozeilenparameter.
+# Mit Fortschrittsanzeige (Prozent) im Terminal.
 #
 # Nutzung:
 # python sync_videos.py \
 #   --video1 video1.mp4 \
 #   --video2 video2.mp4 \
-#   --csv1 timestamps30Hz.csv \
-#   --csv2 timestamps60Hz.csv \
+#   --csv1 timestamps1.csv \
+#   --csv2 timestamps2.csv \
 #   --output output_side_by_side.mp4 \
 #   [--fps 60]
 # ------------------------------------------------------------------------------
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        description="Synchronisiere zwei Videos basierend auf Timestamp-CSV-Dateien und erstelle eine Side-by-Side-Ausgabe."
+        description="Synchronisiere zwei Videos basierend auf Timestamp-CSV-Dateien und erstelle eine Side-by-Side-Ausgabe mit Fortschrittsbar."
     )
     parser.add_argument("--video1", type=str, required=True, help="Pfad zu Video 1 (z.B. 30 Hz)")
     parser.add_argument("--video2", type=str, required=True, help="Pfad zu Video 2 (z.B. 60 Hz)")
@@ -46,12 +43,8 @@ def load_timestamps(csv_path):
     df = pd.read_csv(csv_path)
     # Wenn Spalte 'sec' und 'nanosec' vorhanden:
     if 'sec' in df.columns and 'nanosec' in df.columns:
-        # Rechenweg: sec + nanosec * 1e-9
-        timestamps = df['sec'].astype(float) + df['nanosec'].astype(float) * 1e-9
+        timestamps = df['sec'].astype(float) + df['nanosec'].astype(float) * 1e-9 # berechnen die sekunden und dann die nanosekunden nach der koma und dann damit weiter analysieren
     else:
-        # Falls nur eine Spalte ohne Header, nehmen wir alle Werte als Sekunden
-        # Dabei ignorieren wir Spaltenüberschriften, falls vorhanden.
-        # Extrahiere erste Spalte als float.
         first_col = df.columns[0]
         timestamps = df[first_col].astype(float)
     return timestamps.values
@@ -69,6 +62,19 @@ def find_nearest_frame_index(timestamps, t):
     prev_diff = abs(timestamps[idx - 1] - t)
     curr_diff = abs(timestamps[idx] - t)
     return idx if curr_diff < prev_diff else (idx - 1)
+
+
+def progress_bar(percent_done, bar_length=50):
+    """
+    Zeige eine Fortschrittsanzeige (Prozente) im Terminal.
+
+    :param percent_done: Prozentualer Fortschritt (0–100).
+    :param bar_length: Länge der Leiste in Zeichen.
+    """
+    done_length = int(bar_length * percent_done / 100)
+    bar = '=' * done_length + '-' * (bar_length - done_length)
+    sys.stdout.write(f'[{bar}] {percent_done:6.2f}%\r')
+    sys.stdout.flush()
 
 
 def main():
@@ -106,22 +112,18 @@ def main():
     # ---------------------------------------------------------------------------
     # Schritt 3: Gemeinsame Zeitachse bestimmen
     # ---------------------------------------------------------------------------
-    # Verwende Start = max(erste Zeitstempel), Ende = min(letzte Zeitstempel)
     start_time = max(timestamps1[0], timestamps2[0])
     end_time = min(timestamps1[-1], timestamps2[-1])
 
-    # Falls kein FPS angegeben: Bestimme aus Differenzen der Timestamps
     if args.fps is not None:
         output_fps = args.fps
     else:
-        # Schätz-Frequenz als max Videoaufnahmefrequenz
-        # Unterschied zwischen ersten zwei Zeitausprägungen
         freq1 = 1.0 / np.mean(np.diff(timestamps1)) if len(timestamps1) > 1 else 30.0
         freq2 = 1.0 / np.mean(np.diff(timestamps2)) if len(timestamps2) > 1 else 60.0
         output_fps = max(freq1, freq2)
-    # Erzeuge das Zeitraster
     time_step = 1.0 / output_fps
     timeline = np.arange(start_time, end_time, time_step)
+    total_steps = len(timeline)
 
     # ---------------------------------------------------------------------------
     # Schritt 4: Output-Video-Writer vorbereiten
@@ -133,7 +135,6 @@ def main():
     if not ret1 or not ret2:
         raise IOError("Fehler beim Einlesen des ersten Frames eines Videos.")
 
-    # Beide Frames auf dieselbe Höhe bringen
     h1, w1 = frame1_0.shape[:2]
     h2, w2 = frame2_0.shape[:2]
     target_height = min(h1, h2)
@@ -148,14 +149,15 @@ def main():
     out = cv2.VideoWriter(output_path, fourcc, output_fps, (combined_width, combined_height))
 
     # ---------------------------------------------------------------------------
-    # Schritt 5: Synchronisiertes Schreiben
+    # Schritt 5: Synchronisiertes Schreiben mit Fortschritt
     # ---------------------------------------------------------------------------
     last_frame1 = frame1_0
     last_frame2 = frame2_0
     last_idx1 = 0
     last_idx2 = 0
 
-    for t in timeline:
+    print("Starte Synchronisation und Schreiben...")
+    for i, t in enumerate(timeline):
         idx1 = find_nearest_frame_index(timestamps1, t)
         idx2 = find_nearest_frame_index(timestamps2, t)
 
@@ -186,10 +188,15 @@ def main():
         combined = np.hstack((frame1_resized, frame2_resized))
         out.write(combined)
 
+        percent = (i + 1) / total_steps * 100
+        progress_bar(percent)
+
+    # Nach Fertigstellung Zeile beenden und Info ausgeben
+    sys.stdout.write("\nFertig: '{}' wurde erstellt.\n".format(output_path))
+
     cap1.release()
     cap2.release()
     out.release()
-    print(f"Fertig: '{output_path}' wurde erstellt.")
 
 
 if __name__ == "__main__":
