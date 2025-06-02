@@ -29,13 +29,22 @@ class PupilAsyncRecorder(Node):
 
         # Aufnahme-Status und File-Handles
         self.recording = False
-        self.csv_file = None
-        self.csv_writer = None
+
+        # Gaze CSV
+        self.gaze_csv_file = None
+        self.gaze_csv_writer = None
+
+        # Scene CSV (für Frame-Timestamps)
+        self.scene_csv_file = None
+        self.scene_csv_writer = None
+
+        # VideoWriter
         self.scene_writer = None
+
         self.session_dir = ''
         self.prefix = ''
 
-        # Ein Lock, das jeden Zugriff auf csv_writer bzw. scene_writer synchronisiert
+        # Ein Lock, das jeden Zugriff auf CSV-Writer und VideoWriter synchronisiert
         self._writer_lock = threading.Lock()
 
         # Service-Server zum Start/Stoppen der lokalen Aufzeichnung
@@ -56,27 +65,46 @@ class PupilAsyncRecorder(Node):
 
         if want_start:
             # === Aufnahme STARTEN ===
-            now = self.get_clock().now().to_msg()
-            self.prefix = str(now.sec)
+            now_msg = self.get_clock().now().to_msg()
+            self.prefix = f"{now_msg.sec}"
             base_dir = 'recordings'
             os.makedirs(base_dir, exist_ok=True)
             self.session_dir = os.path.join(base_dir, f'recording_{self.prefix}')
             os.makedirs(self.session_dir, exist_ok=True)
 
-            # CSV vorbereiten
-            csv_path = os.path.join(self.session_dir, f'{self.prefix}_gaze.csv')
+            # Gaze-CSV vorbereiten
+            gaze_csv_path = os.path.join(self.session_dir, f'{self.prefix}_gaze.csv')
             try:
-                self.csv_file = open(csv_path, 'w', newline='')
-                self.csv_writer = csv.writer(self.csv_file)
-                self.csv_writer.writerow([
+                self.gaze_csv_file = open(gaze_csv_path, 'w', newline='')
+                self.gaze_csv_writer = csv.writer(self.gaze_csv_file)
+                self.gaze_csv_writer.writerow([
                     'sec',
                     'nanosec',
-                    'norm_pos_x',
-                    'norm_pos_y'
+                    'x',
+                    'y'
                 ])
             except Exception as e:
                 response.success = False
-                response.message = f'Fehler beim Öffnen der CSV-Datei: {e}'
+                response.message = f'Fehler beim Öffnen der Gaze-CSV: {e}'
+                self.get_logger().error(response.message)
+                return response
+
+            # Scene-CSV vorbereiten
+            scene_csv_path = os.path.join(self.session_dir, f'{self.prefix}_scene.csv')
+            try:
+                self.scene_csv_file = open(scene_csv_path, 'w', newline='')
+                self.scene_csv_writer = csv.writer(self.scene_csv_file)
+                self.scene_csv_writer.writerow([
+                    'sec',
+                    'nanosec'
+                ])
+            except Exception as e:
+                # Gaze CSV schon offen – schließen und Cleanup
+                self.gaze_csv_file.close()
+                self.gaze_csv_file = None
+                self.gaze_csv_writer = None
+                response.success = False
+                response.message = f'Fehler beim Öffnen der Scene-CSV: {e}'
                 self.get_logger().error(response.message)
                 return response
 
@@ -90,18 +118,28 @@ class PupilAsyncRecorder(Node):
             self.get_logger().info(response.message)
         else:
             # === Aufnahme STOPPEN ===
-            # 1) CSV schließen (unter Lock, damit kein write mehr parallel reinkommt)
             with self._writer_lock:
-                if self.csv_file:
+                # 1) Gaze-CSV schließen
+                if self.gaze_csv_file:
                     try:
-                        self.csv_file.close()
+                        self.gaze_csv_file.close()
                         self.get_logger().info('Gaze-CSV geschlossen.')
                     except Exception:
                         pass
-                    self.csv_file = None
-                    self.csv_writer = None
+                    self.gaze_csv_file = None
+                    self.gaze_csv_writer = None
 
-                # 2) VideoWriter freigeben
+                # 2) Scene-CSV schließen
+                if self.scene_csv_file:
+                    try:
+                        self.scene_csv_file.close()
+                        self.get_logger().info('Scene-CSV geschlossen.')
+                    except Exception:
+                        pass
+                    self.scene_csv_file = None
+                    self.scene_csv_writer = None
+
+                # 3) VideoWriter freigeben
                 if self.scene_writer:
                     try:
                         self.scene_writer.release()
@@ -121,7 +159,7 @@ class PupilAsyncRecorder(Node):
     async def gaze_stream(self, url: str):
         """
         Asynchroner Iterator für Blickdaten.
-        Schreibt in CSV, wenn self.recording == True.
+        Schreibt in Gaze-CSV, wenn self.recording == True.
         """
         self.get_logger().info(f'Starting gaze stream: {url}')
         async for gaze in receive_gaze_data(url, run_loop=True):
@@ -133,27 +171,25 @@ class PupilAsyncRecorder(Node):
             msg.norm_pos_y = gaze.y
             self.gaze_pub.publish(msg)
 
-            # 2) CSV-Schreiben nur, wenn recording=True
+            # 2) Gaze-CSV schreiben, falls recording=True
             if self.recording:
                 with self._writer_lock:
-                    # Zusätzliche Prüfung: csv_writer könnte inzwischen None sein
-                    if self.csv_writer:
+                    if self.gaze_csv_writer:
                         try:
                             ts = msg.header.stamp
-                            self.csv_writer.writerow([
+                            self.gaze_csv_writer.writerow([
                                 ts.sec,
                                 ts.nanosec,
                                 gaze.x,
                                 gaze.y
                             ])
                         except Exception as e:
-                            self.get_logger().error(f'Fehler beim Schreiben in CSV: {e}')
-                    # Wenn csv_writer None ist, überspringen wir einfach
+                            self.get_logger().error(f'Fehler beim Schreiben in Gaze-CSV: {e}')
 
     async def scene_stream(self, url: str):
         """
         Asynchroner Iterator für Scene-Frames.
-        Schreibt Video, wenn self.recording == True.
+        Schreibt Video und Scene-CSV (Timestamp), wenn self.recording == True.
         """
         self.get_logger().info(f'Starting scene stream: {url}')
         async for frame in receive_video_frames(url, run_loop=True):
@@ -161,7 +197,8 @@ class PupilAsyncRecorder(Node):
 
             # 1) ROS-Publish
             ros_img = self.bridge.cv2_to_imgmsg(img, encoding='bgr8')
-            ros_img.header.stamp = self.get_clock().now().to_msg()
+            stamp = self.get_clock().now().to_msg()
+            ros_img.header.stamp = stamp
             ros_img.header.frame_id = 'pupil_scene'
             self.scene_pub.publish(ros_img)
 
@@ -171,10 +208,20 @@ class PupilAsyncRecorder(Node):
             info.width = img.shape[1]
             self.scene_info_pub.publish(info)
 
-            # 2) Video-Schreiben nur, wenn recording=True
+            # 2) Scene-CSV und VideoWriter, falls recording=True
             if self.recording:
                 with self._writer_lock:
-                    # Writer lazy anlegen, falls None
+                    # Szene-Timestamp in CSV
+                    if self.scene_csv_writer:
+                        try:
+                            self.scene_csv_writer.writerow([
+                                stamp.sec,
+                                stamp.nanosec
+                            ])
+                        except Exception as e:
+                            self.get_logger().error(f'Fehler beim Schreiben in Scene-CSV: {e}')
+
+                    # VideoWriter lazy anlegen, falls None
                     if self.scene_writer is None:
                         height, width = img.shape[:2]
                         fourcc = cv2.VideoWriter_fourcc(*'mp4v')
@@ -189,12 +236,11 @@ class PupilAsyncRecorder(Node):
                             self.get_logger().error(f'Fehler beim Erstellen des VideoWriters: {e}')
                             self.scene_writer = None
 
-                    # Wenn Writer nutzbar, schreibe
+                    # Wenn Writer existiert, schreibe Frame
                     if self.scene_writer is not None:
                         try:
                             self.scene_writer.write(img)
                         except Exception as e:
-                            # FFmpeg-Fehler abfangen und nur loggen
                             self.get_logger().error(f'FFmpeg-Error beim write(): {e}')
 
     async def run(self):
@@ -229,15 +275,23 @@ class PupilAsyncRecorder(Node):
             )
 
     def destroy_node(self):
-        # Beim Shutdown: CSV und VideoWriter schließen
+        # Beim Shutdown: CSVs und VideoWriter schließen
         with self._writer_lock:
-            if self.csv_file:
+            if self.gaze_csv_file:
                 try:
-                    self.csv_file.close()
+                    self.gaze_csv_file.close()
                 except Exception:
                     pass
-                self.csv_file = None
-                self.csv_writer = None
+                self.gaze_csv_file = None
+                self.gaze_csv_writer = None
+
+            if self.scene_csv_file:
+                try:
+                    self.scene_csv_file.close()
+                except Exception:
+                    pass
+                self.scene_csv_file = None
+                self.scene_csv_writer = None
 
             if self.scene_writer:
                 try:

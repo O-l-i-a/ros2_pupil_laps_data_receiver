@@ -90,8 +90,9 @@ class PupilLabsWrapper(Node):
 
         self.create_service(SetBool, 'record', self._srv_cb)
         self.api_pool = ThreadPoolExecutor(max_workers=1) # to handle the delay in responses from API
+        self.delayns = int(self.device.estimate_time_offset().roundtrip_duration_ms.mean * 1_000_000)
         self.timer    = self.create_timer(1.0/30.0, self.publish_pupil_labs_data) # publish_pupil_labs_data() will be called every 1/30 of sec
-
+        
         # initialise the recording handles
         self.recording       = False
         self.scene_writer    = None
@@ -198,9 +199,19 @@ class PupilLabsWrapper(Node):
             scene_sample, gaze_sample = (
                 self.device.receive_matched_scene_video_frame_and_gaze()
             )  
-           
+            #experiment
+            
             current_time = self.get_clock().now().to_msg() #timestramp of ROS2
-            # ROS-Publish
+            delay_ns = self.delayns
+            if current_time.nanosec >= delay_ns:
+            # No need to borrow a second
+                current_time.nanosec = current_time.nanosec - delay_ns
+            else:
+            # Need to borrow 1 second:
+            #   new_nanosec = (old_nanosec + 1_000_000_000) - delay_ns
+                current_time.sec -= 1
+                current_time.nanosec = current_time.nanosec + 1_000_000_000 - delay_ns
+
             self.pub_gaze.publish(populate_sensor_message(gaze_sample, current_time))
             self.pub_rgb.publish(populate_image_message(scene_sample, current_time))
             
