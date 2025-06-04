@@ -27,7 +27,7 @@ class MyNode(Node):
         self.fps = 30.0
 
         # Output video file
-        self.fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Or 'XVID', 'MJPG'
+        self.fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Or  mp4v 'XVID', 'MJPG'
         #out_path = os.path.expanduser('~/ros2_recorded_video.mp4')
         self.video_writer = None
         self.recording       = False
