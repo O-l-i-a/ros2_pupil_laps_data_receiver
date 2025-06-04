@@ -23,7 +23,7 @@ class RecordingController(Node):
         """
         super().__init__('recording_controller_gui_node')
         # Client for Pupil Labs record service
-        self.pupil_client = self.create_client(SetBool, '/record')
+        self.pupil_client = self.create_client(SetBool, 'record_pupil_scene_with_gaze')
         # Client for ZED start SVO recording service
         self.zed_start_client = self.create_client(StartSvoRec, '/zed/zed_node/start_svo_rec')
         # Client for ZED stop SVO recording service

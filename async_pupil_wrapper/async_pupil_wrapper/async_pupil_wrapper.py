@@ -11,10 +11,10 @@ from rclpy.executors import SingleThreadedExecutor
 from std_srvs.srv import SetBool
 from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge
-from pupil_labs.realtime_api.time_echo import Estimate
 
 from pupil_labs.realtime_api import Network, Device, receive_gaze_data, receive_video_frames
 from gaze_interface.msg import GazeDataAsync  # Passe hier dein Package/Msg an
+from pupil_labs.realtime_api.time_echo import TimeEcho, TimeOffsetEstimator, time_ms
 
 
 class PupilAsyncRecorder(Node):
@@ -105,6 +105,12 @@ class PupilAsyncRecorder(Node):
             status = await device.get_status()
             gaze_sensor = status.direct_gaze_sensor()
             world_sensor = status.direct_world_sensor()
+            time_offset_estimator = TimeOffsetEstimator(
+                status.phone.ip, status.phone.time_echo_port
+                )
+            estimated_offset = await time_offset_estimator.estimate()
+         
+            self.delayns = int(estimated_offset.roundtrip_duration_ms.mean* 1_000_000)
             #async with Estimate(device) as time_estimate:
             #    offset, rtt = await time_estimate.get()
             #    self.delayns = int(rtt * 1_000_000_000)  # convert seconds to nanoseconds
