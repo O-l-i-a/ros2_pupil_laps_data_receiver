@@ -18,7 +18,7 @@ class MyNode(Node):
             self.listener_callback,
             15
         )
-        self.create_service(SetBool, 'record_pupil_scene', self._srv_cb)
+        self.create_service(SetBool, 'record_pupil_scene_with_gaze', self._srv_cb)
 
         self.bridge = CvBridge()
         self.video_writer = None
@@ -31,6 +31,7 @@ class MyNode(Node):
         #out_path = os.path.expanduser('~/ros2_recorded_video.mp4')
         self.video_writer = None
         self.recording       = False
+        self.scene_writer    = None
         self.csv_frame_times = None
         #self.get_logger().info(f"Recording to {out_path}")
     

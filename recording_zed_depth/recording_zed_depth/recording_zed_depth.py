@@ -8,29 +8,30 @@ import cv2
 import csv
 import os
 
-class MyNode(Node):
+class DepthRecorder(Node):
     def __init__(self):
         super().__init__('my_node')
         self.get_logger().info('MyNode has been started!')
         self.subscription = self.create_subscription(
             Image,
-            '/pupil/scene/image_raw',
+            '/zed/zed_node/depth/depth_registered',
             self.listener_callback,
-            15
+            20
         )
-        self.create_service(SetBool, 'record_pupil_scene', self._srv_cb)
+        self.create_service(SetBool, 'record_pupil_scene_with_gaze', self._srv_cb)
 
         self.bridge = CvBridge()
         self.video_writer = None
-        self.frame_width = 1088  # Replace with actual width
-        self.frame_height = 1080  # Replace with actual height
-        self.fps = 30.0
+        self.frame_width = 1280  # Replace with actual width 1280x720
+        self.frame_height = 720  # Replace with actual height
+        self.fps = 60.0
 
         # Output video file
-        self.fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Or  mp4v 'XVID', 'MJPG'
+        self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')  # Or  mp4v 'XVID', 'MJPG'
         #out_path = os.path.expanduser('~/ros2_recorded_video.mp4')
         self.video_writer = None
         self.recording       = False
+        self.scene_writer    = None
         self.csv_frame_times = None
         #self.get_logger().info(f"Recording to {out_path}")
     
@@ -68,7 +69,7 @@ class MyNode(Node):
         """
         Open video and CSV writers for file recording.
         Creates 'recordings/' directory if necessary and initializes:
-         - scene video (1088×1080, 30 FPS)
+         - scene video (1280x720, 30 FPS)
          - gaze CSV with header ['sec','nanosec','x','y','worn']
          - overlay video with gaze overlay
         """
@@ -81,7 +82,7 @@ class MyNode(Node):
         os.makedirs(session_dir, exist_ok=True)
         # Szene-Video 1088x1080px laut docs
         self.video_writer = cv2.VideoWriter(
-            os.path.join(session_dir, f"{prefix}_scene.mp4"), self.fourcc, self.fps, (self.frame_width, self.frame_height)
+            os.path.join(session_dir, f"{prefix}_scene.avi"), self.fourcc, self.fps, (self.frame_width, self.frame_height)
         )  # :contentReference[oaicite:3]{index=3}
 
         # Gaze-CSV
@@ -103,7 +104,7 @@ class MyNode(Node):
             self.csv_file = None
 def main(args=None):
     rclpy.init(args=args)
-    node = MyNode()
+    node = DepthRecorder()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()

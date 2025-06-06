@@ -13,7 +13,7 @@ from sensor_msgs.msg import Image, CameraInfo
 from cv_bridge import CvBridge
 
 from pupil_labs.realtime_api import Network, Device, receive_gaze_data, receive_video_frames
-from gaze_interface.msg import GazeDataAsync  # Passe hier dein Package/Msg an
+from gaze_interface.msg import GazeDataAsync  
 from pupil_labs.realtime_api.time_echo import TimeEcho, TimeOffsetEstimator, time_ms
 
 

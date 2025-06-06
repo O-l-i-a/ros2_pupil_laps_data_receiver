@@ -23,7 +23,8 @@ class RecordingController(Node):
         """
         super().__init__('recording_controller_gui_node')
         # Client for Pupil Labs record service
-        self.pupil_client = self.create_client(SetBool, 'record_pupil_scene_with_gaze')
+        self.pupil_client_scene = self.create_client(SetBool, 'record_pupil_scene')
+        self.pupil_client_gaze = self.create_client(SetBool, 'record_pupil_gaze')
         # Client for ZED start SVO recording service
         self.zed_start_client = self.create_client(StartSvoRec, '/zed/zed_node/start_svo_rec')
         # Client for ZED stop SVO recording service
@@ -111,11 +112,12 @@ class MainWindow(QMainWindow):
         # Start Pupil recording
         pupil_req = SetBool.Request()
         pupil_req.data = True
-        ok_pupil, msg_pupil = self.call_service(self.node.pupil_client, pupil_req)
+        ok_pupil_scene, msg_pupil = self.call_service(self.node.pupil_client_scene, pupil_req)
+        ok_pupil_gaze, msg_pupil = self.call_service(self.node.pupil_client_gaze, pupil_req)
 
         # Start ZED recording only if Pupil started successfully
         ok_zed = False
-        if ok_pupil:
+        if ok_pupil_scene and ok_pupil_gaze:
             zed_req = StartSvoRec.Request(
                 bitrate=0,
                 compression_mode=1,
@@ -131,10 +133,10 @@ class MainWindow(QMainWindow):
                 self.call_service(self.node.pupil_client, stop_req)
 
         # Update status label
-        if ok_pupil and ok_zed:
+        if ok_pupil_scene and ok_pupil_gaze and ok_zed:
             self.status_label.setText('Status: Recording')
         else:
-            self.status_label.setText(f'Error starting: Pupil={ok_pupil}, ZED={ok_zed}')
+            self.status_label.setText(f'Error starting: Pupil Scene={ok_pupil_scene}, Pupil gaze={ok_pupil_gaze}, ZED={ok_zed}')
 
     def stop_recording(self):
         """
@@ -146,17 +148,19 @@ class MainWindow(QMainWindow):
         # Stop Pupil recording
         pupil_req = SetBool.Request()
         pupil_req.data = False
-        ok_pupil, msg_pupil = self.call_service(self.node.pupil_client, pupil_req)
+        ok_pupil_scene, msg_pupil = self.call_service(self.node.pupil_client_scene, pupil_req)
+        ok_pupil_gaze, msg_pupil = self.call_service(self.node.pupil_client_gaze, pupil_req)
+
 
         # Stop ZED recording
         trigger_req = Trigger.Request()
         ok_zed, msg_zed = self.call_service(self.node.zed_stop_client, trigger_req)
 
         # Update status label
-        if ok_pupil and ok_zed:
+        if ok_pupil_scene and ok_pupil_gaze and ok_zed:
             self.status_label.setText('Status: Stopped')
         else:
-            self.status_label.setText(f'Error stopping: Pupil={ok_pupil}, ZED={ok_zed}')
+            self.status_label.setText(f'Error stopping:  Pupil Scene={ok_pupil_scene}, Pupil gaze={ok_pupil_gaze}, ZED={ok_zed}')
 
 def main(args=None):
     """
