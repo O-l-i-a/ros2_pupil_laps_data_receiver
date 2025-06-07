@@ -1,17 +1,25 @@
 import rclpy
 from rclpy.node import Node
 from cv_bridge import CvBridge
-from sensor_msgs.msg import Image, CameraInfo
+from sensor_msgs.msg import Image
 from std_srvs.srv import SetBool
 import cv2
-
 import csv
 import os
+import threading
+import queue
 
 class MyNode(Node):
     def __init__(self):
         super().__init__('my_node')
         self.get_logger().info('MyNode has been started!')
+
+        # Producer-Consumer queue for frames
+        self.frame_queue = queue.Queue(maxsize=200)
+        self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
+        self.writer_thread.start()
+
+        # Subscription and service
         self.subscription = self.create_subscription(
             Image,
             '/pupil/scene/image_raw',
@@ -20,28 +28,24 @@ class MyNode(Node):
         )
         self.create_service(SetBool, 'record_pupil_scene', self._srv_cb)
 
+        # Members for recording
         self.bridge = CvBridge()
         self.video_writer = None
+        self.csv_writer = None
+        self.csv_file = None
         self.frame_width = 1088  # Replace with actual width
         self.frame_height = 1080  # Replace with actual height
         self.fps = 30.0
+        self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+        self.recording = False
 
-        # Output video file
-        self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')  # Or  mp4v 'XVID', 'MJPG'
-        #out_path = os.path.expanduser('~/ros2_recorded_video.mp4')
-        self.video_writer = None
-        self.recording       = False
-        self.csv_frame_times = None
-        #self.get_logger().info(f"Recording to {out_path}")
-    
     def _srv_cb(self, req, resp):
-       
         want_start = bool(req.data)
         if want_start == self.recording:
-            resp.success = False; resp.message = 'No change'
+            resp.success = False
+            resp.message = 'No change'
             return resp
 
-        # Dateien öffnen bzw. schließen
         if want_start:
             self._start_file_recording()
         else:
@@ -51,56 +55,65 @@ class MyNode(Node):
         resp.success = True
         resp.message = 'started' if want_start else 'stopped'
         return resp
-    
+
     def listener_callback(self, msg):
         if not self.recording:
             return
         try:
+            # Convert image and enqueue for writing
             cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            h, w = cv_image.shape[:2]
-            self.get_logger().info(f"Writing frame #{msg.header.stamp.sec}.{msg.header.stamp.nanosec} at {w}×{h}")
-            self.video_writer.write(cv_image)
-            self.csv_writer.writerow([msg.header.stamp.sec, msg.header.stamp.nanosec])
+            self.frame_queue.put((cv_image, msg.header.stamp), block=False)
+        except queue.Full:
+            self.get_logger().warn('Frame queue is full, dropping frame')
         except Exception as e:
-            self.get_logger().error(f"Failed to process frame: {e}")
+            self.get_logger().error(f'Failed to enqueue frame: {e}')
 
-    def _start_file_recording(self): 
-        """
-        Open video and CSV writers for file recording.
-        Creates 'recordings/' directory if necessary and initializes:
-         - scene video (1088×1080, 30 FPS)
-         - gaze CSV with header ['sec','nanosec','x','y','worn']
-         - overlay video with gaze overlay
-        """
+    def _writer_loop(self):
+        while rclpy.ok():
+            try:
+                cv_image, stamp = self.frame_queue.get()
+                # Write video frame and CSV timestamp
+                self.video_writer.write(cv_image)
+                self.csv_writer.writerow([stamp.sec, stamp.nanosec])
+                h, w = cv_image.shape[:2]
+                #self.get_logger().info(f'Wrote frame at {w}×{h}')
+                self.frame_queue.task_done()
+            except Exception as e:
+                self.get_logger().error(f'Writer loop error: {e}')
+
+    def _start_file_recording(self):
         ts = self.get_clock().now().to_msg()
         prefix = f"{ts.sec}"
-        #base folder
         base_dir = 'recordings'
-        #session folder
         session_dir = os.path.join(base_dir, f"recording_{ts.sec}")
         os.makedirs(session_dir, exist_ok=True)
-        # Szene-Video 1088x1080px laut docs
-        self.video_writer = cv2.VideoWriter(
-            os.path.join(session_dir, f"{prefix}_scene.avi"), self.fourcc, self.fps, (self.frame_width, self.frame_height)
-        )  # :contentReference[oaicite:3]{index=3}
 
-        # Gaze-CSV
-        self.csv_file   = open(os.path.join(session_dir, f"{prefix}_scene_times.csv"), 'w', newline='')
-        self.csv_writer = csv.writer(self.csv_file)  # :contentReference[oaicite:4]{index=4}
+        video_path = os.path.join(session_dir, f"{prefix}_scene.avi")
+        self.video_writer = cv2.VideoWriter(
+            video_path, self.fourcc, self.fps,
+            (self.frame_width, self.frame_height)
+        )
+
+        csv_path = os.path.join(session_dir, f"{prefix}_scene_times.csv")
+        self.csv_file = open(csv_path, 'w', newline='')
+        self.csv_writer = csv.writer(self.csv_file)
         self.csv_writer.writerow(['sec','nanosec'])
+        self.get_logger().info(f'Started recording scene: {video_path}')
 
     def _stop_file_recording(self):
-        """
-        Close all open file handles (video writers and CSV file).
-        """
-        if self.video_writer is not None:
-            print("before release")
+        # Wait until all frames are processed
+        self.get_logger().info('Stopping scene recording, waiting for queue to empty...')
+        self.frame_queue.join()
+        # Release writers
+        if self.video_writer:
             self.video_writer.release()
-            print("after release")
             self.video_writer = None
         if self.csv_file:
             self.csv_file.close()
             self.csv_file = None
+        self.get_logger().info('Scene recording stopped and files closed.')
+
+
 def main(args=None):
     rclpy.init(args=args)
     node = MyNode()

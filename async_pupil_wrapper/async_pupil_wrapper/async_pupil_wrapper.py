@@ -22,7 +22,7 @@ class PupilAsyncRecorder(Node):
         super().__init__('pupil_async_recorder')
         self.bridge = CvBridge()
         # Publisher für Gaze- und Scene-Daten
-        self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', 10)
+        self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', 15)
         self.scene_pub = self.create_publisher(Image, 'pupil/scene/image_raw', 15)
         self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', 10)
         self.delayns = 0

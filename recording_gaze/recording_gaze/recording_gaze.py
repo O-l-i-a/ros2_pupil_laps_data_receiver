@@ -18,7 +18,7 @@ class GazeRecorder(Node):
             GazeDataAsync,
             'pupil/gaze',
             self.listener_callback,
-            10
+            15
         )
         self.create_service(SetBool, 'record_pupil_gaze', self._srv_cb)
         #out_path = os.path.expanduser('~/ros2_recorded_video.mp4')
