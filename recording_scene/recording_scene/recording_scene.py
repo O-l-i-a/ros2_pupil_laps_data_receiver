@@ -27,7 +27,7 @@ class MyNode(Node):
         self.fps = 30.0
 
         # Output video file
-        self.fourcc = cv2.VideoWriter_fourcc(*'XVID')  # Or  mp4v 'XVID', 'MJPG'
+        self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')  # Or  mp4v 'XVID', 'MJPG'
         #out_path = os.path.expanduser('~/ros2_recorded_video.mp4')
         self.video_writer = None
         self.recording       = False
@@ -81,7 +81,7 @@ class MyNode(Node):
         os.makedirs(session_dir, exist_ok=True)
         # Szene-Video 1088x1080px laut docs
         self.video_writer = cv2.VideoWriter(
-            os.path.join(session_dir, f"{prefix}_scene.mp4"), self.fourcc, self.fps, (self.frame_width, self.frame_height)
+            os.path.join(session_dir, f"{prefix}_scene.avi"), self.fourcc, self.fps, (self.frame_width, self.frame_height)
         )  # :contentReference[oaicite:3]{index=3}
 
         # Gaze-CSV

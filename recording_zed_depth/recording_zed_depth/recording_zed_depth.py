@@ -10,15 +10,15 @@ import os
 
 class DepthRecorder(Node):
     def __init__(self):
-        super().__init__('my_node')
-        self.get_logger().info('MyNode has been started!')
+        super().__init__('DepthRecorder')
+        self.get_logger().info('DepthRecorder has been started!')
         self.subscription = self.create_subscription(
             Image,
             '/zed/zed_node/depth/depth_registered',
             self.listener_callback,
-            20
+            60
         )
-        self.create_service(SetBool, 'record_pupil_scene_with_gaze', self._srv_cb)
+        self.create_service(SetBool, 'record_zed_depth', self._srv_cb)
 
         self.bridge = CvBridge()
         self.video_writer = None
@@ -57,11 +57,21 @@ class DepthRecorder(Node):
         if not self.recording:
             return
         try:
-            cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
-            h, w = cv_image.shape[:2]
-            self.get_logger().info(f"Writing frame #{msg.header.stamp.sec}.{msg.header.stamp.nanosec} at {w}×{h}")
-            self.video_writer.write(cv_image)
+            depth_f32 = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
+
+        # 2) normalize to full 0–255 range
+            depth_u8 = cv2.normalize(
+            depth_f32, None,
+            alpha=0, beta=255,
+            norm_type=cv2.NORM_MINMAX,
+            dtype=cv2.CV_8U
+        )
+
+        # 3) write directly as gray
+            self.video_writer.write(depth_u8)
             self.csv_writer.writerow([msg.header.stamp.sec, msg.header.stamp.nanosec])
+            h, w = depth_u8.shape
+            self.get_logger().info(f"Wrote gray frame at {w}×{h}")
         except Exception as e:
             self.get_logger().error(f"Failed to process frame: {e}")
 
@@ -69,7 +79,7 @@ class DepthRecorder(Node):
         """
         Open video and CSV writers for file recording.
         Creates 'recordings/' directory if necessary and initializes:
-         - scene video (1280x720, 30 FPS)
+         - scene video (1280x720, 60 FPS)
          - gaze CSV with header ['sec','nanosec','x','y','worn']
          - overlay video with gaze overlay
         """
@@ -82,11 +92,11 @@ class DepthRecorder(Node):
         os.makedirs(session_dir, exist_ok=True)
         # Szene-Video 1088x1080px laut docs
         self.video_writer = cv2.VideoWriter(
-            os.path.join(session_dir, f"{prefix}_scene.avi"), self.fourcc, self.fps, (self.frame_width, self.frame_height)
+            os.path.join(session_dir, f"{prefix}_depth.avi"), self.fourcc, self.fps, (self.frame_width, self.frame_height), isColor=False
         )  # :contentReference[oaicite:3]{index=3}
 
         # Gaze-CSV
-        self.csv_file   = open(os.path.join(session_dir, f"{prefix}_scene_times.csv"), 'w', newline='')
+        self.csv_file   = open(os.path.join(session_dir, f"{prefix}_depth_times.csv"), 'w', newline='')
         self.csv_writer = csv.writer(self.csv_file)  # :contentReference[oaicite:4]{index=4}
         self.csv_writer.writerow(['sec','nanosec'])
 
