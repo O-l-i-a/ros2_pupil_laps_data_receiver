@@ -115,20 +115,13 @@ class MainWindow(QMainWindow):
         # Start Pupil recording
         req = SetBool.Request()
         req.data = True
+        ok_zed_depth, _ = self.call_service(self.node.zed_client_depth, req)
+        ok_zed_rgb, _ = self.call_service(self.node.zed_client_rgb, req)
         ok_pupil_scene, _ = self.call_service(self.node.pupil_client_scene, req)
         ok_pupil_gaze, _ = self.call_service(self.node.pupil_client_gaze, req)
 
         # Start ZED recording only if Pupil started successfully
-        ok_zed_depth = False
-        if ok_pupil_scene and ok_pupil_gaze:
-            ok_zed_depth, _ = self.call_service(self.node.zed_client_depth, req)
-            ok_zed_rgb, _ = self.call_service(self.node.zed_client_rgb, req)
-            # Stop Pupil if ZED failed to start
-            if not ok_zed_depth or not ok_zed_rgb:
-                stop_req = SetBool.Request()
-                stop_req.data = False
-                self.call_service(self.node.pupil_client_scene, stop_req)
-                self.call_service(self.node.pupil_client_gaze, stop_req)
+        
 
         # Update status label
         if ok_pupil_scene and ok_pupil_gaze and ok_zed_depth:

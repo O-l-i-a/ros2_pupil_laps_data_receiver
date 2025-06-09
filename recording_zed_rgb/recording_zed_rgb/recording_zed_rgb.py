@@ -1,13 +1,16 @@
 import rclpy
 from rclpy.node import Node
 from cv_bridge import CvBridge
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 from std_srvs.srv import SetBool
 import cv2
 import csv
 import os
 import threading
 import queue
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
+from rclpy.executors import MultiThreadedExecutor
+
 
 class RGBRecorder(Node):
     def __init__(self):
@@ -18,13 +21,17 @@ class RGBRecorder(Node):
         self.frame_queue = queue.Queue(maxsize=100)
         self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self.writer_thread.start()
-
+        qos = QoSProfile(
+            depth=50,
+            history=HistoryPolicy.KEEP_LAST,
+            reliability=ReliabilityPolicy.RELIABLE,
+        )
         # Subscription and service
         self.subscription = self.create_subscription(
-            Image,
-            '/zed/zed_node/left/image_rect_color',
+            CompressedImage,
+            '/zed/zed_node/left/image_rect_color/compressed',
             self.listener_callback,
-            15  # QoS depth
+            qos  # QoS depth
         )
         self.create_service(SetBool, 'record_zed_rgb', self._srv_cb)
 
@@ -36,7 +43,7 @@ class RGBRecorder(Node):
         self.frame_width = 1280  # actual width
         self.frame_height = 720  # actual height
         self.fps = 58.0
-        self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+        self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
         self.recording = False
 
     def _srv_cb(self, req, resp):
@@ -61,7 +68,7 @@ class RGBRecorder(Node):
             return
         try:
             # Convert image and enqueue for writing
-            cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+            cv_image = self.bridge.compressed_imgmsg_to_cv2(msg, desired_encoding='bgr8')
             self.frame_queue.put((cv_image, msg.header.stamp), block=False)
         except queue.Full:
             self.get_logger().warn('Frame queue is full, dropping frame')

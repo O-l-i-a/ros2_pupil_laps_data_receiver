@@ -8,6 +8,9 @@ import csv
 import os
 import threading
 import queue
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
+from rclpy.executors import MultiThreadedExecutor
+
 
 class DepthRecorder(Node):
     def __init__(self):
@@ -18,13 +21,17 @@ class DepthRecorder(Node):
         self.frame_queue = queue.Queue(maxsize=100)
         self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self.writer_thread.start()
-
+        qos = QoSProfile(
+            depth=50,
+            history=HistoryPolicy.KEEP_LAST,
+            reliability=ReliabilityPolicy.RELIABLE,
+        )
         # Subscription and service
         self.subscription = self.create_subscription(
             Image,
             '/zed/zed_node/depth/depth_registered',
             self.listener_callback,
-            15
+            qos
         )
         self.create_service(SetBool, 'record_zed_depth', self._srv_cb)
 
@@ -35,7 +42,7 @@ class DepthRecorder(Node):
         self.csv_file = None
         self.frame_width = 1280
         self.frame_height = 720
-        self.fps = 45.0
+        self.fps = 60.0
         self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         self.recording = False
 
