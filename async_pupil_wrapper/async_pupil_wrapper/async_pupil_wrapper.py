@@ -9,7 +9,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.executors import SingleThreadedExecutor
 from std_srvs.srv import SetBool
-from sensor_msgs.msg import Image, CameraInfo
+from sensor_msgs.msg import CompressedImage, Image, CameraInfo
 from cv_bridge import CvBridge
 
 from pupil_labs.realtime_api import Network, Device, receive_gaze_data, receive_video_frames
@@ -23,7 +23,7 @@ class PupilAsyncRecorder(Node):
         self.bridge = CvBridge()
         # Publisher für Gaze- und Scene-Daten
         self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', 15)
-        self.scene_pub = self.create_publisher(Image, 'pupil/scene/image_raw', 15)
+        self.scene_pub = self.create_publisher(CompressedImage, 'pupil/scene/image_raw', 15)
         self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', 10)
         self.delayns = 0
         # Service-Server zum Start/Stoppen der lokalen Aufzeichnung
@@ -77,7 +77,7 @@ class PupilAsyncRecorder(Node):
                 current_time.sec -= 1
                 current_time.nanosec = current_time.nanosec + 1_000_000_000 - delay_ns
             # 1) ROS-Publish
-            ros_img = self.bridge.cv2_to_imgmsg(img, encoding='bgr8')
+            ros_img = self.bridge.cv2_to_compressed_imgmsg(img)
             ros_img.header.stamp = current_time
             ros_img.header.frame_id = 'pupil_scene'
             self.scene_pub.publish(ros_img)

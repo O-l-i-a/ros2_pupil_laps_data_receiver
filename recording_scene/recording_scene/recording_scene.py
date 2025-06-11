@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from cv_bridge import CvBridge
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 from std_srvs.srv import SetBool
 import cv2
 import csv
@@ -21,7 +21,7 @@ class MyNode(Node):
 
         # Subscription and service
         self.subscription = self.create_subscription(
-            Image,
+            CompressedImage,
             '/pupil/scene/image_raw',
             self.listener_callback,
             15
@@ -61,7 +61,7 @@ class MyNode(Node):
             return
         try:
             # Convert image and enqueue for writing
-            cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+            cv_image = self.bridge.compressed_imgmsg_to_cv2(msg, desired_encoding='bgr8')
             self.frame_queue.put((cv_image, msg.header.stamp), block=False)
         except queue.Full:
             self.get_logger().warn('Frame queue is full, dropping frame')
