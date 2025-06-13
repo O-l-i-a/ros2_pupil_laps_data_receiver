@@ -81,6 +81,7 @@ class PupilLabsWrapper(Node):
         # Publisher & Service
         self.pub_gaze = self.create_publisher(GazeData, 'pupil_labs/gaze', 10)
         self.pub_rgb  = self.create_publisher(Image,    'pupil_labs/scene_img', 10)
+        
 
         latch_qos = QoSProfile(depth=1, # only the current state is saved, 
                                reliability=ReliabilityPolicy.RELIABLE,
