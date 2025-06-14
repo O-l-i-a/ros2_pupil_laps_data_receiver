@@ -14,8 +14,7 @@ from cv_bridge import CvBridge
 
 from pupil_labs.realtime_api import Network, Device, receive_gaze_data, receive_video_frames, receive_eye_events_data, BlinkEventData, FixationEventData, FixationOnsetEventData
 from gaze_interface.msg import GazeDataAsync  
-from blink_interface.msg import BlinkData
-from fixation_interface.msg import FixationData
+
 
 from pupil_labs.realtime_api.time_echo import TimeEcho, TimeOffsetEstimator, time_ms
 
@@ -28,7 +27,6 @@ class PupilAsync(Node):
         self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', 15)
         self.scene_pub = self.create_publisher(Image, 'pupil/scene/image_raw', 15)
         self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', 10)
-        self.blink_pub = self.create_publisher(BlinkData, 'pupil/blink', 10)
 
         self.delayns = 0
         self.deviceOffsetns = 0
@@ -82,34 +80,6 @@ class PupilAsync(Node):
             info.height = img.shape[0]
             info.width = img.shape[1]
             self.scene_info_pub.publish(info)
-    async def fixations_stream(self, url: str):
-        """
-        Asynchroner Iterator für Fixations and Saccades-Frames.
-        Publiziert CompressedImage und CameraInfo.
-        """
-        self.get_logger().info(f'Starting fixation stream: {url}')
-        async for event in receive_eye_events_data(url, run_loop=True):
-            current_time = self.get_clock().now().to_msg()
-            if current_time.nanosec >= self.delayns:
-                current_time.nanosec -= self.delayns
-            else:
-                current_time.sec -= 1
-                current_time.nanosec += 1_000_000_000 - self.delayns
-            if isinstance(event, FixationEventData):
-                pass
-            elif isinstance(event, BlinkEventData):
-                blink = BlinkData()
-                blink.header.stamp = current_time
-                blink.start_time_ns = event.start_time_ns - self.delayns
-                blink.end_time_ns = event.end_time_ns - self.delayns
-                self.blink_pub.publish(blink)
-            elif isinstance(event, FixationOnsetEventData):
-                pass
-            # Adjust for time offset
-            
-            # Publish image
-            #self.scene_info_pub.publish(info)
-    
 
     async def run(self):
         """
@@ -138,9 +108,11 @@ class PupilAsync(Node):
 
             # --- spawn both coroutines as background tasks ---
             offset_task = asyncio.create_task(self._offset_loop(status))
+            offset_task.add_done_callback(
+                lambda fut: fut.exception()  # druckt Exception-Traceback ins stderr
+                ) 
             gaze_task  = asyncio.create_task(self.gaze_stream(gaze_sensor.url))
             scene_task = asyncio.create_task(self.scene_stream(world_sensor.url))
-            fixation_task = asyncio.create_task(self.fixations_stream(world_sensor.url))
 
             # --- block here until cancelled (e.g. Ctrl-C) ---
             try:
@@ -151,10 +123,9 @@ class PupilAsync(Node):
                 # --- clean up both streams ---
                 gaze_task.cancel()
                 scene_task.cancel()
-                fixation_task.cancel()
                 offset_task.cancel()
                 # optionally wait for them to finish cancelling
-                await asyncio.gather(gaze_task, scene_task, fixation_task, return_exceptions=True)
+                await asyncio.gather(gaze_task, scene_task, offset_task, return_exceptions=True)
 
 
     def destroy_node(self):
@@ -169,7 +140,8 @@ class PupilAsync(Node):
             est = await estimator.estimate()
             # convert ms → ns
             self.delayns      = int(est.roundtrip_duration_ms.mean * 1_000_000)
-            self.deviceOffset = int(est.time_offset_ms.mean       * 1_000_000)
+            #self.deviceOffset = int(est.time_offset_ms.mean       * 1_000_000)
+            #self.get_logger().info(f'estimate roundtrip: {self.delayns} ns')
             await asyncio.sleep(1.0)
 def main():
     rclpy.init()
