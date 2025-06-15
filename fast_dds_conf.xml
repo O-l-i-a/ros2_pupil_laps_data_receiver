@@ -1,0 +1,5 @@
+<transport_descriptors>
+  <transport_descriptor>
+    <property name="maxMessageSize" value="8388608"/>
+  </transport_descriptor>
+</transport_descriptors>

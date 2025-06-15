@@ -3,7 +3,7 @@ from rclpy.node import Node
 from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
 import pyzed.sl as sl
-from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
 
 class ZedWrapperNode(Node):
     def __init__(self):
@@ -13,6 +13,7 @@ class ZedWrapperNode(Node):
             depth=5,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.RELIABLE,
+            durability=DurabilityPolicy.VOLATILE,
         )
         # Publishers for color and depth
         self.color_pub = self.create_publisher(CompressedImage, 'zed/color/image_raw', qos)

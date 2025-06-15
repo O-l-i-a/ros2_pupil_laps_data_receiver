@@ -14,7 +14,8 @@ from cv_bridge import CvBridge
 
 from pupil_labs.realtime_api import Network, Device, receive_gaze_data, receive_video_frames, receive_eye_events_data, BlinkEventData, FixationEventData, FixationOnsetEventData
 from gaze_interface.msg import GazeDataAsync  
-from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
+
 
 
 from pupil_labs.realtime_api.time_echo import TimeEcho, TimeOffsetEstimator, time_ms
@@ -26,9 +27,10 @@ class PupilAsync(Node):
         self.bridge = CvBridge()
         # Publisher für Gaze- und Scene-Daten
         qos = QoSProfile(
-            depth= 7,
+            depth= 15,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.BEST_EFFORT,
+            durability = DurabilityPolicy.VOLATILE
         )
         self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', qos)
         self.scene_pub = self.create_publisher(CompressedImage, 'pupil/scene/image_raw', 15)

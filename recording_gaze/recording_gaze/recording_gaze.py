@@ -4,7 +4,7 @@ import csv
 import os
 from gaze_interface.msg import GazeDataAsync
 from std_srvs.srv import SetBool
-from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
 import collections # For deque
 
 class GazeRecorder(Node):
@@ -12,9 +12,11 @@ class GazeRecorder(Node):
         super().__init__('GazeRecorder')
         self.get_logger().info('GazeRecorder has been started!')
         qos = QoSProfile(
-            depth=7,
+            depth=15,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.BEST_EFFORT,
+            durability = DurabilityPolicy.VOLATILE
+
         )
         self.subscription = self.create_subscription(
             GazeDataAsync,
