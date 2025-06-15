@@ -14,6 +14,7 @@ from cv_bridge import CvBridge
 
 from pupil_labs.realtime_api import Network, Device, receive_gaze_data, receive_video_frames, receive_eye_events_data, BlinkEventData, FixationEventData, FixationOnsetEventData
 from gaze_interface.msg import GazeDataAsync  
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
 
 
 from pupil_labs.realtime_api.time_echo import TimeEcho, TimeOffsetEstimator, time_ms
@@ -24,10 +25,15 @@ class PupilAsync(Node):
         super().__init__('pupil_async')
         self.bridge = CvBridge()
         # Publisher für Gaze- und Scene-Daten
-        self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', 15)
-        self.scene_pub = self.create_publisher(Image, 'pupil/scene/image_raw', 15)
+        qos = QoSProfile(
+            depth= 7,
+            history=HistoryPolicy.KEEP_LAST,
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+        )
+        self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', qos)
+        self.scene_pub = self.create_publisher(CompressedImage, 'pupil/scene/image_raw', 15)
         self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', 10)
-
+        
         self.delayns = 0
         self.deviceOffsetns = 0
         self.get_logger().info('PupilAsync bereit. Warte auf /record Service…')
@@ -69,7 +75,7 @@ class PupilAsync(Node):
                 current_time.sec -= 1
                 current_time.nanosec += 1_000_000_000 - self.delayns
             # Publish image
-            ros_img = self.bridge.cv2_to_imgmsg(img)
+            ros_img = self.bridge.cv2_to_compressed_imgmsg(img)
             ros_img.header.stamp = current_time
             ros_img.header.frame_id = 'pupil_scene'
             self.scene_pub.publish(ros_img)
@@ -108,9 +114,6 @@ class PupilAsync(Node):
 
             # --- spawn both coroutines as background tasks ---
             offset_task = asyncio.create_task(self._offset_loop(status))
-            offset_task.add_done_callback(
-                lambda fut: fut.exception()  # druckt Exception-Traceback ins stderr
-                ) 
             gaze_task  = asyncio.create_task(self.gaze_stream(gaze_sensor.url))
             scene_task = asyncio.create_task(self.scene_stream(world_sensor.url))
 
@@ -125,7 +128,7 @@ class PupilAsync(Node):
                 scene_task.cancel()
                 offset_task.cancel()
                 # optionally wait for them to finish cancelling
-                await asyncio.gather(gaze_task, scene_task, offset_task, return_exceptions=True)
+                await asyncio.gather(gaze_task, scene_task, return_exceptions=True)
 
 
     def destroy_node(self):

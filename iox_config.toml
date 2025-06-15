@@ -1,0 +1,22 @@
+[general]
+version = 1
+
+[[segment]]
+# allow processes in group “olhamelnyk” to both publish and subscribe
+reader = "olhamelnyk"
+writer = "olhamelnyk"
+
+  # kleiner Pool für Parameter-Events …
+  [[segment.mempool]]
+  size  = 256
+  count = 200
+
+  # mittlerer Pool für Gaze-Daten …
+  [[segment.mempool]]
+  size  = 2048
+  count = 500
+
+  # großer Pool für HD-Bilder (1920×1080×3 Bytes + 64 Header)
+  [[segment.mempool]]
+  size  = 6220864
+  count = 120

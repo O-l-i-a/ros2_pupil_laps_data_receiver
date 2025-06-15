@@ -1,40 +1,41 @@
 import rclpy
 from rclpy.node import Node
-from cv_bridge import CvBridge
-from sensor_msgs.msg import Image, CameraInfo
-from std_srvs.srv import SetBool
-import cv2
-from gaze_interface.msg import GazeDataAsync  
-
-
 import csv
 import os
+from gaze_interface.msg import GazeDataAsync
+from std_srvs.srv import SetBool
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
+import collections # For deque
 
 class GazeRecorder(Node):
     def __init__(self):
         super().__init__('GazeRecorder')
         self.get_logger().info('GazeRecorder has been started!')
+        qos = QoSProfile(
+            depth=7,
+            history=HistoryPolicy.KEEP_LAST,
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+        )
         self.subscription = self.create_subscription(
             GazeDataAsync,
             'pupil/gaze',
             self.listener_callback,
-            15
+            qos
         )
         self.create_service(SetBool, 'record_pupil_gaze', self._srv_cb)
-        #out_path = os.path.expanduser('~/ros2_recorded_video.mp4')
-        self.recording  = False
+        self.recording = False
         self.csv_file = None
         self.csv_writer = None
-        #self.get_logger().info(f"Recording to {out_path}")
-    
+        self.gaze_buffer = collections.deque(maxlen=5000) # Buffer for gaze data
+        self.buffer_size_threshold = 500 # Write to file every 500 messages
+        self.flush_timer = self.create_timer(1.0, self._flush_buffer) # Flush every 1 second
+
     def _srv_cb(self, req, resp):
-       
         want_start = bool(req.data)
         if want_start == self.recording:
             resp.success = False; resp.message = 'No change'
             return resp
 
-        # Dateien öffnen bzw. schließen
         if want_start:
             self._start_file_recording()
         else:
@@ -44,41 +45,46 @@ class GazeRecorder(Node):
         resp.success = True
         resp.message = 'started' if want_start else 'stopped'
         return resp
-    
+
     def listener_callback(self, msg):
         if not self.recording:
             return
         try:
-            
-            self.csv_writer.writerow([msg.header.stamp.sec, msg.header.stamp.nanosec, msg.norm_pos_x, msg.norm_pos_y])
+            # Append to buffer instead of immediate write
+            self.gaze_buffer.append([msg.header.stamp.sec, msg.header.stamp.nanosec, msg.norm_pos_x, msg.norm_pos_y])
+            if len(self.gaze_buffer) >= self.buffer_size_threshold:
+                self._flush_buffer()
         except Exception as e:
             self.get_logger().error(f"Failed to process gaze: {e}")
 
-    def _start_file_recording(self): 
-        """
-        Open video and CSV writers for file recording.
-        Creates 'recordings/' directory if necessary and initializes:
-         - gaze CSV with header ['sec','nanosec','x','y','worn']
-        """
+    def _flush_buffer(self):
+        if self.csv_writer and self.gaze_buffer:
+            try:
+                # Write all buffered data in one go
+                self.csv_writer.writerows(list(self.gaze_buffer))
+                self.gaze_buffer.clear()
+                self.csv_file.flush() # Ensure data is written to disk
+            except Exception as e:
+                self.get_logger().error(f"Failed to flush gaze buffer: {e}")
+
+    def _start_file_recording(self):
         ts = self.get_clock().now().to_msg()
         prefix = f"{ts.sec}"
-        #base folder
         base_dir = 'recordings'
-        #session folder
         session_dir = os.path.join(base_dir, f"recording_{ts.sec}")
         os.makedirs(session_dir, exist_ok=True)
-        # Gaze-CSV
-        self.csv_file   = open(os.path.join(session_dir, f"{prefix}_gaze.csv"), 'w', newline='')
+        self.csv_file = open(os.path.join(session_dir, f"{prefix}_gaze.csv"), 'w', newline='')
         self.csv_writer = csv.writer(self.csv_file)
         self.csv_writer.writerow(['sec','nanosec', "x", "y"])
+        self.get_logger().info(f"Started recording gaze to {os.path.join(session_dir, f'{prefix}_gaze.csv')}")
 
     def _stop_file_recording(self):
-        """
-        Close all open file handles (CSV file).
-        """
+        self._flush_buffer() # Flush any remaining data before closing
         if self.csv_file:
             self.csv_file.close()
             self.csv_file = None
+        self.get_logger().info("Stopped recording gaze.")
+
 def main(args=None):
     rclpy.init(args=args)
     node = GazeRecorder()

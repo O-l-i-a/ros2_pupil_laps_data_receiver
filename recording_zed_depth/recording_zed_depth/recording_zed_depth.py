@@ -22,7 +22,7 @@ class DepthRecorder(Node):
         self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self.writer_thread.start()
         qos = QoSProfile(
-            depth=20,
+            depth=10,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.RELIABLE,
         )
@@ -40,9 +40,9 @@ class DepthRecorder(Node):
         self.video_writer = None
         self.csv_writer = None
         self.csv_file = None
-        self.frame_width = 800#1280
-        self.frame_height = 450#720
-        self.fps = 59.0
+        self.frame_width = 1280#1280
+        self.frame_height = 720#720
+        self.fps = 58.0
         self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         self.recording = False
 
