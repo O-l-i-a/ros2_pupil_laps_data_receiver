@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from cv_bridge import CvBridge
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 from std_srvs.srv import SetBool
 import cv2
 import csv
@@ -22,14 +22,14 @@ class RGBRecorder(Node):
         self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self.writer_thread.start()
         qos = QoSProfile(
-            depth=20,
+            depth=10,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.RELIABLE,
         )
         # Subscription and service
         self.subscription = self.create_subscription(
-            Image,
-            '/zed/zed_node/left/image_rect_color',
+            CompressedImage,
+            'zed/color/image_raw',
             self.listener_callback,
             qos  # QoS depth
         )
@@ -68,7 +68,7 @@ class RGBRecorder(Node):
             return
         try:
             # Convert image and enqueue for writing
-            cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
+            cv_image = self.bridge.compressed_imgmsg_to_cv2(msg, desired_encoding='bgr8')
             self.frame_queue.put((cv_image, msg.header.stamp), block=False)
         except queue.Full:
             self.get_logger().warn('Frame queue is full, dropping frame')

@@ -1,7 +1,7 @@
 import rclpy
 from rclpy.node import Node
 from cv_bridge import CvBridge
-from sensor_msgs.msg import Image
+from sensor_msgs.msg import Image, CompressedImage
 from std_srvs.srv import SetBool
 import cv2
 import csv
@@ -29,7 +29,7 @@ class DepthRecorder(Node):
         # Subscription and service
         self.subscription = self.create_subscription(
             Image,
-            '/zed/zed_node/depth/depth_registered',
+            'zed/depth/image_raw',
             self.listener_callback,
             qos
         )
@@ -68,7 +68,7 @@ class DepthRecorder(Node):
             return
         try:
             # Quickly convert and enqueue
-            depth_f32 = self.bridge.imgmsg_to_cv2(msg, desired_encoding='passthrough')
+            depth_f32 = self.bridge.imgmsg_to_cv2(msg, desired_encoding='8UC4')
             self.frame_queue.put((depth_f32, msg.header.stamp), block=False)
         except queue.Full:
             self.get_logger().warn('Frame queue is full, dropping frame')
@@ -88,7 +88,7 @@ class DepthRecorder(Node):
                 )
                 self.video_writer.write(depth_u8)
                 self.csv_writer.writerow([stamp.sec, stamp.nanosec])
-                h, w = depth_u8.shape
+                h, w, _ = depth_u8.shape
                 #self.get_logger().info(f'Wrote gray frame at {w}×{h}')
                 self.frame_queue.task_done()
             except Exception as e:
