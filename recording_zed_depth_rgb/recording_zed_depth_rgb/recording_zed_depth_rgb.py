@@ -41,13 +41,13 @@ class CombinedRecorder(Node):
         self.rgb_height = 720
         self.depth_width = 1280
         self.depth_height = 720
-        self.fps = 60.0
+        self.fps = 50.0
         self.rgb_fourcc = cv2.VideoWriter_fourcc(*'XVID')
         self.depth_fourcc = cv2.VideoWriter_fourcc(*'MJPG')
 
         # QoS
         qos = QoSProfile(
-            depth=50,
+            depth=30,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.BEST_EFFORT,
         )

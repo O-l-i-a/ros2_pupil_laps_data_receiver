@@ -42,7 +42,7 @@ class DepthRecorder(Node):
         self.csv_file = None
         self.frame_width = 1280#1280
         self.frame_height = 720#720
-        self.fps = 58.0
+        self.fps = 50.0
         self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         self.recording = False
 

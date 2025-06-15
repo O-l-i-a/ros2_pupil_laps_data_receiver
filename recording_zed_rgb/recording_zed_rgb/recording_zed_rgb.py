@@ -40,9 +40,9 @@ class RGBRecorder(Node):
         self.video_writer = None
         self.csv_writer = None
         self.csv_file = None
-        self.frame_width = 640#1280
-        self.frame_height = 360#720
-        self.fps = 58.0
+        self.frame_width = 1280#1280
+        self.frame_height = 720#720
+        self.fps = 50.0
         self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
         self.recording = False
 
