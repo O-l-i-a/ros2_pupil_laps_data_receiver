@@ -27,7 +27,7 @@ class PupilAsync(Node):
         self.bridge = CvBridge()
         # Publisher für Gaze- und Scene-Daten
         qos = QoSProfile(
-            depth= 15,
+            depth= 5,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.BEST_EFFORT,
             durability = DurabilityPolicy.VOLATILE

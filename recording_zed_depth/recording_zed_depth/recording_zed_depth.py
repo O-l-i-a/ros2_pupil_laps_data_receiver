@@ -22,7 +22,7 @@ class DepthRecorder(Node):
         self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self.writer_thread.start()
         qos = QoSProfile(
-            depth=10,
+            depth=2,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.RELIABLE,
         )

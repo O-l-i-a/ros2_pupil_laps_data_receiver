@@ -1,5 +1,6 @@
 import rclpy
 from rclpy.node import Node
+from rclpy.callback_groups import ReentrantCallbackGroup
 import csv
 import os
 from gaze_interface.msg import GazeDataAsync
@@ -12,17 +13,19 @@ class GazeRecorder(Node):
         super().__init__('GazeRecorder')
         self.get_logger().info('GazeRecorder has been started!')
         qos = QoSProfile(
-            depth=15,
+            depth=5,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.BEST_EFFORT,
             durability = DurabilityPolicy.VOLATILE
 
         )
+        self.cb_group = ReentrantCallbackGroup()
         self.subscription = self.create_subscription(
             GazeDataAsync,
             'pupil/gaze',
             self.listener_callback,
-            qos
+            qos,
+            callback_group= self.cb_group
         )
         self.create_service(SetBool, 'record_pupil_gaze', self._srv_cb)
         self.recording = False

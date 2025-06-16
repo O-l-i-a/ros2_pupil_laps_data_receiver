@@ -4,17 +4,18 @@ from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge, CvBridgeError
 import pyzed.sl as sl
 from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
-
+from rclpy.callback_groups import ReentrantCallbackGroup
 class ZedWrapperNode(Node):
     def __init__(self):
         super().__init__('zed_wrapper_node')
         self.bridge = CvBridge()
         qos = QoSProfile(
-            depth=5,
+            depth=2,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.RELIABLE,
             durability=DurabilityPolicy.VOLATILE,
         )
+        self.cb_group = ReentrantCallbackGroup()
         # Publishers for color and depth
         self.color_pub = self.create_publisher(CompressedImage, 'zed/color/image_raw', qos)
         self.depth_pub = self.create_publisher(Image, 'zed/depth/image_raw', qos)
@@ -34,7 +35,7 @@ class ZedWrapperNode(Node):
             return
 
         # Timer for ~60Hz capturing loop
-        self.create_timer(1.0/120.0, self.timer_callback)
+        self.create_timer(1.0/100.0, self.timer_callback, self.cb_group)
 
     def timer_callback(self):
         # Grab a new frame
@@ -48,6 +49,7 @@ class ZedWrapperNode(Node):
         mat_color = sl.Mat()
         self.zed.retrieve_image(mat_color, sl.VIEW.LEFT)
         color_img = mat_color.get_data()  # ZED returns 8UC4 (BGRA)
+        #print("Image resolution: {0} x {1} || Image timestamp: {2}\n".format(mat_color.get_width(), mat_color.get_height(), timestamp.get_milliseconds()))
         try:
             # Use 'bgra8' encoding to match 4-channel BGRA data
             color_msg = self.bridge.cv2_to_compressed_imgmsg(color_img, dst_format='jpeg')
