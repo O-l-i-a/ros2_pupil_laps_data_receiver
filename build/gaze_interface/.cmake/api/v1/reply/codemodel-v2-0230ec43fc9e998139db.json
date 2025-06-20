@@ -1,0 +1,242 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-1b719d7c20421973e91b.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "gaze_interface__py",
+					"jsonFile" : "directory-gaze_interface__py-145e3aa3ab01773244a2.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/olhamelnyk/colcon_venv/src/build/gaze_interface/gaze_interface__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "gaze_interface",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_gaze_interface_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_gaze_interface_egg-84f98c31e69e34ba5bba.json",
+					"name" : "ament_cmake_python_build_gaze_interface_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_symlink_gaze_interface::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_symlink_gaze_interface-4e8fb33f60ba8b344d73.json",
+					"name" : "ament_cmake_python_symlink_gaze_interface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface-02cd7e194da1f3670c09.json",
+					"name" : "gaze_interface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__cpp-ba43723f35141449cd51.json",
+					"name" : "gaze_interface__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "gaze_interface__py::@0d0920f65e14a1571efa",
+					"jsonFile" : "target-gaze_interface__py-89d296659be3c5369395.json",
+					"name" : "gaze_interface__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__rosidl_generator_c-67b45949650458d31b28.json",
+					"name" : "gaze_interface__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__rosidl_generator_py-a960e5bf968349fd84d1.json",
+					"name" : "gaze_interface__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__rosidl_generator_type_description-2a727adcdef7f0f41941.json",
+					"name" : "gaze_interface__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__rosidl_typesupport_c-e1362b9f883227722972.json",
+					"name" : "gaze_interface__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__rosidl_typesupport_cpp-660d6b0880cce72801c0.json",
+					"name" : "gaze_interface__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__rosidl_typesupport_fastrtps_c-cecec6a588b9cce6984b.json",
+					"name" : "gaze_interface__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__rosidl_typesupport_fastrtps_cpp-e5f144449e06fc6dd119.json",
+					"name" : "gaze_interface__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__rosidl_typesupport_introspection_c-0f0447407fadbfc91ed8.json",
+					"name" : "gaze_interface__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface__rosidl_typesupport_introspection_cpp-74a6db0289847f6351f8.json",
+					"name" : "gaze_interface__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface_s__rosidl_typesupport_c-a68b87d68b8bb4da230c.json",
+					"name" : "gaze_interface_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface_s__rosidl_typesupport_fastrtps_c-9a62c42c7e60e89872b8.json",
+					"name" : "gaze_interface_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface_s__rosidl_typesupport_introspection_c-7e8079a93197a1d9a4ca.json",
+					"name" : "gaze_interface_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "gaze_interface_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-gaze_interface_uninstall-80a823b8d8ad19b2523c.json",
+					"name" : "gaze_interface_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-90c75d7a7ef0d67d9367.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/olhamelnyk/colcon_venv/src/build/gaze_interface",
+		"source" : "/home/olhamelnyk/colcon_venv/src/gaze_interface"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

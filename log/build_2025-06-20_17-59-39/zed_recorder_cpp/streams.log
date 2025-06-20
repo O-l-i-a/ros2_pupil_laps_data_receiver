@@ -1,0 +1,27 @@
+[0.017s] Invoking command in '/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/olhamelnyk/colcon_venv/src/zed_recorder_cpp -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/zed_recorder_cpp
+[0.043s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[0.339s] -- Override CMake install command with custom implementation using symlinks instead of copying resources
+[0.346s] -- Found rclcpp: 28.1.9 (/opt/ros/jazzy/share/rclcpp/cmake)
+[0.396s] -- Found rosidl_generator_c: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_c/cmake)
+[0.406s] -- Found rosidl_generator_cpp: 4.6.5 (/opt/ros/jazzy/share/rosidl_generator_cpp/cmake)
+[0.421s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[0.437s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[0.506s] -- Found rmw_implementation_cmake: 7.3.2 (/opt/ros/jazzy/share/rmw_implementation_cmake/cmake)
+[0.508s] -- Found rmw_fastrtps_cpp: 8.4.2 (/opt/ros/jazzy/share/rmw_fastrtps_cpp/cmake)
+[0.592s] -- Using RMW implementation 'rmw_fastrtps_cpp' as default
+[0.663s] -- Found sensor_msgs: 5.3.6 (/opt/ros/jazzy/share/sensor_msgs/cmake)
+[0.724s] -- Found cv_bridge: 4.1.0 (/opt/ros/jazzy/share/cv_bridge/cmake)
+[0.851s] -- Configuring done (0.8s)
+[0.868s] -- Generating done (0.0s)
+[0.872s] -- Build files have been written to: /home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp
+[0.885s] Invoked command in '/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/olhamelnyk/colcon_venv/src/zed_recorder_cpp -DAMENT_CMAKE_SYMLINK_INSTALL=1 -DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/zed_recorder_cpp
+[0.886s] Invoking command in '/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp -- -j16 -l16
+[0.991s] [ 50%] [32mBuilding CXX object CMakeFiles/depth_recorder_node.dir/src/depth_recorder_node.cpp.o[0m
+[1.297s] [01m[K/home/olhamelnyk/colcon_venv/src/zed_recorder_cpp/src/depth_recorder_node.cpp:3:10:[m[K [01;31m[Kfatal error: [m[Kcv_bridge/cv_bridge.h: No such file or directory
+[1.297s]     3 | #include [01;31m[K<cv_bridge/cv_bridge.h>[m[K
+[1.297s]       |          [01;31m[K^~~~~~~~~~~~~~~~~~~~~~~[m[K
+[1.297s] compilation terminated.
+[1.302s] gmake[2]: *** [CMakeFiles/depth_recorder_node.dir/build.make:76: CMakeFiles/depth_recorder_node.dir/src/depth_recorder_node.cpp.o] Error 1
+[1.303s] gmake[1]: *** [CMakeFiles/Makefile2:137: CMakeFiles/depth_recorder_node.dir/all] Error 2
+[1.304s] gmake: *** [Makefile:146: all] Error 2
+[1.310s] Invoked command in '/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp -- -j16 -l16

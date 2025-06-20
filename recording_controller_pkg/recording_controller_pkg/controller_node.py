@@ -27,7 +27,7 @@ class RecordingController(Node):
         self.pupil_client_gaze = self.create_client(SetBool, 'record_pupil_gaze')
         # Client for ZED start depth recording service
         self.zed_client_depth = self.create_client(SetBool, "record_zed_depth")
-        self.zed_client_rgb = self.create_client(SetBool, "record_zed_rgb")
+        #self.zed_client_rgb = self.create_client(SetBool, "record_zed_rgb")
 
         #self.zed_start_client = self.create_client(StartSvoRec, '/zed/zed_node/start_svo_rec')
         # Client for ZED stop SVO recording service
@@ -116,7 +116,7 @@ class MainWindow(QMainWindow):
         req = SetBool.Request()
         req.data = True
         ok_zed_depth, _ = self.call_service(self.node.zed_client_depth, req)
-        ok_zed_rgb, _ = self.call_service(self.node.zed_client_rgb, req)
+        #ok_zed_rgb, _ = self.call_service(self.node.zed_client_rgb, req)
         ok_pupil_scene, _ = self.call_service(self.node.pupil_client_scene, req)
         ok_pupil_gaze, _ = self.call_service(self.node.pupil_client_gaze, req)
 
@@ -127,7 +127,7 @@ class MainWindow(QMainWindow):
         if ok_pupil_scene and ok_pupil_gaze and ok_zed_depth:
             self.status_label.setText('Status: Recording')
         else:
-            self.status_label.setText(f'Error starting: Pupil Scene={ok_pupil_scene}, Pupil gaze={ok_pupil_gaze}, ZED depth={ok_zed_depth}, ZED Rgb = {ok_zed_rgb}')
+            self.status_label.setText(f'Error starting: Pupil Scene={ok_pupil_scene}, Pupil gaze={ok_pupil_gaze}, ZED depth={ok_zed_depth}') # ZED Rgb = {ok_zed_rgb}')
 
     def stop_recording(self):
         """
@@ -145,14 +145,14 @@ class MainWindow(QMainWindow):
 
         # Stop ZED recording
         ok_zed_depth, _ = self.call_service(self.node.zed_client_depth, req)
-        ok_zed_rgb, _ = self.call_service(self.node.zed_client_rgb, req)
+        #ok_zed_rgb, _ = self.call_service(self.node.zed_client_rgb, req)
 
 
         # Update status label
-        if ok_pupil_scene and ok_pupil_gaze and ok_zed_depth and ok_zed_rgb:
+        if ok_pupil_scene and ok_pupil_gaze and ok_zed_depth:
             self.status_label.setText('Status: Stopped')
         else:
-            self.status_label.setText(f'Error stopping:  Pupil Scene={ok_pupil_scene}, Pupil gaze={ok_pupil_gaze}, ZED depth={ok_zed_depth}, ZED Rgb = {ok_zed_rgb}')
+            self.status_label.setText(f'Error stopping:  Pupil Scene={ok_pupil_scene}, Pupil gaze={ok_pupil_gaze}, ZED depth={ok_zed_depth}') # ZED Rgb = {ok_zed_rgb}')
 
 def main(args=None):
     """

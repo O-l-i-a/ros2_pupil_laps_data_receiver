@@ -1,0 +1,36 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "zed_msgs/srv/SetPose_Request",
+      "fields": [
+        {
+          "name": "pos",
+          "type": {
+            "type_id": 58,
+            "capacity": 3,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        },
+        {
+          "name": "orient",
+          "type": {
+            "type_id": 58,
+            "capacity": 3,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": []
+  },
+  "type_hashes": [
+    {
+      "type_name": "zed_msgs/srv/SetPose_Request",
+      "hash_string": "RIHS01_5458e02c3d0f1d1ae6a7fc833a16619956bb437a725df9dbe5e9dd8c34009d38"
+    }
+  ]
+}

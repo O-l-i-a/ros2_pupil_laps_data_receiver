@@ -1,0 +1,5 @@
+source;share/zed_recorder_cpp/local_setup.bash
+source;share/zed_recorder_cpp/local_setup.dsv
+source;share/zed_recorder_cpp/local_setup.ps1
+source;share/zed_recorder_cpp/local_setup.sh
+source;share/zed_recorder_cpp/local_setup.zsh

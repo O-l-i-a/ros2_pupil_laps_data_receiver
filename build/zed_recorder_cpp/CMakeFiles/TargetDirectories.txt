@@ -1,0 +1,10 @@
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/uninstall.dir
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/zed_recorder_cpp_uninstall.dir
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/depth_recorder_node.dir
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/test.dir
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/edit_cache.dir
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/rebuild_cache.dir
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/list_install_components.dir
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/install.dir
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/install/local.dir
+/home/olhamelnyk/colcon_venv/src/build/zed_recorder_cpp/CMakeFiles/install/strip.dir

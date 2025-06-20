@@ -1,0 +1,456 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "zed_msgs/msg/ObjectsStamped",
+      "fields": [
+        {
+          "name": "header",
+          "type": {
+            "type_id": 1,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": "std_msgs/msg/Header"
+          },
+          "default_value": ""
+        },
+        {
+          "name": "objects",
+          "type": {
+            "type_id": 145,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": "zed_msgs/msg/Object"
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": [
+      {
+        "type_name": "builtin_interfaces/msg/Time",
+        "fields": [
+          {
+            "name": "sec",
+            "type": {
+              "type_id": 6,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "nanosec",
+            "type": {
+              "type_id": 7,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "std_msgs/msg/Header",
+        "fields": [
+          {
+            "name": "stamp",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "builtin_interfaces/msg/Time"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "frame_id",
+            "type": {
+              "type_id": 17,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "zed_msgs/msg/BoundingBox2Df",
+        "fields": [
+          {
+            "name": "corners",
+            "type": {
+              "type_id": 49,
+              "capacity": 4,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/Keypoint2Df"
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "zed_msgs/msg/BoundingBox2Di",
+        "fields": [
+          {
+            "name": "corners",
+            "type": {
+              "type_id": 49,
+              "capacity": 4,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/Keypoint2Di"
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "zed_msgs/msg/BoundingBox3D",
+        "fields": [
+          {
+            "name": "corners",
+            "type": {
+              "type_id": 49,
+              "capacity": 8,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/Keypoint3D"
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "zed_msgs/msg/Keypoint2Df",
+        "fields": [
+          {
+            "name": "kp",
+            "type": {
+              "type_id": 58,
+              "capacity": 2,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "zed_msgs/msg/Keypoint2Di",
+        "fields": [
+          {
+            "name": "kp",
+            "type": {
+              "type_id": 55,
+              "capacity": 2,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "zed_msgs/msg/Keypoint3D",
+        "fields": [
+          {
+            "name": "kp",
+            "type": {
+              "type_id": 58,
+              "capacity": 3,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "zed_msgs/msg/Object",
+        "fields": [
+          {
+            "name": "label",
+            "type": {
+              "type_id": 17,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "label_id",
+            "type": {
+              "type_id": 4,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "sublabel",
+            "type": {
+              "type_id": 17,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "confidence",
+            "type": {
+              "type_id": 10,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "position",
+            "type": {
+              "type_id": 58,
+              "capacity": 3,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "position_covariance",
+            "type": {
+              "type_id": 58,
+              "capacity": 6,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "velocity",
+            "type": {
+              "type_id": 58,
+              "capacity": 3,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "tracking_available",
+            "type": {
+              "type_id": 15,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "tracking_state",
+            "type": {
+              "type_id": 2,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "action_state",
+            "type": {
+              "type_id": 2,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "bounding_box_2d",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/BoundingBox2Di"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "bounding_box_3d",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/BoundingBox3D"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "dimensions_3d",
+            "type": {
+              "type_id": 58,
+              "capacity": 3,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "skeleton_available",
+            "type": {
+              "type_id": 15,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "body_format",
+            "type": {
+              "type_id": 2,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "head_bounding_box_2d",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/BoundingBox2Df"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "head_bounding_box_3d",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/BoundingBox3D"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "head_position",
+            "type": {
+              "type_id": 58,
+              "capacity": 3,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          },
+          {
+            "name": "skeleton_2d",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/Skeleton2D"
+            },
+            "default_value": ""
+          },
+          {
+            "name": "skeleton_3d",
+            "type": {
+              "type_id": 1,
+              "capacity": 0,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/Skeleton3D"
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "zed_msgs/msg/Skeleton2D",
+        "fields": [
+          {
+            "name": "keypoints",
+            "type": {
+              "type_id": 49,
+              "capacity": 70,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/Keypoint2Df"
+            },
+            "default_value": ""
+          }
+        ]
+      },
+      {
+        "type_name": "zed_msgs/msg/Skeleton3D",
+        "fields": [
+          {
+            "name": "keypoints",
+            "type": {
+              "type_id": 49,
+              "capacity": 70,
+              "string_capacity": 0,
+              "nested_type_name": "zed_msgs/msg/Keypoint3D"
+            },
+            "default_value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "type_hashes": [
+    {
+      "type_name": "zed_msgs/msg/ObjectsStamped",
+      "hash_string": "RIHS01_0945160ef044aa44b86c8b0e5ae4ed5a8823259eafb37d67e9809efd589d3952"
+    },
+    {
+      "type_name": "builtin_interfaces/msg/Time",
+      "hash_string": "RIHS01_b106235e25a4c5ed35098aa0a61a3ee9c9b18d197f398b0e4206cea9acf9c197"
+    },
+    {
+      "type_name": "std_msgs/msg/Header",
+      "hash_string": "RIHS01_f49fb3ae2cf070f793645ff749683ac6b06203e41c891e17701b1cb597ce6a01"
+    },
+    {
+      "type_name": "zed_msgs/msg/BoundingBox2Df",
+      "hash_string": "RIHS01_56348cd41a63a681523319519a2d7a0241c396e1ef8fec8241fb17a4c21293d9"
+    },
+    {
+      "type_name": "zed_msgs/msg/BoundingBox2Di",
+      "hash_string": "RIHS01_14d9bb2ef42edfe45329d160bf82909d2db812f20e71e114b408a3647b2c9d70"
+    },
+    {
+      "type_name": "zed_msgs/msg/BoundingBox3D",
+      "hash_string": "RIHS01_e1d7aad1e5f11bc985b8e53d906ee42e831465cf093f5f1d3ed64419a4eb03ed"
+    },
+    {
+      "type_name": "zed_msgs/msg/Keypoint2Df",
+      "hash_string": "RIHS01_f3cde2acac575a10c3841e2d98ba51cd096048d09bf7240f71356a720ecfc037"
+    },
+    {
+      "type_name": "zed_msgs/msg/Keypoint2Di",
+      "hash_string": "RIHS01_9640ce7b2547a1382a21b8cc0cda8600e19b041fca43d8128cbc24e32cc80982"
+    },
+    {
+      "type_name": "zed_msgs/msg/Keypoint3D",
+      "hash_string": "RIHS01_838f35f5ca296ba0be86867a759b9d6449e55ed6ec3eaa7d2f7a261103c23fd1"
+    },
+    {
+      "type_name": "zed_msgs/msg/Object",
+      "hash_string": "RIHS01_a15af0066dadda824844d9896ebb9d33c87a0726ca174acdbae4bcec57a1ab03"
+    },
+    {
+      "type_name": "zed_msgs/msg/Skeleton2D",
+      "hash_string": "RIHS01_8231da5f0a74d2690c5095ed5b913e3a5779e32856d5737ed8e3d027c32cb36a"
+    },
+    {
+      "type_name": "zed_msgs/msg/Skeleton3D",
+      "hash_string": "RIHS01_e762798d067f7d681fdee259aa75e28f0fc6eb36dad13e4eddec89c7d8bd6b54"
+    }
+  ]
+}

@@ -17,9 +17,10 @@ class RGBRecorder(Node):
     def __init__(self):
         super().__init__('rgb_recorder')
         self.get_logger().info('RGBRecorder has been started!')
+        cv2.setNumThreads(1)
 
         # Producer-Consumer queue for frames
-        self.frame_queue = queue.Queue(maxsize=100)
+        self.frame_queue = queue.Queue(maxsize=30)
         self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self.writer_thread.start()
         qos = QoSProfile(

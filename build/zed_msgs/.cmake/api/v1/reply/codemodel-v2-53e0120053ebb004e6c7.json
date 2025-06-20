@@ -1,0 +1,251 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-7448af2f1c0cc14cfbd4.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				},
+				{
+					"build" : "zed_msgs__py",
+					"jsonFile" : "directory-zed_msgs__py-93ef7d36c60b00071e39.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/olhamelnyk/colcon_venv/src/build/zed_msgs/zed_msgs__py",
+					"targetIndexes" : 
+					[
+						6
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "zed_msgs",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18,
+						19
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "all_zed_msgs_files::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-all_zed_msgs_files-cefd1d140b67361ce765.json",
+					"name" : "all_zed_msgs_files",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_zed_msgs_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_zed_msgs_egg-e9277f64c998e60cb615.json",
+					"name" : "ament_cmake_python_build_zed_msgs_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_symlink_zed_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_symlink_zed_msgs-1faac6e7dbbac17822c4.json",
+					"name" : "ament_cmake_python_symlink_zed_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-8287ce8fc774a664b575.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs-40499da0c5d9acf5e52a.json",
+					"name" : "zed_msgs",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__cpp-8f36cfb4a1a677615d90.json",
+					"name" : "zed_msgs__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "zed_msgs__py::@b73c147196348a6ee048",
+					"jsonFile" : "target-zed_msgs__py-14752d9fcb3303e595f0.json",
+					"name" : "zed_msgs__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__rosidl_generator_c-c40c132cf94f18c01d60.json",
+					"name" : "zed_msgs__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__rosidl_generator_py-c855e47e43575b838a46.json",
+					"name" : "zed_msgs__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__rosidl_generator_type_description-a37660d2bc1d77e22e31.json",
+					"name" : "zed_msgs__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__rosidl_typesupport_c-9116c2ae0d4a7bafae6f.json",
+					"name" : "zed_msgs__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__rosidl_typesupport_cpp-5392d40f5c88a5fbf9c9.json",
+					"name" : "zed_msgs__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__rosidl_typesupport_fastrtps_c-44f56318c5f593dd906f.json",
+					"name" : "zed_msgs__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__rosidl_typesupport_fastrtps_cpp-a2e755aadaca4905f8a9.json",
+					"name" : "zed_msgs__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__rosidl_typesupport_introspection_c-e4fdbeb61dfacb0a4312.json",
+					"name" : "zed_msgs__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs__rosidl_typesupport_introspection_cpp-4f51d8a13ba7d2ae7303.json",
+					"name" : "zed_msgs__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs_s__rosidl_typesupport_c-201b56489d67fd55d3a6.json",
+					"name" : "zed_msgs_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs_s__rosidl_typesupport_fastrtps_c-0bacf022bca863a37387.json",
+					"name" : "zed_msgs_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs_s__rosidl_typesupport_introspection_c-3450d68288f075e1baf1.json",
+					"name" : "zed_msgs_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "zed_msgs_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-zed_msgs_uninstall-1885d0d6758763d8e9e6.json",
+					"name" : "zed_msgs_uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/olhamelnyk/colcon_venv/src/build/zed_msgs",
+		"source" : "/home/olhamelnyk/colcon_venv/src/zed-ros2-interfaces"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

@@ -1,0 +1,26 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "zed_msgs/msg/MagHeadingStatus",
+      "fields": [
+        {
+          "name": "status",
+          "type": {
+            "type_id": 3,
+            "capacity": 0,
+            "string_capacity": 0,
+            "nested_type_name": ""
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": []
+  },
+  "type_hashes": [
+    {
+      "type_name": "zed_msgs/msg/MagHeadingStatus",
+      "hash_string": "RIHS01_6d1f4e83949736d23314925f22b89bfe2e6739dd8911fd20c45b490361b9890f"
+    }
+  ]
+}

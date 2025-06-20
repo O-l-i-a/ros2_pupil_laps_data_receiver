@@ -1,0 +1,46 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "zed_msgs/msg/Skeleton2D",
+      "fields": [
+        {
+          "name": "keypoints",
+          "type": {
+            "type_id": 49,
+            "capacity": 70,
+            "string_capacity": 0,
+            "nested_type_name": "zed_msgs/msg/Keypoint2Df"
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": [
+      {
+        "type_name": "zed_msgs/msg/Keypoint2Df",
+        "fields": [
+          {
+            "name": "kp",
+            "type": {
+              "type_id": 58,
+              "capacity": 2,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "type_hashes": [
+    {
+      "type_name": "zed_msgs/msg/Skeleton2D",
+      "hash_string": "RIHS01_8231da5f0a74d2690c5095ed5b913e3a5779e32856d5737ed8e3d027c32cb36a"
+    },
+    {
+      "type_name": "zed_msgs/msg/Keypoint2Df",
+      "hash_string": "RIHS01_f3cde2acac575a10c3841e2d98ba51cd096048d09bf7240f71356a720ecfc037"
+    }
+  ]
+}

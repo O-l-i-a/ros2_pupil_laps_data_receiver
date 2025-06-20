@@ -1,0 +1,46 @@
+{
+  "type_description_msg": {
+    "type_description": {
+      "type_name": "zed_msgs/msg/BoundingBox2Di",
+      "fields": [
+        {
+          "name": "corners",
+          "type": {
+            "type_id": 49,
+            "capacity": 4,
+            "string_capacity": 0,
+            "nested_type_name": "zed_msgs/msg/Keypoint2Di"
+          },
+          "default_value": ""
+        }
+      ]
+    },
+    "referenced_type_descriptions": [
+      {
+        "type_name": "zed_msgs/msg/Keypoint2Di",
+        "fields": [
+          {
+            "name": "kp",
+            "type": {
+              "type_id": 55,
+              "capacity": 2,
+              "string_capacity": 0,
+              "nested_type_name": ""
+            },
+            "default_value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "type_hashes": [
+    {
+      "type_name": "zed_msgs/msg/BoundingBox2Di",
+      "hash_string": "RIHS01_14d9bb2ef42edfe45329d160bf82909d2db812f20e71e114b408a3647b2c9d70"
+    },
+    {
+      "type_name": "zed_msgs/msg/Keypoint2Di",
+      "hash_string": "RIHS01_9640ce7b2547a1382a21b8cc0cda8600e19b041fca43d8128cbc24e32cc80982"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "package_name": "gaze_interface",
+  "non_idl_tuples": [
+    "/home/olhamelnyk/colcon_venv/src/gaze_interface:msg/GazeDataAsync.msg"
+  ]
+}

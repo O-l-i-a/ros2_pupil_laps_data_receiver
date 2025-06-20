@@ -93,6 +93,7 @@ class ZedWrapperNode(Node):
     # ---------------------------------------------------------------------
 
     def _capture_loop(self):
+        period = 1.0 / self.TARGET_FPS
         while rclpy.ok() and self._running:
 
             if self.zed.grab() == sl.ERROR_CODE.SUCCESS:
@@ -172,7 +173,7 @@ class ZedWrapperNode(Node):
 def main(args=None):
     rclpy.init(args=args)
     node = ZedWrapperNode()
-    executor = MultiThreadedExecutor()
+    executor = MultiThreadedExecutor(num_threads=5)
     executor.add_node(node)
 
     try:
