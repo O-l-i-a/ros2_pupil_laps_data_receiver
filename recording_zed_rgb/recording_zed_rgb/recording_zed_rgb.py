@@ -8,8 +8,9 @@ import csv
 import os
 import threading
 import queue
-from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
 from rclpy.executors import MultiThreadedExecutor
+from rclpy.callback_groups import ReentrantCallbackGroup
 
 
 class RGBRecorder(Node):
@@ -22,16 +23,21 @@ class RGBRecorder(Node):
         self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self.writer_thread.start()
         qos = QoSProfile(
-            depth=10,
+            depth=2,
             history=HistoryPolicy.KEEP_LAST,
-            reliability=ReliabilityPolicy.RELIABLE,
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            durability=DurabilityPolicy.VOLATILE,
+
         )
+        self.cb_group_color = ReentrantCallbackGroup()
+
         # Subscription and service
         self.subscription = self.create_subscription(
             CompressedImage,
-            'zed/color/image_raw',
+            'zed/color/image_raw/compressed',
             self.listener_callback,
-            qos  # QoS depth
+            qos,  # QoS depth
+            callback_group= self.cb_group_color 
         )
         self.create_service(SetBool, 'record_zed_rgb', self._srv_cb)
 
@@ -43,7 +49,7 @@ class RGBRecorder(Node):
         self.frame_width = 1280#1280
         self.frame_height = 720#720
         self.fps = 50.0
-        self.fourcc = cv2.VideoWriter_fourcc(*'XVID')
+        self.fourcc = cv2.VideoWriter_fourcc(*'H264')
         self.recording = False
 
     def _srv_cb(self, req, resp):

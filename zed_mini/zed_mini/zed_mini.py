@@ -93,7 +93,6 @@ class ZedWrapperNode(Node):
     # ---------------------------------------------------------------------
 
     def _capture_loop(self):
-        period = 1.0 / self.TARGET_FPS
         while rclpy.ok() and self._running:
 
             if self.zed.grab() == sl.ERROR_CODE.SUCCESS:

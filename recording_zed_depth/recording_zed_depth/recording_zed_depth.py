@@ -48,7 +48,7 @@ class DepthRecorder(Node):
         self.frame_width = 1280#1280
         self.frame_height = 720#720
         self.fps = 50.0
-        self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+        self.fourcc = cv2.VideoWriter_fourcc(*'H264')
         self.recording = False
 
     def _srv_cb(self, req, resp):
