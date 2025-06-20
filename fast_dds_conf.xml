@@ -1,5 +1,15 @@
-<transport_descriptors>
-  <transport_descriptor>
-    <property name="maxMessageSize" value="8388608"/>
-  </transport_descriptor>
-</transport_descriptors>
+<dds xmlns="http://www.eprosima.com">
+ <profiles>
+        <!--
+            UDP transport for PDP and SHM/TCPv4 transport for both EDP and application data
+        -->
+        <participant profile_name="zed/depth/image_raw/" >
+            <rtps>
+                <builtinTransports>LARGE_DATA</builtinTransports>
+            </rtps>
+        </participant>
+    </profiles>
+    <library_settings>
+        <intraprocess_delivery>FULL</intraprocess_delivery> <!-- OFF | USER_DATA_ONLY | FULL -->
+    </library_settings>
+</dds>
