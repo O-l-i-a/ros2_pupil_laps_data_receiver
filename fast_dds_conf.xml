@@ -3,12 +3,12 @@
         <!--
             UDP transport for PDP and SHM/TCPv4 transport for both EDP and application data
         -->
-        <participant profile_name="zed/depth/image_raw/" >
+        <participant profile_name="/zed_multi/myzed2i/rgb/image_rect_color" >
             <rtps>
                 <builtinTransports>LARGE_DATA</builtinTransports>
             </rtps>
         </participant>
-        <participant profile_name="zed/color/image_raw/compressed" >
+        <participant profile_name="/zed_multi/myzed2i/depth/depth_registered" >
             <rtps>
                 <builtinTransports>LARGE_DATA</builtinTransports>
             </rtps>
