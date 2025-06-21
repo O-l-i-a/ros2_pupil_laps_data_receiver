@@ -68,7 +68,7 @@ RGBRecorder::RGBRecorder(const rclcpp::NodeOptions & opts_in)
 {
   // Parameter -----------------------------------------------------------------
   topic_      = declare_parameter("topic",      "/zed_multi/myzed2i/rgb/image_rect_color");
-  compressed_ = declare_parameter("compressed", true);
+  compressed_ = declare_parameter("compressed", false);
   target_fps_ = declare_parameter("target_fps", 60.0);
 
   RCLCPP_INFO(get_logger(), "RGBRecorder subscribes to %s", topic_.c_str());
