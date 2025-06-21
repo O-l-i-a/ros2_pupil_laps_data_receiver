@@ -138,14 +138,20 @@ void DepthRecorder::depthCallback(const Image::ConstSharedPtr & msg)
 void DepthRecorder::srvCallback(const std::shared_ptr<SetBool::Request> req,
                                 std::shared_ptr<SetBool::Response>      resp)
 {
+  // Antwort sofort – schwere I/O im Hintergrund
   if (req->data == recording_) {
-    resp->success = false; resp->message = "no change"; return;
+    resp->success = false;
+    resp->message = "no change";
+    return;
   }
 
-  if (req->data)  startRecording();
-  else            stopRecording();
+  if (req->data) {
+    std::thread([this]{ startRecording(); }).detach();
+  } else {
+    std::thread([this]{ stopRecording(); }).detach();
+  }
 
-  recording_    = req->data;
+  recording_   = req->data;
   resp->success = true;
   resp->message = req->data ? "started" : "stopped";
 }
