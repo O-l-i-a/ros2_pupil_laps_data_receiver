@@ -177,24 +177,21 @@ void DepthRecorder::startRecording()
 // ─────────────────────────────────────────────────────────────────────────────
 void DepthRecorder::openVideoWriter(int width, int height)
 {
-  const uint64_t sec = get_clock()->now().seconds();
-  fs::path video_path = output_base_ /
-                        (std::to_string(sec) + (compressed_ ? "_depth.mp4" : "_depth.avi"));
+    const uint64_t ts = get_clock()->now().seconds();
+                        // MP4-Pfad + H.264
+    fs::path f = output_base_ /
+                 (std::to_string(ts) + "_depth.mp4");
 
-  if (compressed_) {
-    video_writer_.open(video_path.string(),
-                       cv::VideoWriter::fourcc('M','J','P','G'), // H.264
-                       target_fps_, {width, height}, false);
-  } else {
-    video_writer_.open(video_path.string(),
-                       0,                               /* raw */
-                       target_fps_, {width, height}, false);
-  }
+    int fourcc = cv::VideoWriter::fourcc('a','v','c','1');   // H.264
+    video_writer_.open(f.string(),
+                       fourcc, target_fps_, cv::Size(width, height), /*isColor=*/true);
 
-  if (!video_writer_.isOpened()) {
-    RCLCPP_ERROR(get_logger(), "Failed to open video file %s (codec unsupported?)",
-                 video_path.c_str());
-  }
+
+
+if (!video_writer_.isOpened())
+    RCLCPP_ERROR(get_logger(),
+      "Unable to open video file! Check codec");
+
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -227,15 +224,15 @@ void DepthRecorder::writerLoop(std::stop_token token)
     }
     if (!video_writer_.isOpened()) continue;      // give up this frame
 
-    // 32F → 8U -------------------------------------------------------------
-    cv::Mat depth8;
-    depth32.convertTo(depth8, CV_8U, 255.f / kDepthRangeMeters);
-
     // Some H.264 builds need 3‑channel frames; uncomment if you still get
     // black frames:
     // cv::cvtColor(depth8, depth8, cv::COLOR_GRAY2BGR);
+    cv::Mat depth8, depthBGR;
+    depth32.convertTo(depth8, CV_8U, 255.f / kDepthRangeMeters);
+    cv::cvtColor(depth8, depthBGR, cv::COLOR_GRAY2BGR);
 
-    video_writer_.write(depth8);
+    video_writer_.write(depthBGR);
+    
 
     if (csv_file_.is_open())
       csv_file_ << stamp.sec << ',' << stamp.nanosec << '\n';
