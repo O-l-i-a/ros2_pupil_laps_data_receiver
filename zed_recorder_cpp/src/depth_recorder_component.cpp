@@ -183,7 +183,7 @@ void DepthRecorder::openVideoWriter(int width, int height)
 
   if (compressed_) {
     video_writer_.open(video_path.string(),
-                       cv::VideoWriter::fourcc('a','v','c','1'), // H.264
+                       cv::VideoWriter::fourcc('M','J','P','G'), // H.264
                        target_fps_, {width, height}, false);
   } else {
     video_writer_.open(video_path.string(),
