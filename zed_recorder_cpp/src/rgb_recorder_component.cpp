@@ -1,9 +1,9 @@
 // rgb_recorder_component.cpp
 // -----------------------------------------------------------------------------
-// ZED RGB recorder component for ROS 2 Jazzy.
+// ZED RGB recorder component for ROS 2 Jazzy.
 // Schreibt Farbbilder direkt aus dem ROS‑Callback in eine MP4‑ (H.264/mp4v)
 // oder AVI‑Datei (MJPG).  Queue, Mutex & Hintergrund‑Thread wurden entfernt –
-// stattdessen verwenden wir ROS 2 **intra‑process‑zero‑copy**.
+// stattdessen verwenden wir ROS 2 **intra‑process‑zero‑copy**.
 // -----------------------------------------------------------------------------
 
 #include <rclcpp/rclcpp.hpp>
@@ -39,6 +39,10 @@ private:
   void srvCallback(const std::shared_ptr<SetBool::Request>,
                    std::shared_ptr<SetBool::Response>);
 
+  // parameter callback ------------------------------------------------------
+  rcl_interfaces::msg::SetParametersResult parameterCallback(
+    const std::vector<rclcpp::Parameter> & parameters);
+
   // helpers -----------------------------------------------------------------
   void startRecording();
   void stopRecording();
@@ -48,10 +52,12 @@ private:
   std::string topic_;
   bool        compressed_ {true};            // MP4(H.264/mp4v) vs. AVI(MJPG)
   double      target_fps_ {60.0};
+  std::string participant_ {"default"};     // Standardwert
 
   // rclcpp entities ---------------------------------------------------------
   rclcpp::Subscription<Image>::SharedPtr sub_img_;
   rclcpp::Service<SetBool>::SharedPtr    srv_rec_;
+  rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr param_cb_handle_;
 
   // state -------------------------------------------------------------------
   std::atomic<bool> recording_   {false};
@@ -70,8 +76,14 @@ RGBRecorder::RGBRecorder(const rclcpp::NodeOptions & opts_in)
   topic_      = declare_parameter("topic",      "/zed_multi/myzed2i/rgb/image_rect_color");
   compressed_ = declare_parameter("compressed", false);
   target_fps_ = declare_parameter("target_fps", 60.0);
+  participant_ = declare_parameter("participant_name", "default");
 
   RCLCPP_INFO(get_logger(), "RGBRecorder subscribes to %s", topic_.c_str());
+  RCLCPP_INFO(get_logger(), "Participant name: %s", participant_.c_str());
+
+  // Parameter callback für dynamische Updates
+  param_cb_handle_ = add_on_set_parameters_callback(
+    std::bind(&RGBRecorder::parameterCallback, this, std::placeholders::_1));
 
   // Subscription (zero‑copy) ---------------------------------------------------
   auto qos = rclcpp::SensorDataQoS().keep_last(5).best_effort();
@@ -93,6 +105,29 @@ RGBRecorder::RGBRecorder(const rclcpp::NodeOptions & opts_in)
 RGBRecorder::~RGBRecorder()
 {
   stopRecording();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+rcl_interfaces::msg::SetParametersResult RGBRecorder::parameterCallback(
+  const std::vector<rclcpp::Parameter> & parameters)
+{
+  rcl_interfaces::msg::SetParametersResult result;
+  result.successful = true;
+  
+  for (const auto & param : parameters) {
+    if (param.get_name() == "participant_name") {
+      if (param.get_type() == rclcpp::ParameterType::PARAMETER_STRING) {
+        participant_ = param.as_string();
+        RCLCPP_INFO(get_logger(), "Updated participant name to: %s", participant_.c_str());
+      } else {
+        RCLCPP_ERROR(get_logger(), "participant_name must be a string");
+        result.successful = false;
+        result.reason = "participant_name must be a string";
+      }
+    }
+  }
+  
+  return result;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -143,7 +178,8 @@ void RGBRecorder::srvCallback(const std::shared_ptr<SetBool::Request> req,
 void RGBRecorder::startRecording()
 {
   const uint64_t ts = get_clock()->now().seconds();
-  base_dir_ = fs::current_path() / "recordings" / ("recording_" + std::to_string(ts));
+  // Verwende participant_ für Ordnername
+  base_dir_ = fs::current_path() / "recordings" / ("recording_" + participant_);
   fs::create_directories(base_dir_);
 
   csv_.open(base_dir_ / (std::to_string(ts) + "_rgb_times.csv"));

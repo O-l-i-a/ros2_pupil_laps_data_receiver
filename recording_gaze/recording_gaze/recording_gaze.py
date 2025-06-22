@@ -1,5 +1,7 @@
 import rclpy
 from rclpy.node import Node
+from rclpy.parameter import Parameter
+from rcl_interfaces.msg import SetParametersResult
 from rclpy.callback_groups import ReentrantCallbackGroup
 import csv
 import os
@@ -10,14 +12,22 @@ import collections # For deque
 
 class GazeRecorder(Node):
     def __init__(self):
-        super().__init__('GazeRecorder')
+        super().__init__('pupil_gaze_recorder')
         self.get_logger().info('GazeRecorder has been started!')
+
+        # Parameter für participant name
+        self.declare_parameter('participant_name', 'default')
+        self.participant_name = self.get_parameter('participant_name').get_parameter_value().string_value
+        self.get_logger().info(f'Participant name: {self.participant_name}')
+
+        # Parameter callback für dynamische Updates
+        self.add_on_set_parameters_callback(self._parameter_callback)
+
         qos = QoSProfile(
             depth=5,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.BEST_EFFORT,
             durability = DurabilityPolicy.VOLATILE
-
         )
         self.cb_group = ReentrantCallbackGroup()
         self.subscription = self.create_subscription(
@@ -34,6 +44,19 @@ class GazeRecorder(Node):
         self.gaze_buffer = collections.deque(maxlen=5000) # Buffer for gaze data
         self.buffer_size_threshold = 500 # Write to file every 500 messages
         self.flush_timer = self.create_timer(1.0, self._flush_buffer) # Flush every 1 second
+
+    def _parameter_callback(self, params):
+        """Callback für Parameter Updates"""
+        for param in params:
+            if param.name == 'participant_name':
+                if param.type_ == Parameter.Type.STRING:
+                    self.participant_name = param.value
+                    self.get_logger().info(f'Updated participant name to: {self.participant_name}')
+                else:
+                    self.get_logger().error('participant_name must be a string')
+                    return SetParametersResult(successful=False, reason="participant_name must be a string")
+        
+        return SetParametersResult(successful=True)
 
     def _srv_cb(self, req, resp):
         want_start = bool(req.data)
@@ -76,7 +99,8 @@ class GazeRecorder(Node):
         ts = self.get_clock().now().to_msg()
         prefix = f"{ts.sec}"
         base_dir = 'recordings'
-        session_dir = os.path.join(base_dir, f"recording_{ts.sec}")
+        # Verwende participant name für Ordnername
+        session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
         os.makedirs(session_dir, exist_ok=True)
         self.csv_file = open(os.path.join(session_dir, f"{prefix}_gaze.csv"), 'w', newline='')
         self.csv_writer = csv.writer(self.csv_file)

@@ -43,6 +43,10 @@ private:
   void srvCallback(const std::shared_ptr<SetBool::Request>,
                    std::shared_ptr<SetBool::Response>);
 
+  // parameter callback ------------------------------------------------------
+  rcl_interfaces::msg::SetParametersResult parameterCallback(
+    const std::vector<rclcpp::Parameter> & parameters);
+
   // helpers -----------------------------------------------------------------
   void startRecording();
   void stopRecording();
@@ -52,10 +56,12 @@ private:
   std::string topic_;
   bool        compressed_ {true};
   double      target_fps_ {60.0};
+  std::string participant_ {"default"};  // Standardwert
 
   // rclcpp entites ----------------------------------------------------------
   rclcpp::Subscription<Image>::SharedPtr sub_depth_;
   rclcpp::Service<SetBool>::SharedPtr    srv_rec_;
+  rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr param_cb_handle_;
 
   // state -------------------------------------------------------------------
   std::atomic<bool> recording_   {false};
@@ -74,8 +80,14 @@ DepthRecorder::DepthRecorder(const rclcpp::NodeOptions & opts_in)
   topic_      = declare_parameter("topic",      "/zed_multi/myzed2i/depth/depth_registered");
   compressed_ = declare_parameter("compressed", false);
   target_fps_ = declare_parameter("target_fps", 60.0);
-
+  participant_ = declare_parameter("participant_name", "default");
+  
   RCLCPP_INFO(get_logger(), "DepthRecorder subscribes to %s", topic_.c_str());
+  RCLCPP_INFO(get_logger(), "Participant name: %s", participant_.c_str());
+  
+  // Parameter callback für dynamische Updates
+  param_cb_handle_ = add_on_set_parameters_callback(
+    std::bind(&DepthRecorder::parameterCallback, this, std::placeholders::_1));
 
   // Subscription (zero-copy) --------------------------------------------------
   auto qos = rclcpp::SensorDataQoS().keep_last(5).best_effort();
@@ -97,6 +109,29 @@ DepthRecorder::DepthRecorder(const rclcpp::NodeOptions & opts_in)
 DepthRecorder::~DepthRecorder()
 {
   stopRecording();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+rcl_interfaces::msg::SetParametersResult DepthRecorder::parameterCallback(
+  const std::vector<rclcpp::Parameter> & parameters)
+{
+  rcl_interfaces::msg::SetParametersResult result;
+  result.successful = true;
+  
+  for (const auto & param : parameters) {
+    if (param.get_name() == "participant_name") {
+      if (param.get_type() == rclcpp::ParameterType::PARAMETER_STRING) {
+        participant_ = param.as_string();
+        RCLCPP_INFO(get_logger(), "Updated participant name to: %s", participant_.c_str());
+      } else {
+        RCLCPP_ERROR(get_logger(), "participant_name must be a string");
+        result.successful = false;
+        result.reason = "participant_name must be a string";
+      }
+    }
+  }
+  
+  return result;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -160,7 +195,9 @@ void DepthRecorder::srvCallback(const std::shared_ptr<SetBool::Request> req,
 void DepthRecorder::startRecording()
 {
   const uint64_t ts = get_clock()->now().seconds();
-  output_base_ = fs::current_path() / "recordings" / ("recording_" + std::to_string(ts));
+  // Verwende participant_ für Ordnername
+  output_base_ = fs::current_path() / "recordings" / ("recording_" + participant_);
+
   fs::create_directories(output_base_);
 
   csv_file_.open(output_base_ / (std::to_string(ts) + "_depth_times.csv"));

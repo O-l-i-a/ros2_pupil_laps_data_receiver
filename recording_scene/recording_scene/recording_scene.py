@@ -1,5 +1,7 @@
 import rclpy
 from rclpy.node import Node
+from rclpy.parameter import Parameter
+from rcl_interfaces.msg import SetParametersResult  # Correct import
 from cv_bridge import CvBridge
 from sensor_msgs.msg import Image, CompressedImage
 from std_srvs.srv import SetBool
@@ -9,10 +11,18 @@ import os
 import threading
 import queue
 
-class MyNode(Node):
+class SceneRecorder(Node):
     def __init__(self):
-        super().__init__('my_node')
-        self.get_logger().info('MyNode has been started!')
+        super().__init__('pupil_scene_recorder')
+        self.get_logger().info('SceneRecorder has been started!')
+
+        # Parameter für participant name
+        self.declare_parameter('participant_name', 'default')
+        self.participant_name = self.get_parameter('participant_name').get_parameter_value().string_value
+        self.get_logger().info(f'Participant name: {self.participant_name}')
+
+        # Parameter callback für dynamische Updates
+        self.add_on_set_parameters_callback(self._parameter_callback)
 
         # Producer-Consumer queue for frames
         self.frame_queue = queue.Queue(maxsize=200)
@@ -38,6 +48,19 @@ class MyNode(Node):
         self.fps = 30.0
         self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         self.recording = False
+
+    def _parameter_callback(self, params):
+        """Callback für Parameter Updates"""
+        for param in params:
+            if param.name == 'participant_name':
+                if param.type_ == Parameter.Type.STRING:
+                    self.participant_name = param.value
+                    self.get_logger().info(f'Updated participant name to: {self.participant_name}')
+                else:
+                    self.get_logger().error('participant_name must be a string')
+                    return SetParametersResult(successful=False, reason="participant_name must be a string")
+        
+        return SetParametersResult(successful=True)
 
     def _srv_cb(self, req, resp):
         want_start = bool(req.data)
@@ -85,7 +108,8 @@ class MyNode(Node):
         ts = self.get_clock().now().to_msg()
         prefix = f"{ts.sec}"
         base_dir = 'recordings'
-        session_dir = os.path.join(base_dir, f"recording_{ts.sec}")
+        # Verwende participant name für Ordnername
+        session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
         os.makedirs(session_dir, exist_ok=True)
 
         video_path = os.path.join(session_dir, f"{prefix}_scene.avi")
@@ -98,7 +122,7 @@ class MyNode(Node):
         self.csv_file = open(csv_path, 'w', newline='')
         self.csv_writer = csv.writer(self.csv_file)
         self.csv_writer.writerow(['sec','nanosec'])
-        self.get_logger().info(f'Started recording scene: {video_path}')
+        self.get_logger().info(f'Started recording scene to: {session_dir}')
 
     def _stop_file_recording(self):
         # Wait until all frames are processed
@@ -116,7 +140,7 @@ class MyNode(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = MyNode()
+    node = SceneRecorder()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()
