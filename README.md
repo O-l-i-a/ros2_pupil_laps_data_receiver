@@ -1,13 +1,13 @@
 # Recording Suite for ZED 2i & Pupil Labs
 This workspace provides tools to synchronize and record data from:
 
-Pupil Labs eye-tracking hardware (scene video + gaze data)
+- Pupil Labs eye-tracking hardware (scene video + gaze data)
 
-Stereolabs ZED 2i stereo camera (SVO recording)
+- Stereolabs ZED 2i stereo camera (depth and rgb recording)
 
-SVO-converter (Converting SVO to mp4 or png for eachh frame)
+- A synchronizer app to put two recorded videos near each other
 
-
+- A gaze overlap app, that merges gaze coordinates and scene video of pupil labs for visualization 
 # It includes:
 
 pupil_labs_wrapper (inspired by https://github.com/UW-CTRL/pupil_labs_ros2_wrapper)
