@@ -1,11 +1,11 @@
 // depth_recorder_component.cpp
 // -----------------------------------------------------------------------------
-// ZED *depth* recorder (ROS 2 Jazzy) ohne Queue, Mutex oder Writer-Thread.
-// Schreibt Tiefenbilder direkt aus dem Callback – dank
-// **intra-process-zero-copy** wird der sensor\_msgs::Image nicht kopiert.  
-// Die 32-bit-Float-Tiefe (0‒5 m) wird auf 8-bit skaliert und als BGR-Frame
-// in eine MP4- (H.264/mp4v) oder AVI-Datei (MJPG) kodiert.  Ein CSV mit den
-// exakten ROS-Zeitstempeln wird parallel erzeugt.
+// ZED *depth* recorder (ROS 2 Jazzy).
+// Writes Depthimage directly from Callback – because of 
+// **intra-process-zero-copy** is the sensor\_msgs::Image not copied.  
+// The 32-bit-Float-depth (0‒5 m) is scaled to 8-bit and is written as BGR-Frame
+// in the MP4- (H.264/mp4v) or AVI-Datei (MJPG). A CSV File with timestamps of
+// the header of the received ROS Image are written.
 // -----------------------------------------------------------------------------
 
 #include <rclcpp/rclcpp.hpp>
@@ -29,7 +29,7 @@ using std_srvs::srv::SetBool;
 namespace zed_recorder_cpp
 {
 // ─────────────────────────────────────────────────────────────────────────────
-static constexpr float kDepthRangeMeters = 5.0f;   // 0-5 m → 0-255
+static constexpr float kDepthRangeMeters = 3.0f;   // 0-5 m → 0-255 TODO edit to 3
 
 class DepthRecorder : public rclcpp::Node
 {
@@ -85,7 +85,7 @@ DepthRecorder::DepthRecorder(const rclcpp::NodeOptions & opts_in)
   RCLCPP_INFO(get_logger(), "DepthRecorder subscribes to %s", topic_.c_str());
   RCLCPP_INFO(get_logger(), "Participant name: %s", participant_.c_str());
   
-  // Parameter callback für dynamische Updates
+  // Parameter callback for dynamic update of participant name
   param_cb_handle_ = add_on_set_parameters_callback(
     std::bind(&DepthRecorder::parameterCallback, this, std::placeholders::_1));
 
@@ -111,7 +111,7 @@ DepthRecorder::~DepthRecorder()
   stopRecording();
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
+// Editing the name of the participant in run time and logging the updated value
 rcl_interfaces::msg::SetParametersResult DepthRecorder::parameterCallback(
   const std::vector<rclcpp::Parameter> & parameters)
 {
@@ -139,7 +139,7 @@ void DepthRecorder::depthCallback(const Image::ConstSharedPtr & msg)
 {
   if (!recording_) return;
 
-  // erstes Frame → VideoWriter öffnen -----------------------------------------
+  // first Frame → open VideoWriter -----------------------------------------
   if (first_frame_) {
     openWriter(static_cast<int>(msg->width), static_cast<int>(msg->height));
     first_frame_ = false;
