@@ -47,8 +47,8 @@ class PupilAsync(Node):
         """
         self.get_logger().info(f'Starting gaze stream: {url}')
         async for gaze in receive_gaze_data(url, run_loop=True):
-            msg = GazeDataAsync()
             current_time = self.get_clock().now().to_msg()
+            msg = GazeDataAsync()
             # Adjust for time offset
             if current_time.nanosec >= self.delayns:
                 current_time.nanosec -= self.delayns
@@ -68,8 +68,8 @@ class PupilAsync(Node):
         """
         self.get_logger().info(f'Starting scene stream: {url}')
         async for frame in receive_video_frames(url, run_loop=True):
-            img = frame.bgr_buffer()
             current_time = self.get_clock().now().to_msg()
+            img = frame.bgr_buffer()
             # Adjust for time offset
             if current_time.nanosec >= self.delayns:
                 current_time.nanosec -= self.delayns
