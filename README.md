@@ -7,8 +7,7 @@ This workspace provides tools to synchronize and record data from:
 
 # Tools for recordings:
 
-**- A synchronizer app to put two recorded videos near each other
-**
+**- A synchronizer app to put two recorded videos near each other**
 Example of use:
 
 python3 sync_videos.py \
@@ -19,8 +18,7 @@ python3 sync_videos.py \
   --output ~/home/olhamelnyk/colcon_venv/recordings/recording_1748613207/output_side_by_side.mp4 \
   --fps 60
 
-**- A gaze overlap app, that merges gaze coordinates and scene video of pupil labs for visualization
-**
+**- A gaze overlap app, that merges gaze coordinates and scene video of pupil labs for visualization**
 Example of use:
 
 cd ~/colcon_venv/
@@ -38,8 +36,7 @@ python async_gaze_scene.py \
   --dot_color 0,255,0
 
 
-**- A controller app to start all recordings together
-**
+**- A controller app to start all recordings together**
 Example of use:
 
 source install/setup.bash
@@ -48,8 +45,7 @@ ros2 run recording_controller_pkg controller_node
 
 # It includes:
 
-asyncpupil_labs_wrapper:
-
+**async_pupil_wrapper:** (Python)
 A ROS 2 node that discovers a Pupil Labs device, publishes:
 
 pupil_labs/scene/img_raw (sensor_msgs/Image @ 30 Hz)
@@ -58,7 +54,27 @@ pupil/scene/camera_info (sensor_msgs/CameraInfo @ 30 Hz)
 
 pupil/gaze (gaze_interface/GazeDataAsync @ 130 Hz)
 
+**recording_gaze**: (Python)
 
+A ROS 2 node that subscribes to pupil/gaze and records a .csv file with coordinates of gaze and timestamps
+
+**recording_scene** (Python)
+
+A ROS 2 node that subscribes to pupil_labs/scene/img_raw and records a .csv file with timestamps and .avi video recording of the published frames
+
+**zed_wrapper** (C++)
+
+A ROS 2 node that publishes data from the ZED2i camera - see more at https://github.com/stereolabs/zed-ros2-wrapper
+
+**depth_recorder_component** (C++)
+
+A ROS 2 node that subscribes to /zed_multi/myzed2i/depth/depth_registered and records a .csv file with timestamps and .avi video recording of the published frames
+
+**rgb_recorder_component** (C++)
+
+A ROS 2 node that subscribes to /zed_multi/myzed2i/rgb/image_rect_color and records a .csv file with timestamps and .avi video recording of the published frames
+
+**zed_wrapper, depth_recorder_component and rgb_recorder_component are in the one component zed_multi for using interprocess memory** 
 
 # Prerequisites
 Ubuntu 22.04 LTS
