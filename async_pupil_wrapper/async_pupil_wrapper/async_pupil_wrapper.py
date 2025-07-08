@@ -51,7 +51,7 @@ class PupilAsync(Node):
         # ---------------- CSV logging ---------------------------
         self._csv_file = open(csv_path, "w", newline="")
         self._csv_writer = csv.writer(self._csv_file)
-        self._csv_writer.writerow(["host_time_ns", "offset_ns", "roundtrip_ns"])
+        self._csv_writer.writerow(["host_time_ns", "offset_ns"])
         qos = QoSProfile(
             depth= 5,
             history=HistoryPolicy.KEEP_LAST,
@@ -157,19 +157,19 @@ class PupilAsync(Node):
         super().destroy_node()
 
     async def _offset_loop(self, status):
-        """Continuously refine clock offset every 2 s."""
+        """Continuously refine clock offset every 1 s."""
         estimator = TimeOffsetEstimator(status.phone.ip, status.phone.time_echo_port)
         while True:
             estimates = await estimator.estimate()
             if estimates is None:
-                await asyncio.sleep(2.0)
+                await asyncio.sleep(1.0)
                 continue
             self.delayns = int(estimates.time_offset_ms.mean * 1_000_000)
 
             now_ns = self.get_clock().now().nanoseconds
-            self._csv_writer.writerow([now_ns, self.offset_ns, self.roundtrip_ns])
+            self._csv_writer.writerow([now_ns, self.delayns])
 
-            await asyncio.sleep(2.0)
+            await asyncio.sleep(1.0)
 
 def main():
     rclpy.init()
