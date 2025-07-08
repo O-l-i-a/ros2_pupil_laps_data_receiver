@@ -81,6 +81,22 @@ def progress_bar(percent_done, bar_length=50):
     sys.stdout.write(f'[{bar}] {percent_done:6.2f}%\r')
     sys.stdout.flush()
 
+def average_fps_from_timestamps(timestamps):
+    """Berechne die durchschnittliche Bildrate (FPS) als Mittelwert der Frames pro Sekunde."""
+    if len(timestamps) < 2:
+        return 25.0  # Fallback
+
+    # Sekundenzuordnung relativ zum ersten Timestamp
+    elapsed = timestamps - timestamps[0]
+    sec_bins = np.floor(elapsed).astype(int)
+    # Zähle Frames pro Sekunde
+    _, counts = np.unique(sec_bins, return_counts=True)
+    fps = counts.mean()
+
+    # Sicherheitsprüfungen
+    if fps <= 0 or fps > 240:  # unrealistische Werte filtern
+        fps = 25.0
+    return float(fps)
 
 def main():
     args = parse_arguments()
@@ -170,11 +186,7 @@ def main():
     # (Man könnte hier auch abs(len(ts_base)/(timestamps_base[-1]-timestamps_base[0])) rechnen,
     #   aber dafür ist es in der Praxis genug, einfach total_base/(Gesamtdauer) zu nehmen.)
     # Einfacher: FPS = total_base / (ts_base[-1] - ts_base[0])
-    duration_base = ts_base[-1] - ts_base[0]
-    if duration_base <= 0:
-        output_fps = 25.0
-    else:
-        output_fps = total_base / duration_base
+    output_fps = average_fps_from_timestamps(ts_base)
 
     # Sicherstellen, dass output_fps > 0 und nicht extrem groß/small
     if output_fps <= 0 or output_fps > 120:
