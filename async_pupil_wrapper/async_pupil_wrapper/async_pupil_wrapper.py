@@ -7,7 +7,7 @@ import threading
 
 import rclpy
 from rclpy.node import Node
-from rclpy.executors import SingleThreadedExecutor
+from rclpy.executors import SingleThreadedExecutor, MultiThreadedExecutor
 from std_srvs.srv import SetBool
 from sensor_msgs.msg import CompressedImage, Image, CameraInfo
 from cv_bridge import CvBridge
@@ -174,11 +174,10 @@ class PupilAsync(Node):
 def main():
     rclpy.init()
     node = PupilAsync()
-    executor = SingleThreadedExecutor()
+    executor = MultiThreadedExecutor()
     executor.add_node(node)
     spin_thread = threading.Thread(target=executor.spin, daemon=True)
     spin_thread.start()
-
     try:
         asyncio.run(node.run())
     except KeyboardInterrupt:
