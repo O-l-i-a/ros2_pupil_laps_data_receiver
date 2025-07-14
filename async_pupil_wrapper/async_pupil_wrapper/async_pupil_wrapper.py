@@ -15,7 +15,7 @@ from cv_bridge import CvBridge
 from pupil_labs.realtime_api import Network, Device, receive_gaze_data, receive_video_frames, receive_eye_events_data, BlinkEventData, FixationEventData, FixationOnsetEventData
 from gaze_interface.msg import GazeDataAsync  
 from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
-
+from rclpy.callback_groups import ReentrantCallbackGroup
 
 
 from pupil_labs.realtime_api.time_echo import TimeEcho, TimeOffsetEstimator, time_ms
@@ -35,33 +35,31 @@ class PupilAsync(Node):
         self.bridge = CvBridge()
         # Publisher für Gaze- und Scene-Daten
         self.declare_parameter("participant_name", "default")
-        self.participant_name: str = (
-            self.get_parameter("participant_name").get_parameter_value().string_value
-        )
-        self.get_logger().info(f"Participant name: {self.participant_name}")
+        
+        #self.get_logger().info(f"Participant name: {self.participant_name}")
 
         base_dir = "recordings"
-        self.session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
-        os.makedirs(self.session_dir, exist_ok=True)
+        #self.session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
+        #os.makedirs(self.session_dir, exist_ok=True)
 
         ts = self.get_clock().now().to_msg()
         prefix = f"{ts.sec}"
-        csv_path = os.path.join(self.session_dir, f"{prefix}_offset_log.csv")
+        #csv_path = os.path.join(self.session_dir, f"{prefix}_offset_log.csv")
 
         # ---------------- CSV logging ---------------------------
-        self._csv_file = open(csv_path, "w", newline="")
-        self._csv_writer = csv.writer(self._csv_file)
-        self._csv_writer.writerow(["host_time_ns", "offset_ns"])
+        #self._csv_file = open(csv_path, "w", newline="")
+        #self._csv_writer = csv.writer(self._csv_file)
+        #self._csv_writer.writerow(["host_time_ns", "offset_ns"])
         qos = QoSProfile(
             depth= 5,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.BEST_EFFORT,
             durability = DurabilityPolicy.VOLATILE
         )
-        self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', qos)
+        self.cb_group = ReentrantCallbackGroup()
+        self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', qos, callback_group=self.cb_group)
         self.scene_pub = self.create_publisher(CompressedImage, 'pupil/scene/image_raw', 15)
         self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', 10)
-        
         self.delayns = 0
         self.get_logger().info('PupilAsync bereit. Warte auf /record Service…')
 
@@ -153,11 +151,11 @@ class PupilAsync(Node):
 
 
     def destroy_node(self):
-        self._csv_file.close()
+        #self._csv_file.close()
         super().destroy_node()
 
     async def _offset_loop(self, status):
-        """Continuously refine clock offset every 1 s."""
+        """Continuously refine clock offset every 2s."""
         estimator = TimeOffsetEstimator(status.phone.ip, status.phone.time_echo_port)
         while True:
             estimates = await estimator.estimate()
@@ -166,15 +164,15 @@ class PupilAsync(Node):
                 continue
             self.delayns = int(estimates.time_offset_ms.mean * 1_000_000)
 
-            now_ns = self.get_clock().now().nanoseconds
-            self._csv_writer.writerow([now_ns, self.delayns])
+           # now_ns = self.get_clock().now().nanoseconds
+           # self._csv_writer.writerow([now_ns, self.delayns])
 
-            await asyncio.sleep(1.0)
+            await asyncio.sleep(2.0)
 
 def main():
     rclpy.init()
     node = PupilAsync()
-    executor = MultiThreadedExecutor()
+    executor = SingleThreadedExecutor()
     executor.add_node(node)
     spin_thread = threading.Thread(target=executor.spin, daemon=True)
     spin_thread.start()

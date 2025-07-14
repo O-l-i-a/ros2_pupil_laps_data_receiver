@@ -92,7 +92,9 @@ DepthRecorder::DepthRecorder(const rclcpp::NodeOptions & opts_in)
   // Subscription (zero-copy) --------------------------------------------------
   auto qos = rclcpp::SensorDataQoS().keep_last(5).best_effort();
   rclcpp::SubscriptionOptions sub_opts;
-
+  // auto reentrant_cbg_ =
+  // create_callback_group(rclcpp::CallbackGroupType::Reentrant);
+  // sub_opts.callback_group = reentrant_cbg_;
   sub_depth_ = create_subscription<Image>(
       topic_, qos,
       std::bind(&DepthRecorder::depthCallback, this, std::placeholders::_1),
