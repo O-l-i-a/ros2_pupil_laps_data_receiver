@@ -170,13 +170,17 @@ def main():
 
     hb, wb = frame_base_0.shape[:2]
     hh, wh = frame_high_0.shape[:2]
-    target_height = min(hb, hh)
-    scale_base = target_height / hb
-    scale_high = target_height / hh
-    target_width_base = int(wb * scale_base)
-    target_width_high = int(wh * scale_high)
-    combined_width  = target_width_base + target_width_high
-    combined_height = target_height
+
+    # Gleiche Zielbreite für beide
+    target_width = min(wb, wh)
+    scale_base_w = target_width / float(wb)
+    scale_high_w = target_width / float(wh)
+
+    target_height_base = int(round(hb * scale_base_w))
+    target_height_high = int(round(hh * scale_high_w))
+
+    combined_width  = target_width
+    combined_height = target_height_base + target_height_high
 
     # ----------------------------------------------------------------------------
     # 5. Output-Video mit FIXEN 30 FPS
@@ -223,11 +227,10 @@ def main():
             last_frame_high = frame_high.copy()
 
         # Resize + schreiben
-        frameb_resized = cv2.resize(frame_base, (target_width_base, target_height))
-        frameh_resized = cv2.resize(frame_high, (target_width_high, target_height))
-        combined = np.hstack((frameb_resized, frameh_resized))
+        frameb_resized = cv2.resize(frame_base, (target_width, target_height_base))
+        frameh_resized = cv2.resize(frame_high, (target_width, target_height_high))
+        combined = np.vstack((frameb_resized, frameh_resized))
         out.write(combined)
-
         # Fortschritt
         progress_bar((i + 1) / len(ts_base) * 100)
 

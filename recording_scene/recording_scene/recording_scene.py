@@ -43,8 +43,8 @@ class SceneRecorder(Node):
         self.video_writer = None
         self.csv_writer = None
         self.csv_file = None
-        self.frame_width = 1088  # Replace with actual width
-        self.frame_height = 1080  # Replace with actual height
+        self.frame_width = 1600# invisible 1088  # Replace with actual width
+        self.frame_height = 1200#invisible 1080  # Replace with actual height
         self.fps = 30.0
         self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         self.recording = False

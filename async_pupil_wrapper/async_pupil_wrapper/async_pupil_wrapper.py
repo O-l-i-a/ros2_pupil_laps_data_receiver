@@ -21,6 +21,7 @@ from rclpy.callback_groups import ReentrantCallbackGroup
 
 from pupil_labs.realtime_api.time_echo import TimeEcho, TimeOffsetEstimator, time_ms
 from rclpy.time import Time
+from pupil_labs.realtime_api.device import DeviceError
 
 
 
@@ -96,11 +97,11 @@ class PupilAsync(Node):
                 img = frame.bgr_buffer()
                 host_ns = frame.timestamp_unix_ns + self.delayns
                 stamp = unix_ns_to_ros_time(host_ns).to_msg()
-
+                now = self.get_clock().now().to_msg()
                 # --- Image ---
                 #ros_img = self.bridge.cv2_to_compressed_imgmsg(img)
                 ros_img = self.bridge.cv2_to_imgmsg(img, encoding='bgr8')
-                ros_img.header.stamp = stamp
+                ros_img.header.stamp = now
                 ros_img.header.frame_id = "pupil_scene"
                 self.scene_pub.publish(ros_img)
 
