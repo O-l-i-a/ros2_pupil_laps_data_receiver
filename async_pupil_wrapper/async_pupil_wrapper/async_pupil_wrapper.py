@@ -11,63 +11,96 @@ from rclpy.node import Node
 from rclpy.executors import SingleThreadedExecutor, MultiThreadedExecutor
 from std_srvs.srv import SetBool
 from sensor_msgs.msg import CompressedImage, Image, CameraInfo
+from geometry_msgs.msg import TransformStamped
 from cv_bridge import CvBridge
 
-from pupil_labs.realtime_api import Network, Device, receive_gaze_data, receive_video_frames, receive_eye_events_data, BlinkEventData, FixationEventData, FixationOnsetEventData
-from gaze_interface.msg import GazeDataAsync  
+from pupil_labs.realtime_api import (
+    Network,
+    Device,
+    receive_gaze_data,
+    receive_video_frames,
+    receive_eye_events_data,
+    BlinkEventData,
+    FixationEventData,
+    FixationOnsetEventData,
+)
+from gaze_interface.msg import GazeDataAsync
 from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
 from rclpy.callback_groups import ReentrantCallbackGroup
 
-
-from pupil_labs.realtime_api.time_echo import TimeEcho, TimeOffsetEstimator, time_ms
+from pupil_labs.realtime_api.time_echo import (
+    TimeEcho,
+    TimeOffsetEstimator,
+    time_ms,
+)
 from rclpy.time import Time
 from pupil_labs.realtime_api.device import DeviceError
 
+from tf2_ros import TransformBroadcaster
+import tf_transformations
+import apriltag
 
 
 def unix_ns_to_ros_time(unix_ns: int) -> Time:
-    """Helper to build an rclpy Time from **host‑clock** nanoseconds."""
+    """Helper to build an rclpy Time from **host-clock** nanoseconds."""
     sec = unix_ns // 1_000_000_000
     nanosec = unix_ns % 1_000_000_000
     return Time(seconds=sec, nanoseconds=nanosec)
 
+
 class PupilAsync(Node):
     def __init__(self):
-        super().__init__('pupil_async')
+        super().__init__("pupil_async")
         self.bridge = CvBridge()
-        # Publisher für Gaze- und Scene-Daten
-        self.declare_parameter("participant_name", "default")
-        self.shutdown_event = asyncio.Event()
-        #self.get_logger().info(f"Participant name: {self.participant_name}")
 
+        # Parameters
+        self.declare_parameter("participant_name", "default")
+        self.tag_size = self.declare_parameter("tag_size", 0.1).value  # meters
+        self.tag_family = self.declare_parameter("tag_family", "tag36h11").value
+
+        # AprilTag detector
+        options = apriltag.DetectorOptions(
+            families=self.tag_family,
+            nthreads=4,
+            quad_decimate=2.0,
+            refine_edges=True,
+        )
+        self.apriltag_detector = apriltag.Detector(options)
+
+        # TF broadcaster
+        self.tf_broadcaster = TransformBroadcaster(self)
+
+        self.shutdown_event = asyncio.Event()
+
+        # Recording base dir (currently unused/commented)
         base_dir = "recordings"
-        #self.session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
-        #os.makedirs(self.session_dir, exist_ok=True)
 
         ts = self.get_clock().now().to_msg()
         prefix = f"{ts.sec}"
-        #csv_path = os.path.join(self.session_dir, f"{prefix}_offset_log.csv")
 
-        # ---------------- CSV logging ---------------------------
-        #self._csv_file = open(csv_path, "w", newline="")
-        #self._csv_writer = csv.writer(self._csv_file)
-        #self._csv_writer.writerow(["host_time_ns", "offset_ns"])
+        # QoS
         qos = QoSProfile(
-            depth= 5,
+            depth=5,
             history=HistoryPolicy.KEEP_LAST,
             reliability=ReliabilityPolicy.BEST_EFFORT,
-            durability = DurabilityPolicy.VOLATILE
+            durability=DurabilityPolicy.VOLATILE,
         )
         self.cb_group = ReentrantCallbackGroup()
-        self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', qos, callback_group=self.cb_group)
-        self.scene_pub = self.create_publisher(Image, 'pupil/scene/image_raw', 10)
-        self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', 10)
+        self.gaze_pub = self.create_publisher(
+            GazeDataAsync, "pupil/gaze", qos, callback_group=self.cb_group
+        )
+        self.scene_pub = self.create_publisher(Image, "pupil/scene/image_raw", 10)
+        self.scene_info_pub = self.create_publisher(
+            CameraInfo, "pupil/scene/camera_info", 10
+        )
+
         self.delayns = 0
         self.calibration = None
-        self.get_logger().info('PupilAsync bereit. Warte auf /record Service…')
+
+        self.get_logger().info("PupilAsync bereit. Warte auf /record Service…")
 
     async def gaze_stream(self, url: str):
-        self.get_logger().info(f'Starting gaze stream: {url}')
+        self.get_logger().info(f"Starting gaze stream: {url}")
         try:
             async for gaze in receive_gaze_data(url, run_loop=True):
                 if self.shutdown_event.is_set():
@@ -76,32 +109,34 @@ class PupilAsync(Node):
                 msg = GazeDataAsync()
                 host_ns = gaze.timestamp_unix_ns + self.delayns
                 msg.header.stamp = unix_ns_to_ros_time(host_ns).to_msg()
-                msg.header.frame_id = 'pupil_gaze'
+                msg.header.frame_id = "pupil_gaze"
                 msg.norm_pos_x = gaze.x
                 msg.norm_pos_y = gaze.y
                 self.gaze_pub.publish(msg)
 
         except asyncio.CancelledError:
-            self.get_logger().debug('gaze_stream cancelled')
+            self.get_logger().debug("gaze_stream cancelled")
             raise
+
     async def scene_stream(self, url: str):
         """
         Asynchronous iterator for scene frames.
-        Publishes CompressedImage and CameraInfo.
+        Publishes Image, CameraInfo and AprilTag TFs.
         """
-        self.get_logger().info(f'Starting scene stream: {url}')
+        self.get_logger().info(f"Starting scene stream: {url}")
         try:
             logged_calib = False
 
             async for frame in receive_video_frames(url, run_loop=True):
                 img = frame.bgr_buffer()
+
+                # host-synced timestamp for this frame
                 host_ns = frame.timestamp_unix_ns + self.delayns
-                stamp = unix_ns_to_ros_time(host_ns).to_msg()
-                now = self.get_clock().now().to_msg()
+                img_stamp = unix_ns_to_ros_time(host_ns).to_msg()
+
                 # --- Image ---
-                #ros_img = self.bridge.cv2_to_compressed_imgmsg(img)
-                ros_img = self.bridge.cv2_to_imgmsg(img, encoding='bgr8')
-                ros_img.header.stamp = now
+                ros_img = self.bridge.cv2_to_imgmsg(img, encoding="bgr8")
+                ros_img.header.stamp = img_stamp         # image time
                 ros_img.header.frame_id = "pupil_scene"
                 self.scene_pub.publish(ros_img)
 
@@ -123,7 +158,6 @@ class PupilAsync(Node):
                 scene_K_arr = np.array(scene_K_raw)
                 scene_D_arr = np.array(scene_D_raw)
 
-                # Normalize shapes: handle (1,3,3) / (3,3) / (9,) all the same
                 k_flat = scene_K_arr.flatten()
                 d_flat = scene_D_arr.flatten()
 
@@ -139,34 +173,27 @@ class PupilAsync(Node):
                 if k_flat.size != 9:
                     self.get_logger().error(
                         f"Expected 9 intrinsics values, got {k_flat.size}, "
-                        "skipping CameraInfo publishing."
+                        "skipping CameraInfo + AprilTag pose."
                     )
                     continue
 
-                # Fill CameraInfo
                 info = CameraInfo()
-                info.header = ros_img.header
+                info.header = ros_img.header          # same stamp as image
                 info.height = img.shape[0]
-                info.width  = img.shape[1]
+                info.width = img.shape[1]
                 info.distortion_model = "plumb_bob"
 
-                # K must be exactly 9 numbers
                 info.k = k_flat.tolist()
-
-                # Distortion coefficients (whatever length Neon provides)
                 info.d = d_flat.tolist()
 
-                # Identity rectification matrix R
                 info.r = [0.0] * 9
                 info.r[0] = info.r[4] = info.r[8] = 1.0
 
-                # Extract fx, fy, cx, cy from the flattened K
-                fx = k_flat[0]
-                cx = k_flat[2]
-                fy = k_flat[4]
-                cy = k_flat[5]
+                fx = float(k_flat[0])
+                cx = float(k_flat[2])
+                fy = float(k_flat[4])
+                cy = float(k_flat[5])
 
-                # Simple projection matrix P (no stereo baseline)
                 info.p = [
                     fx, 0.0, cx, 0.0,
                     0.0, fy, cy, 0.0,
@@ -175,12 +202,65 @@ class PupilAsync(Node):
 
                 self.scene_info_pub.publish(info)
 
+                # --- AprilTag detection + TF with timing ---
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+                # start timing here
+                t_start = self.get_clock().now()
+                detections = self.apriltag_detector.detect(gray)
+
+                if detections and fx is not None and fy is not None:
+                    camera_params = (fx, fy, cx, cy)
+
+                    for det in detections:
+                        pose, _, _ = self.apriltag_detector.detection_pose(
+                            det, camera_params, self.tag_size
+                        )
+
+                        R = pose[:3, :3]
+                        t = pose[:3, 3]
+
+                        T = np.eye(4)
+                        T[:3, :3] = R
+                        T[:3, 3] = t
+
+                        q = tf_transformations.quaternion_from_matrix(T)
+
+                        # end timing after pose estimation
+                        t_end = self.get_clock().now()
+                        detection_ns = (t_end - t_start).nanoseconds
+                        detection_ms = detection_ns / 1e6
+
+                        # Publish TF: header.stamp = end of detection
+                        tf_msg = TransformStamped()
+                        tf_msg.header.stamp = t_end.to_msg()
+                        tf_msg.header.frame_id = "pupil_scene"
+                        tf_msg.child_frame_id = f"tag_{det.tag_id}"
+
+                        tf_msg.transform.translation.x = float(t[0])
+                        tf_msg.transform.translation.y = float(t[1])
+                        tf_msg.transform.translation.z = float(t[2])
+
+                        tf_msg.transform.rotation.x = float(q[0])
+                        tf_msg.transform.rotation.y = float(q[1])
+                        tf_msg.transform.rotation.z = float(q[2])
+                        tf_msg.transform.rotation.w = float(q[3])
+
+                        self.tf_broadcaster.sendTransform(tf_msg)
+
+                        # Optional: debug log
+                        self.get_logger().debug(
+                            f"AprilTag {det.tag_id}: detection took {detection_ms:.3f} ms"
+                        )
+
+                # Now, latency from image to TF is:
+                #   tf_msg.header.stamp - ros_img.header.stamp
+
         except asyncio.CancelledError:
-            self.get_logger().debug('scene_stream cancelled')
+            self.get_logger().debug("scene_stream cancelled")
             raise
         except Exception as e:
             self.get_logger().exception(f"scene_stream error: {e}")
-
 
 
     async def run(self):
@@ -188,48 +268,49 @@ class PupilAsync(Node):
         Device discovery and then spin up the gaze + scene streams as background tasks,
         blocking until the user interrupts (Ctrl-C).
         """
-        self.get_logger().info('Discovering Pupil device...')
+        self.get_logger().info("Discovering Pupil device...")
         async with Network() as network:
             dev_info = await network.wait_for_new_device(timeout_seconds=20)
         if dev_info is None:
-            self.get_logger().error('No Pupil device found, aborting')
+            self.get_logger().error("No Pupil device found, aborting")
             return
-        
-        self.get_logger().info('Pupil device connected')
+
+        self.get_logger().info("Pupil device connected")
         async with Device.from_discovered_device(dev_info) as device:
             self.calibration = await device.get_calibration()
             status = await device.get_status()
             gaze_sensor = status.direct_gaze_sensor()
             world_sensor = status.direct_world_sensor()
-            #self.delayns = int(device.time_echo().roundtrip_duration_ms.mean * 1_000_000)
+
             if not gaze_sensor.connected:
-                self.get_logger().error('Gaze sensor not connected')
+                self.get_logger().error("Gaze sensor not connected")
                 return
             if not world_sensor.connected:
-                self.get_logger().error('Scene camera not connected')
+                self.get_logger().error("Scene camera not connected")
                 return
 
             # --- spawn both coroutines as background tasks ---
             offset_task = asyncio.create_task(self._offset_loop(status))
-            gaze_task  = asyncio.create_task(self.gaze_stream(gaze_sensor.url))
+            gaze_task = asyncio.create_task(self.gaze_stream(gaze_sensor.url))
             scene_task = asyncio.create_task(self.scene_stream(world_sensor.url))
 
             # --- block here until cancelled (e.g. Ctrl-C) ---
             try:
                 await asyncio.Event().wait()
             except asyncio.CancelledError:
-                self.get_logger().info('Shutdown requested, cancelling streams…')
+                self.get_logger().info(
+                    "Shutdown requested, cancelling streams…"
+                )
             finally:
                 # --- clean up both streams ---
                 gaze_task.cancel()
                 scene_task.cancel()
                 offset_task.cancel()
-                # optionally wait for them to finish cancelling
-                await asyncio.gather(gaze_task, scene_task, offset_task, return_exceptions=True)
-
+                await asyncio.gather(
+                    gaze_task, scene_task, offset_task, return_exceptions=True
+                )
 
     def destroy_node(self):
-        #self._csv_file.close()
         super().destroy_node()
 
     async def _offset_loop(self, status):
@@ -242,10 +323,8 @@ class PupilAsync(Node):
                 continue
             self.delayns = int(estimates.time_offset_ms.mean * 1_000_000)
 
-           # now_ns = self.get_clock().now().nanoseconds
-           # self._csv_writer.writerow([now_ns, self.delayns])
-
             await asyncio.sleep(2.0)
+
 
 def main():
     rclpy.init()
@@ -261,7 +340,7 @@ def main():
     async def main_async():
         ros_task = asyncio.create_task(ros_spin())
         try:
-            await node.run()      # starts your gaze + scene + offset tasks
+            await node.run()
         finally:
             ros_task.cancel()
             await asyncio.gather(ros_task, return_exceptions=True)
@@ -275,5 +354,5 @@ def main():
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
