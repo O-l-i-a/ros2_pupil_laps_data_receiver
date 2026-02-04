@@ -52,7 +52,7 @@ class PupilAsync(Node):
     def __init__(self):
         super().__init__("pupil_async")
         self.bridge = CvBridge()
-
+        self.det_busy = False
         # Parameters
         self.declare_parameter("participant_name", "default")
         self.tag_size = self.declare_parameter("tag_size", 0.1).value  # meters
@@ -129,25 +129,20 @@ class PupilAsync(Node):
 
             async for frame in receive_video_frames(url, run_loop=True):
                 img = frame.bgr_buffer()
-
-                # host-synced timestamp for this frame
                 host_ns = frame.timestamp_unix_ns + self.delayns
                 img_stamp = unix_ns_to_ros_time(host_ns).to_msg()
 
                 # --- Image ---
                 ros_img = self.bridge.cv2_to_imgmsg(img, encoding="bgr8")
-                ros_img.header.stamp = img_stamp         # image time
+                ros_img.header.stamp = img_stamp
                 ros_img.header.frame_id = "pupil_scene"
                 self.scene_pub.publish(ros_img)
 
                 # --- CameraInfo ---
                 if self.calibration is None:
-                    # no calibration -> just images
                     continue
 
                 calib = self.calibration
-
-                # Try dict-style access first, fallback to attributes
                 try:
                     scene_K_raw = calib["scene_camera_matrix"]
                     scene_D_raw = calib["scene_distortion_coefficients"]
@@ -178,7 +173,7 @@ class PupilAsync(Node):
                     continue
 
                 info = CameraInfo()
-                info.header = ros_img.header          # same stamp as image
+                info.header = ros_img.header
                 info.height = img.shape[0]
                 info.width = img.shape[1]
                 info.distortion_model = "plumb_bob"
@@ -202,56 +197,16 @@ class PupilAsync(Node):
 
                 self.scene_info_pub.publish(info)
 
-                # --- AprilTag detection + TF with timing ---
-                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-                # start timing here
-                t_start = self.get_clock().now()
-                detections = self.apriltag_detector.detect(gray)
-
-                if detections and fx is not None and fy is not None:
-                    camera_params = (fx, fy, cx, cy)
-
-                    for det in detections:
-                        pose, _, _ = self.apriltag_detector.detection_pose(
-                            det, camera_params, self.tag_size
-                        )
-
-                        R = pose[:3, :3]
-                        t = pose[:3, 3]
-
-                        T = np.eye(4)
-                        T[:3, :3] = R
-                        T[:3, 3] = t
-
-                        q = tf_transformations.quaternion_from_matrix(T)
-
-                        # end timing after pose estimation
-                        t_end = self.get_clock().now()
-                        detection_ns = (t_end - t_start).nanoseconds
-                        detection_ms = detection_ns / 1e6
-
-                        # Publish TF: header.stamp = end of detection
-                        tf_msg = TransformStamped()
-                        tf_msg.header.stamp = t_end.to_msg()
-                        tf_msg.header.frame_id = "pupil_scene"
-                        tf_msg.child_frame_id = f"tag_{det.tag_id}"
-
-                        tf_msg.transform.translation.x = float(t[0])
-                        tf_msg.transform.translation.y = float(t[1])
-                        tf_msg.transform.translation.z = float(t[2])
-
-                        tf_msg.transform.rotation.x = float(q[0])
-                        tf_msg.transform.rotation.y = float(q[1])
-                        tf_msg.transform.rotation.z = float(q[2])
-                        tf_msg.transform.rotation.w = float(q[3])
-
-                        self.tf_broadcaster.sendTransform(tf_msg)
-
-                        # Optional: debug log
-                        self.get_logger().debug(
-                            f"AprilTag {det.tag_id}: detection took {detection_ms:.3f} ms"
-                        )
+                # --- Non-blocking AprilTag kick ---
+                if not self.det_busy and fx is not None and fy is not None:
+                    self.det_busy = True
+                    # pass img by reference; heavy stuff happens in thread
+                    asyncio.create_task(
+                        self._run_detection_background(img, fx, fy, cx, cy, img_stamp)
+                    )
+                else:
+                    # detector is busy, skip this frame for detection
+                    self.get_logger().debug("Detection busy, skipping frame for AprilTag")
 
                 # Now, latency from image to TF is:
                 #   tf_msg.header.stamp - ros_img.header.stamp
@@ -262,6 +217,83 @@ class PupilAsync(Node):
         except Exception as e:
             self.get_logger().exception(f"scene_stream error: {e}")
 
+    async def _run_detection_background(self, img, fx, fy, cx, cy, img_stamp):
+        """
+        Run AprilTag detection in a background thread so the main loop doesn't block.
+        """
+        try:
+            # Heavy work in separate thread
+            tf_msgs = await asyncio.to_thread(
+                self._detect_apriltags, img, fx, fy, cx, cy, img_stamp
+            )
+
+            # Back in event loop: publish TFs (cheap)
+            if tf_msgs:
+                self.tf_broadcaster.sendTransform(tf_msgs)
+        except Exception as e:
+            self.get_logger().error(f"Error in background detection: {e}")
+        finally:
+            # Mark detector as free
+            self.det_busy = False
+
+    def _detect_apriltags(self, img, fx, fy, cx, cy, img_stamp):
+        """
+        Runs in a separate thread via asyncio.to_thread.
+        Does grayscale conversion + AprilTag detection + pose.
+        Returns a list of TransformStamped.
+        """
+        tf_msgs = []
+
+        # Convert to grayscale here (outside async / hot loop)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+        t_start = time_ms()
+        detections = self.apriltag_detector.detect(gray)
+
+        if not detections:
+            return tf_msgs
+
+        camera_params = (fx, fy, cx, cy)
+
+        for det in detections:
+            pose, _, _ = self.apriltag_detector.detection_pose(
+                det, camera_params, self.tag_size
+            )
+
+            R = pose[:3, :3]
+            t = pose[:3, 3]
+
+            T = np.eye(4)
+            T[:3, :3] = R
+            T[:3, 3] = t
+
+            q = tf_transformations.quaternion_from_matrix(T)
+
+            t_end = time_ms()
+            detection_ms = t_end - t_start
+
+            tf_msg = TransformStamped()
+            # you can use img_stamp or a fresh Time; img_stamp is fine
+            tf_msg.header.stamp = img_stamp
+            tf_msg.header.frame_id = "pupil_scene"
+            tf_msg.child_frame_id = f"tag_{det.tag_id}"
+
+            tf_msg.transform.translation.x = float(t[0])
+            tf_msg.transform.translation.y = float(t[1])
+            tf_msg.transform.translation.z = float(t[2])
+
+            tf_msg.transform.rotation.x = float(q[0])
+            tf_msg.transform.rotation.y = float(q[1])
+            tf_msg.transform.rotation.z = float(q[2])
+            tf_msg.transform.rotation.w = float(q[3])
+
+            tf_msgs.append(tf_msg)
+
+            self.get_logger().debug(
+                f"AprilTag {det.tag_id}: detection took {detection_ms:.3f} ms"
+            )
+
+        return tf_msgs
 
     async def run(self):
         """
