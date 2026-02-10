@@ -1,0 +1,2 @@
+[console_scripts]
+recording_blink = recording_blink.recording_blink:main

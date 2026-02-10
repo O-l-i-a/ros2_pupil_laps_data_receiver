@@ -1,0 +1,7 @@
+Metadata-Version: 2.1
+Name: recording-blink
+Version: 0.0.0
+Summary: Blink recorder node for Pupil ROS streams
+Maintainer: olhamelnyk
+Maintainer-email: olgamelnik12@gmail.com
+License: Apache-2.0

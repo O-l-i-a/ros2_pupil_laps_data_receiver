@@ -1,0 +1,2 @@
+[console_scripts]
+recording_imu = recording_imu.recording_imu:main

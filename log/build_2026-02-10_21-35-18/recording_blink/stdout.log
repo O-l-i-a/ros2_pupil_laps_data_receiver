@@ -1,0 +1,35 @@
+running egg_info
+creating ../build/recording_blink/recording_blink.egg-info
+writing ../build/recording_blink/recording_blink.egg-info/PKG-INFO
+writing dependency_links to ../build/recording_blink/recording_blink.egg-info/dependency_links.txt
+writing entry points to ../build/recording_blink/recording_blink.egg-info/entry_points.txt
+writing requirements to ../build/recording_blink/recording_blink.egg-info/requires.txt
+writing top-level names to ../build/recording_blink/recording_blink.egg-info/top_level.txt
+writing manifest file '../build/recording_blink/recording_blink.egg-info/SOURCES.txt'
+reading manifest file '../build/recording_blink/recording_blink.egg-info/SOURCES.txt'
+writing manifest file '../build/recording_blink/recording_blink.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/olhamelnyk/colcon_venv/src/build/recording_blink/build
+creating /home/olhamelnyk/colcon_venv/src/build/recording_blink/build/lib
+creating /home/olhamelnyk/colcon_venv/src/build/recording_blink/build/lib/recording_blink
+copying recording_blink/recording_blink.py -> /home/olhamelnyk/colcon_venv/src/build/recording_blink/build/lib/recording_blink
+copying recording_blink/__init__.py -> /home/olhamelnyk/colcon_venv/src/build/recording_blink/build/lib/recording_blink
+running install
+running install_lib
+creating /home/olhamelnyk/colcon_venv/src/install/recording_blink/lib/python3.12/site-packages/recording_blink
+copying /home/olhamelnyk/colcon_venv/src/build/recording_blink/build/lib/recording_blink/recording_blink.py -> /home/olhamelnyk/colcon_venv/src/install/recording_blink/lib/python3.12/site-packages/recording_blink
+copying /home/olhamelnyk/colcon_venv/src/build/recording_blink/build/lib/recording_blink/__init__.py -> /home/olhamelnyk/colcon_venv/src/install/recording_blink/lib/python3.12/site-packages/recording_blink
+byte-compiling /home/olhamelnyk/colcon_venv/src/install/recording_blink/lib/python3.12/site-packages/recording_blink/recording_blink.py to recording_blink.cpython-312.pyc
+byte-compiling /home/olhamelnyk/colcon_venv/src/install/recording_blink/lib/python3.12/site-packages/recording_blink/__init__.py to __init__.cpython-312.pyc
+running install_data
+creating /home/olhamelnyk/colcon_venv/src/install/recording_blink/share/ament_index
+creating /home/olhamelnyk/colcon_venv/src/install/recording_blink/share/ament_index/resource_index
+creating /home/olhamelnyk/colcon_venv/src/install/recording_blink/share/ament_index/resource_index/packages
+copying resource/recording_blink -> /home/olhamelnyk/colcon_venv/src/install/recording_blink/share/ament_index/resource_index/packages
+copying package.xml -> /home/olhamelnyk/colcon_venv/src/install/recording_blink/share/recording_blink
+running install_egg_info
+Copying ../build/recording_blink/recording_blink.egg-info to /home/olhamelnyk/colcon_venv/src/install/recording_blink/lib/python3.12/site-packages/recording_blink-0.0.0-py3.12.egg-info
+running install_scripts
+Installing recording_blink script to /home/olhamelnyk/colcon_venv/src/install/recording_blink/lib/recording_blink
+writing list of installed files to '/home/olhamelnyk/colcon_venv/src/build/recording_blink/install.log'

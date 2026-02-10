@@ -18,6 +18,8 @@ class RecordingController(Node):
         # ---------- service clients ----------
         self.pupil_scene_cli = self.create_client(SetBool, 'record_pupil_scene')
         self.pupil_gaze_cli  = self.create_client(SetBool, 'record_pupil_gaze')
+        self.pupil_blink_cli = self.create_client(SetBool, 'record_pupil_blink')
+        self.pupil_imu_cli   = self.create_client(SetBool, 'record_pupil_imu')
         self.zed_depth_cli   = self.create_client(SetBool, '/zed_multi/record_zed_depth')
         self.zed_rgb_cli     = self.create_client(SetBool, '/zed_multi/record_zed_rgb')
 
@@ -27,6 +29,8 @@ class RecordingController(Node):
             '/zed_multi/rgb_recorder',
             '/pupil_scene_recorder',
             'pupil_gaze_recorder',
+            'pupil_blink_recorder',
+            'pupil_imu_recorder',
         ]
         self.param_clients = {
             name: AsyncParameterClient(self, remote_node_name=name)
@@ -128,6 +132,8 @@ class MainWindow(QMainWindow):
             self._call_service(self.node.zed_rgb_cli,    True),
             self._call_service(self.node.pupil_scene_cli,True),
             self._call_service(self.node.pupil_gaze_cli, True),
+            self._call_service(self.node.pupil_blink_cli, True),
+            self._call_service(self.node.pupil_imu_cli,   True),
         ])
         self.status.setText('Status: Recording' if ok else '❌ start failed')
 
@@ -138,6 +144,8 @@ class MainWindow(QMainWindow):
             self._call_service(self.node.zed_rgb_cli,    False),
             self._call_service(self.node.pupil_scene_cli,False),
             self._call_service(self.node.pupil_gaze_cli, False),
+            self._call_service(self.node.pupil_blink_cli, False),
+            self._call_service(self.node.pupil_imu_cli,   False),
         ])
         self.status.setText('Status: Stopped' if ok else '❌ stop failed')
 

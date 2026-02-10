@@ -2,6 +2,7 @@
 import asyncio
 import os
 import csv
+import json
 import cv2
 import threading
 import numpy as np
@@ -52,6 +53,7 @@ class PupilAsync(Node):
         self.declare_parameter("participant_name", "default")
         self.declare_parameter("opencv_num_threads", 4)
         self.shutdown_event = asyncio.Event()
+        self.participant_name = self.get_parameter("participant_name").value
         #self.get_logger().info(f"Participant name: {self.participant_name}")
 
         # OpenCV CPU tuning for high-rate BGR->gray conversion.
@@ -82,9 +84,9 @@ class PupilAsync(Node):
             durability = DurabilityPolicy.VOLATILE
         )
         qos_scene = QoSProfile(
-            depth= 10,
+            depth= 15,
             history=HistoryPolicy.KEEP_LAST,
-            reliability=ReliabilityPolicy.BEST_EFFORT,
+            reliability=ReliabilityPolicy.RELIABLE,
             durability = DurabilityPolicy.VOLATILE
         )
         self.cb_group = ReentrantCallbackGroup()
@@ -96,6 +98,13 @@ class PupilAsync(Node):
         self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', qos_scene)
         self.delayns = 0
         self.calibration = None
+        self._scene_k = None
+        self._scene_d = None
+        self._scene_fx = 0.0
+        self._scene_fy = 0.0
+        self._scene_cx = 0.0
+        self._scene_cy = 0.0
+        self._scene_calib_valid = False
         self.get_logger().info('PupilAsync bereit. Warte auf /record Service…')
 
     async def gaze_stream(self, url: str):
@@ -199,8 +208,6 @@ class PupilAsync(Node):
         """
         self.get_logger().info(f'Starting scene stream: {url}')
         try:
-            logged_calib = False
-
             async for frame in receive_video_frames(url, run_loop=True):
                 img = frame.bgr_buffer()
                 h, w = img.shape[:2]
@@ -216,76 +223,6 @@ class PupilAsync(Node):
                 
                 ros_img.header.frame_id = "pupil_scene"
                 self.scene_pub.publish(ros_img)
-
-                # --- CameraInfo ---
-                if self.calibration is None:
-                    # no calibration -> just images
-                    continue
-
-                calib = self.calibration
-
-                # Try dict-style access first, fallback to attributes
-                try:
-                    scene_K_raw = calib["scene_camera_matrix"]
-                    scene_D_raw = calib["scene_distortion_coefficients"]
-                except Exception:
-                    scene_K_raw = calib.scene_camera_matrix
-                    scene_D_raw = calib.scene_distortion_coefficients
-
-                scene_K_arr = np.array(scene_K_raw)
-                scene_D_arr = np.array(scene_D_raw)
-
-                # Normalize shapes: handle (1,3,3) / (3,3) / (9,) all the same
-                k_flat = scene_K_arr.flatten()
-                d_flat = scene_D_arr.flatten()
-
-                if not logged_calib:
-                    self.get_logger().info(
-                        f"scene_K raw shape: {scene_K_arr.shape}, "
-                        f"flattened len: {k_flat.size}; "
-                        f"scene_D raw shape: {scene_D_arr.shape}, "
-                        f"flattened len: {d_flat.size}"
-                    )
-                    logged_calib = True
-
-                if k_flat.size != 9:
-                    self.get_logger().error(
-                        f"Expected 9 intrinsics values, got {k_flat.size}, "
-                        "skipping CameraInfo publishing."
-                    )
-                    continue
-
-                # Fill CameraInfo
-                info = CameraInfo()
-                info.header = ros_img.header
-                info.height = img.shape[0]
-                info.width  = img.shape[1]
-                info.distortion_model = "plumb_bob"
-
-                # K must be exactly 9 numbers
-                info.k = k_flat.tolist()
-
-                # Distortion coefficients (whatever length Neon provides)
-                info.d = d_flat.tolist()
-
-                # Identity rectification matrix R
-                info.r = [0.0] * 9
-                info.r[0] = info.r[4] = info.r[8] = 1.0
-
-                # Extract fx, fy, cx, cy from the flattened K
-                fx = k_flat[0]
-                cx = k_flat[2]
-                fy = k_flat[4]
-                cy = k_flat[5]
-
-                # Simple projection matrix P (no stereo baseline)
-                info.p = [
-                    fx, 0.0, cx, 0.0,
-                    0.0, fy, cy, 0.0,
-                    0.0, 0.0, 1.0, 0.0,
-                ]
-
-                self.scene_info_pub.publish(info)
 
         except asyncio.CancelledError:
             self.get_logger().debug('scene_stream cancelled')
@@ -310,6 +247,8 @@ class PupilAsync(Node):
         self.get_logger().info('Pupil device connected')
         async with Device.from_discovered_device(dev_info) as device:
             self.calibration = await device.get_calibration()
+            self._prepare_scene_calibration()
+            self._write_scene_calibration_file()
             status = await device.get_status()
             gaze_sensor = status.direct_gaze_sensor()
             world_sensor = status.direct_world_sensor()
@@ -366,6 +305,73 @@ class PupilAsync(Node):
                 if imu_task is not None:
                     tasks.append(imu_task)
                 await asyncio.gather(*tasks, return_exceptions=True)
+
+    def _prepare_scene_calibration(self):
+        if self.calibration is None:
+            self._scene_calib_valid = False
+            return
+
+        calib = self.calibration
+        try:
+            scene_k_raw = calib["scene_camera_matrix"]
+            scene_d_raw = calib["scene_distortion_coefficients"]
+        except Exception:
+            scene_k_raw = calib.scene_camera_matrix
+            scene_d_raw = calib.scene_distortion_coefficients
+
+        scene_k_arr = np.array(scene_k_raw)
+        scene_d_arr = np.array(scene_d_raw)
+        k_flat = scene_k_arr.flatten()
+        d_flat = scene_d_arr.flatten()
+
+        self.get_logger().info(
+            f"scene_K raw shape: {scene_k_arr.shape}, flattened len: {k_flat.size}; "
+            f"scene_D raw shape: {scene_d_arr.shape}, flattened len: {d_flat.size}"
+        )
+
+        if k_flat.size != 9:
+            self.get_logger().error(
+                f"Expected 9 intrinsics values, got {k_flat.size}, CameraInfo disabled."
+            )
+            self._scene_calib_valid = False
+            return
+
+        self._scene_k = k_flat.tolist()
+        self._scene_d = d_flat.tolist()
+        self._scene_fx = float(k_flat[0])
+        self._scene_cx = float(k_flat[2])
+        self._scene_fy = float(k_flat[4])
+        self._scene_cy = float(k_flat[5])
+        self._scene_calib_valid = True
+
+    def _write_scene_calibration_file(self):
+        if not self._scene_calib_valid:
+            self.get_logger().warning("Scene calibration invalid; file will not be written.")
+            return
+
+        base_dir = "recordings"
+        session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
+        os.makedirs(session_dir, exist_ok=True)
+        calib_path = os.path.join(session_dir, "scene_calibration.json")
+
+        calib_payload = {
+            "participant_name": self.participant_name,
+            "distortion_model": "plumb_bob",
+            "k": self._scene_k,
+            "d": self._scene_d,
+            "r": [1.0, 0.0, 0.0,
+                  0.0, 1.0, 0.0,
+                  0.0, 0.0, 1.0],
+            "p": [
+                self._scene_fx, 0.0, self._scene_cx, 0.0,
+                0.0, self._scene_fy, self._scene_cy, 0.0,
+                0.0, 0.0, 1.0, 0.0,
+            ],
+        }
+
+        with open(calib_path, "w", encoding="utf-8") as f:
+            json.dump(calib_payload, f, indent=2)
+        self.get_logger().info(f"Scene calibration written once to: {calib_path}")
 
 
     def destroy_node(self):

@@ -1,105 +1,171 @@
-import sys
-import threading
-
-import rclpy
+#!/usr/bin/env python3
+import sys, os, asyncio, threading, rclpy
 from rclpy.node import Node
+from rclpy.parameter import Parameter
+from rclpy.parameter_client import AsyncParameterClient
 from std_srvs.srv import SetBool
-from zed_msgs.srv import StartSvoRec
-from std_srvs.srv import Trigger
-
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QLabel, QVBoxLayout, QWidget
+from PyQt5.QtWidgets import (
+    QApplication, QMainWindow, QPushButton, QLabel,
+    QVBoxLayout, QWidget, QLineEdit
+)
 from PyQt5.QtCore import QTimer
 
+# ────────────────────────────────────────────────────────  ROS node
 class RecordingController(Node):
     def __init__(self):
         super().__init__('recording_controller_gui_node')
-        # Clients
-        self.pupil_client = self.create_client(SetBool, '/record')
-        self.zed_start_client = self.create_client(StartSvoRec, '/zed/zed_node/start_svo_rec')
-        self.zed_stop_client = self.create_client(Trigger, '/zed/zed_node/stop_svo_rec')
 
+        # ---------- service clients ----------
+        self.pupil_scene_cli = self.create_client(SetBool, 'record_pupil_scene')
+        self.pupil_gaze_cli  = self.create_client(SetBool, 'record_pupil_gaze')
+        self.pupil_blink_cli = self.create_client(SetBool, 'record_pupil_blink')
+        self.pupil_imu_cli   = self.create_client(SetBool, 'record_pupil_imu')
+        self.zed_depth_cli   = self.create_client(SetBool, '/zed_multi/record_zed_depth')
+        self.zed_rgb_cli     = self.create_client(SetBool, '/zed_multi/record_zed_rgb')
+
+        # ---------- parameter clients ----------
+        self.recorder_nodes = [
+            '/zed_multi/depth_recorder',
+            '/zed_multi/rgb_recorder',
+            '/pupil_scene_recorder',
+            'pupil_gaze_recorder',
+            'pupil_blink_recorder',
+            'pupil_imu_recorder',
+        ]
+        self.param_clients = {
+            name: AsyncParameterClient(self, remote_node_name=name)
+            for name in self.recorder_nodes
+        }
+
+    # ---------------------------------------------------- broadcast parameter
+    async def broadcast_participant(self, name: str, timeout=2.0):
+        futures = {
+            node: cli.set_parameters([
+                Parameter('participant_name', Parameter.Type.STRING, name)
+            ])
+            for node, cli in self.param_clients.items()
+        }
+
+        done, _ = await asyncio.wait(futures.values(), timeout=timeout)
+        ok, fail = [], []
+        for node, fut in futures.items():
+            try:
+                if fut in done and fut.result().results[0].successful:
+                    ok.append(node)
+                else:
+                    fail.append(node)
+            except Exception:
+                fail.append(node)
+        return ok, fail
+
+
+# ────────────────────────────────────────────────────────  Qt GUI
 class MainWindow(QMainWindow):
-    def __init__(self, rclpy_node):
+    def __init__(self, node: RecordingController, loop: asyncio.AbstractEventLoop):
         super().__init__()
+        self.node = node
+        self.loop = loop
         self.setWindowTitle('Recording Controller')
-        self.node = rclpy_node
-        # Widgets
-        self.status_label = QLabel('Status: Idle')
+
+        # ---------- widgets ----------
+        self.status = QLabel('Status: Idle')
         self.start_btn = QPushButton('Start Recording')
-        self.stop_btn = QPushButton('Stop Recording')
+        self.stop_btn  = QPushButton('Stop Recording')
+        self.name_edit = QLineEdit(placeholderText='Participant name …')
+
+        # ---------- layout ----------
+        vbox = QVBoxLayout()
+        for w in (self.status, self.start_btn, self.stop_btn, self.name_edit):
+            vbox.addWidget(w)
+        container = QWidget(); container.setLayout(vbox)
+        self.setCentralWidget(container)
+
+        # ---------- signals ----------
         self.start_btn.clicked.connect(self.start_recording)
         self.stop_btn.clicked.connect(self.stop_recording)
-        # Layout
-        layout = QVBoxLayout()
-        layout.addWidget(self.status_label)
-        layout.addWidget(self.start_btn)
-        layout.addWidget(self.stop_btn)
-        container = QWidget()
-        container.setLayout(layout)
-        self.setCentralWidget(container)
-        # Timer to spin ROS2
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.ros_spin)
-        self.timer.start(50)
+        self.name_edit.returnPressed.connect(self.on_name_entered)
 
+        # ---------- periodic ROS spin ----------
+        self.timer = QTimer(self); self.timer.timeout.connect(self.ros_spin)
+        self.timer.start(40)
+
+    # ---------------------------------------------------- helpers
     def ros_spin(self):
-        rclpy.spin_once(self.node, timeout_sec=0)
+        rclpy.spin_once(self.node, timeout_sec=0.0)
 
-    def call_service(self, client, req):
-        if not client.wait_for_service(timeout_sec=2.0):
-            return False, 'Service unavailable'
-        future = client.call_async(req)
-        rclpy.spin_until_future_complete(self.node, future)
-        res = future.result()
-        # different types have different attributes
-        success = getattr(res, 'success', False)
-        message = getattr(res, 'message', '')
-        return success, message
+    def _set_status(self, msg: str):
+        # ensure execution in the Qt thread
+        QTimer.singleShot(0, lambda m=msg: self.status.setText(m))
+
+    async def _send_name(self, text):
+        ok, fail = await self.node.broadcast_participant(text)
+        if fail:
+            self._set_status(f'❌ failed: {", ".join(fail)}')
+        else:
+            self._set_status(f'✓ sent to {len(ok)} nodes')
+
+    def on_name_entered(self):
+        text = self.name_edit.text().strip()
+        if not text:
+            self.status.setText('❗ empty participant name')
+            return
+        # schedule coroutine on background asyncio loop
+        asyncio.run_coroutine_threadsafe(self._send_name(text), self.loop)
+
+    # ---------------------------------------------------- start / stop
+    def _call_service(self, client, data, timeout=2.0):
+        if not client.wait_for_service(timeout_sec=timeout):
+            return False
+        req = SetBool.Request(); req.data = data
+        fut = client.call_async(req)
+        rclpy.spin_until_future_complete(self.node, fut)
+        return getattr(fut.result(), 'success', False)
 
     def start_recording(self):
-        self.status_label.setText('Status: Starting...')
-        # Pupil
-        pupil_req = SetBool.Request()
-        pupil_req.data = True
-        ok_pupil, msg_pupil = self.call_service(self.node.pupil_client, pupil_req)
-        # ZED
-        zed_req = StartSvoRec.Request()
-        zed_req.bitrate = 0
-        zed_req.compression_mode = 0
-        zed_req.target_framerate = 30
-        zed_req.input_transcode = False
-        zed_req.svo_filename = ''
-        ok_zed, msg_zed = self.call_service(self.node.zed_start_client, zed_req)
-        if ok_pupil and ok_zed:
-            self.status_label.setText('Status: Recording')
-        else:
-            self.status_label.setText(f'Error: Pupil({ok_pupil}), ZED({ok_zed})')
+        self.status.setText('Status: Starting…')
+        ts = self.node.get_clock().now().to_msg().sec
+        base = os.path.expanduser('~/colcon_venv/recordings')
+        os.makedirs(os.path.join(base, f'recording_{ts}'), exist_ok=True)
+
+        ok = all([
+            self._call_service(self.node.zed_depth_cli,  True),
+            self._call_service(self.node.zed_rgb_cli,    True),
+            self._call_service(self.node.pupil_scene_cli,True),
+            self._call_service(self.node.pupil_gaze_cli, True),
+            self._call_service(self.node.pupil_blink_cli, True),
+            self._call_service(self.node.pupil_imu_cli,   True),
+        ])
+        self.status.setText('Status: Recording' if ok else '❌ start failed')
 
     def stop_recording(self):
-        self.status_label.setText('Status: Stopping...')
-        # Pupil
-        pupil_req = SetBool.Request()
-        pupil_req.data = False
-        ok_pupil, msg_pupil = self.call_service(self.node.pupil_client, pupil_req)
-        # ZED
-        trigger_req = Trigger.Request()
-        ok_zed, msg_zed = self.call_service(self.node.zed_stop_client, trigger_req)
-        if ok_pupil and ok_zed:
-            self.status_label.setText('Status: Stopped')
-        else:
-            self.status_label.setText(f'Error: Pupil({ok_pupil}), ZED({ok_zed})')
+        self.status.setText('Status: Stopping…')
+        ok = all([
+            self._call_service(self.node.zed_depth_cli,  False),
+            self._call_service(self.node.zed_rgb_cli,    False),
+            self._call_service(self.node.pupil_scene_cli,False),
+            self._call_service(self.node.pupil_gaze_cli, False),
+            self._call_service(self.node.pupil_blink_cli, False),
+            self._call_service(self.node.pupil_imu_cli,   False),
+        ])
+        self.status.setText('Status: Stopped' if ok else '❌ stop failed')
 
-def main(args=None):
-    rclpy.init(args=args)
+
+# ────────────────────────────────────────────────────────  main
+def main(argv=None):
+    rclpy.init(args=argv)
     node = RecordingController()
-    # run Qt in main thread
+
+    # ---------- dedicated asyncio loop ----------
+    loop = asyncio.new_event_loop()
+    threading.Thread(target=loop.run_forever, daemon=True).start()
+
     app = QApplication(sys.argv)
-    window = MainWindow(node)
-    window.show()
-    # ensure ROS spin in background
+    win = MainWindow(node, loop); win.show()
     exit_code = app.exec_()
-    node.destroy_node()
-    rclpy.shutdown()
+
+    # ---------- clean shutdown ----------
+    loop.call_soon_threadsafe(loop.stop)
+    node.destroy_node(); rclpy.shutdown()
     sys.exit(exit_code)
 
 if __name__ == '__main__':

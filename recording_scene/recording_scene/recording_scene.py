@@ -10,7 +10,8 @@ import csv
 import os
 import threading
 import queue
-from rclpy.qos import qos_profile_sensor_data
+import numpy as np
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
 
 
 class SceneRecorder(Node):
@@ -22,20 +23,40 @@ class SceneRecorder(Node):
         self.declare_parameter('participant_name', 'default')
         self.participant_name = self.get_parameter('participant_name').get_parameter_value().string_value
         self.get_logger().info(f'Participant name: {self.participant_name}')
+        self.declare_parameter('queue_size', 500)
+        self.declare_parameter('target_fps', 30.0)
+        self.declare_parameter('scene_qos_depth', 15)
+        self.declare_parameter('scene_qos_reliability', 'best_effort')  # best_effort|reliable
 
         # Parameter callback für dynamische Updates
         self.add_on_set_parameters_callback(self._parameter_callback)
 
         # Producer-Consumer queue for frames
-        self.frame_queue = queue.Queue(maxsize=200)
+        self.frame_queue = queue.Queue(maxsize=int(self.get_parameter('queue_size').value))
         self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self.writer_thread.start()
+
+        reliability_param = str(self.get_parameter('scene_qos_reliability').value).lower()
+        reliability = (
+            ReliabilityPolicy.RELIABLE
+            if reliability_param == 'reliable'
+            else ReliabilityPolicy.BEST_EFFORT
+        )
+        qos_scene = QoSProfile(
+            depth=int(self.get_parameter('scene_qos_depth').value),
+            history=HistoryPolicy.KEEP_LAST,
+            reliability=reliability,
+            durability=DurabilityPolicy.VOLATILE,
+        )
+        self.get_logger().info(
+            f'Scene subscription QoS: depth={qos_scene.depth}, reliability={reliability_param}'
+        )
 
         self.subscription = self.create_subscription(
             Image,
             '/pupil/scene/image_raw',
             self.listener_callback,
-            qos_profile_sensor_data
+            qos_scene
         )
         # Subscription and service
         
@@ -47,9 +68,12 @@ class SceneRecorder(Node):
         self.csv_writer = None
         self.csv_file = None
         self.video_path = None
-        self.fps = 30.0
+        self.fps = float(self.get_parameter('target_fps').value)
         self.fourcc = cv2.VideoWriter_fourcc(*'MJPG')
         self.recording = False
+        self.frames_received = 0
+        self.frames_written = 0
+        self.frames_dropped = 0
 
     def _parameter_callback(self, params):
         """Callback für Parameter Updates"""
@@ -85,18 +109,25 @@ class SceneRecorder(Node):
         if not self.recording:
             return
         try:
-            # Convert image and enqueue for writing
-            cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='mono8')
-            self.frame_queue.put((cv_image, msg.header.stamp), block=False)
+            self.frames_received += 1
+            # Keep callback minimal: queue ROS message and convert in writer thread.
+            self.frame_queue.put(msg, block=False)
         except queue.Full:
-            self.get_logger().warn('Frame queue is full, dropping frame')
+            self.frames_dropped += 1
         except Exception as e:
             self.get_logger().error(f'Failed to enqueue frame: {e}')
 
     def _writer_loop(self):
         while rclpy.ok():
             try:
-                cv_image, stamp = self.frame_queue.get()
+                msg = self.frame_queue.get()
+                if msg.encoding == 'mono8':
+                    # Fast path without cv_bridge conversion overhead.
+                    flat = np.frombuffer(msg.data, dtype=np.uint8)
+                    cv_image = flat.reshape((msg.height, msg.step))[:, :msg.width]
+                else:
+                    cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='mono8')
+                stamp = msg.header.stamp
                 if self.video_writer is None and self.video_path is not None:
                     h, w = cv_image.shape[:2]
                     self.video_writer = cv2.VideoWriter(
@@ -110,8 +141,7 @@ class SceneRecorder(Node):
                 # Write video frame and CSV timestamp
                 self.video_writer.write(cv_image)
                 self.csv_writer.writerow([stamp.sec, stamp.nanosec])
-                h, w = cv_image.shape[:2]
-                #self.get_logger().info(f'Wrote frame at {w}×{h}')
+                self.frames_written += 1
                 self.frame_queue.task_done()
             except Exception as e:
                 self.get_logger().error(f'Writer loop error: {e}')
@@ -131,6 +161,9 @@ class SceneRecorder(Node):
         self.csv_file = open(csv_path, 'w', newline='')
         self.csv_writer = csv.writer(self.csv_file)
         self.csv_writer.writerow(['sec','nanosec'])
+        self.frames_received = 0
+        self.frames_written = 0
+        self.frames_dropped = 0
         self.get_logger().info(f'Started grayscale scene recording to: {session_dir}')
 
     def _stop_file_recording(self):
@@ -145,6 +178,10 @@ class SceneRecorder(Node):
         if self.csv_file:
             self.csv_file.close()
             self.csv_file = None
+        self.get_logger().info(
+            f'Recording stats: received={self.frames_received}, '
+            f'written={self.frames_written}, dropped={self.frames_dropped}'
+        )
         self.get_logger().info('Scene recording stopped and files closed.')
 
 

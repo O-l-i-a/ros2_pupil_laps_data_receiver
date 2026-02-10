@@ -1,0 +1,13 @@
+package.xml
+setup.cfg
+setup.py
+../build/recording_imu/recording_imu.egg-info/PKG-INFO
+../build/recording_imu/recording_imu.egg-info/SOURCES.txt
+../build/recording_imu/recording_imu.egg-info/dependency_links.txt
+../build/recording_imu/recording_imu.egg-info/entry_points.txt
+../build/recording_imu/recording_imu.egg-info/requires.txt
+../build/recording_imu/recording_imu.egg-info/top_level.txt
+../build/recording_imu/recording_imu.egg-info/zip-safe
+recording_imu/__init__.py
+recording_imu/recording_imu.py
+resource/recording_imu

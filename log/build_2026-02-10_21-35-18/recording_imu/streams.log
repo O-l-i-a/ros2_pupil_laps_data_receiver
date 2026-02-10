@@ -1,0 +1,37 @@
+[3.506s] Invoking command in '/home/olhamelnyk/colcon_venv/src/recording_imu': AMENT_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/olhamelnyk/colcon_venv/src/build/recording_imu/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/olhamelnyk/colcon_venv/src/install/recording_imu/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/src/install/imu_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/recording_imu build --build-base /home/olhamelnyk/colcon_venv/src/build/recording_imu/build install --record /home/olhamelnyk/colcon_venv/src/build/recording_imu/install.log --single-version-externally-managed install_data
+[4.281s] running egg_info
+[4.281s] creating ../build/recording_imu/recording_imu.egg-info
+[4.344s] writing ../build/recording_imu/recording_imu.egg-info/PKG-INFO
+[4.344s] writing dependency_links to ../build/recording_imu/recording_imu.egg-info/dependency_links.txt
+[4.345s] writing entry points to ../build/recording_imu/recording_imu.egg-info/entry_points.txt
+[4.345s] writing requirements to ../build/recording_imu/recording_imu.egg-info/requires.txt
+[4.345s] writing top-level names to ../build/recording_imu/recording_imu.egg-info/top_level.txt
+[4.345s] writing manifest file '../build/recording_imu/recording_imu.egg-info/SOURCES.txt'
+[4.463s] reading manifest file '../build/recording_imu/recording_imu.egg-info/SOURCES.txt'
+[4.464s] writing manifest file '../build/recording_imu/recording_imu.egg-info/SOURCES.txt'
+[4.464s] running build
+[4.465s] running build_py
+[4.467s] creating /home/olhamelnyk/colcon_venv/src/build/recording_imu/build
+[4.468s] creating /home/olhamelnyk/colcon_venv/src/build/recording_imu/build/lib
+[4.468s] creating /home/olhamelnyk/colcon_venv/src/build/recording_imu/build/lib/recording_imu
+[4.469s] copying recording_imu/recording_imu.py -> /home/olhamelnyk/colcon_venv/src/build/recording_imu/build/lib/recording_imu
+[4.469s] copying recording_imu/__init__.py -> /home/olhamelnyk/colcon_venv/src/build/recording_imu/build/lib/recording_imu
+[4.470s] running install
+[4.479s] running install_lib
+[4.533s] creating /home/olhamelnyk/colcon_venv/src/install/recording_imu/lib/python3.12/site-packages/recording_imu
+[4.534s] copying /home/olhamelnyk/colcon_venv/src/build/recording_imu/build/lib/recording_imu/recording_imu.py -> /home/olhamelnyk/colcon_venv/src/install/recording_imu/lib/python3.12/site-packages/recording_imu
+[4.534s] copying /home/olhamelnyk/colcon_venv/src/build/recording_imu/build/lib/recording_imu/__init__.py -> /home/olhamelnyk/colcon_venv/src/install/recording_imu/lib/python3.12/site-packages/recording_imu
+[4.534s] byte-compiling /home/olhamelnyk/colcon_venv/src/install/recording_imu/lib/python3.12/site-packages/recording_imu/recording_imu.py to recording_imu.cpython-312.pyc
+[4.540s] byte-compiling /home/olhamelnyk/colcon_venv/src/install/recording_imu/lib/python3.12/site-packages/recording_imu/__init__.py to __init__.cpython-312.pyc
+[4.541s] running install_data
+[4.541s] creating /home/olhamelnyk/colcon_venv/src/install/recording_imu/share/ament_index
+[4.541s] creating /home/olhamelnyk/colcon_venv/src/install/recording_imu/share/ament_index/resource_index
+[4.541s] creating /home/olhamelnyk/colcon_venv/src/install/recording_imu/share/ament_index/resource_index/packages
+[4.542s] copying resource/recording_imu -> /home/olhamelnyk/colcon_venv/src/install/recording_imu/share/ament_index/resource_index/packages
+[4.543s] copying package.xml -> /home/olhamelnyk/colcon_venv/src/install/recording_imu/share/recording_imu
+[4.544s] running install_egg_info
+[4.638s] Copying ../build/recording_imu/recording_imu.egg-info to /home/olhamelnyk/colcon_venv/src/install/recording_imu/lib/python3.12/site-packages/recording_imu-0.0.0-py3.12.egg-info
+[4.640s] running install_scripts
+[5.020s] Installing recording_imu script to /home/olhamelnyk/colcon_venv/src/install/recording_imu/lib/recording_imu
+[5.020s] writing list of installed files to '/home/olhamelnyk/colcon_venv/src/build/recording_imu/install.log'
+[5.181s] Invoked command in '/home/olhamelnyk/colcon_venv/src/recording_imu' returned '0': AMENT_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/olhamelnyk/colcon_venv/src/build/recording_imu/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/olhamelnyk/colcon_venv/src/install/recording_imu/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/src/install/imu_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/recording_imu build --build-base /home/olhamelnyk/colcon_venv/src/build/recording_imu/build install --record /home/olhamelnyk/colcon_venv/src/build/recording_imu/install.log --single-version-externally-managed install_data

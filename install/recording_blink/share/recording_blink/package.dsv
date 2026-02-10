@@ -1,0 +1,6 @@
+source;share/recording_blink/hook/pythonpath.ps1
+source;share/recording_blink/hook/pythonpath.dsv
+source;share/recording_blink/hook/pythonpath.sh
+source;share/recording_blink/hook/ament_prefix_path.ps1
+source;share/recording_blink/hook/ament_prefix_path.dsv
+source;share/recording_blink/hook/ament_prefix_path.sh
