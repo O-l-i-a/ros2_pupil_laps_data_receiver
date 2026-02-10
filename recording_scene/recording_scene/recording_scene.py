@@ -10,6 +10,8 @@ import csv
 import os
 import threading
 import queue
+from rclpy.qos import qos_profile_sensor_data
+
 
 class SceneRecorder(Node):
     def __init__(self):
@@ -29,13 +31,14 @@ class SceneRecorder(Node):
         self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
         self.writer_thread.start()
 
-        # Subscription and service
         self.subscription = self.create_subscription(
-            CompressedImage,
+            Image,
             '/pupil/scene/image_raw',
             self.listener_callback,
-            15
+            qos_profile_sensor_data
         )
+        # Subscription and service
+        
         self.create_service(SetBool, 'record_pupil_scene', self._srv_cb)
 
         # Members for recording
@@ -84,7 +87,7 @@ class SceneRecorder(Node):
             return
         try:
             # Convert image and enqueue for writing
-            cv_image = self.bridge.compressed_imgmsg_to_cv2(msg, desired_encoding='bgr8')
+            cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='bgr8')
             self.frame_queue.put((cv_image, msg.header.stamp), block=False)
         except queue.Full:
             self.get_logger().warn('Frame queue is full, dropping frame')

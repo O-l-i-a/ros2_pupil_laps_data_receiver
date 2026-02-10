@@ -1,0 +1,242 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-bfcdf97e46c80f239548.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "imu_interface__py",
+					"jsonFile" : "directory-imu_interface__py-9c600dcd5fe7c946ddaa.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/olhamelnyk/colcon_venv/src/build/imu_interface/imu_interface__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "imu_interface",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_imu_interface_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_imu_interface_egg-13ade8ba2f1433a8b224.json",
+					"name" : "ament_cmake_python_build_imu_interface_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_copy_imu_interface::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_copy_imu_interface-7503a7b80fc5ef08fcc1.json",
+					"name" : "ament_cmake_python_copy_imu_interface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface-e79b1533377c4e7e83f8.json",
+					"name" : "imu_interface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__cpp-e5e6ce8615abc85a29f4.json",
+					"name" : "imu_interface__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "imu_interface__py::@917b07ba48152c2617d3",
+					"jsonFile" : "target-imu_interface__py-ae6d360bf2834fc5c4c2.json",
+					"name" : "imu_interface__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__rosidl_generator_c-b7ab9c940f4856652454.json",
+					"name" : "imu_interface__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__rosidl_generator_py-1dea8c92ccdeff0832a8.json",
+					"name" : "imu_interface__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__rosidl_generator_type_description-5f3ccf79fa4cdc78d199.json",
+					"name" : "imu_interface__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__rosidl_typesupport_c-66989fe81550e4d7ca73.json",
+					"name" : "imu_interface__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__rosidl_typesupport_cpp-0221347e1e31ab6a61e1.json",
+					"name" : "imu_interface__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__rosidl_typesupport_fastrtps_c-a129ce80cb8bcd74f4be.json",
+					"name" : "imu_interface__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__rosidl_typesupport_fastrtps_cpp-c955b4b2537b8d215bcf.json",
+					"name" : "imu_interface__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__rosidl_typesupport_introspection_c-9129832ab3266dc3cf33.json",
+					"name" : "imu_interface__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface__rosidl_typesupport_introspection_cpp-18f55faec2ba8f46c9f0.json",
+					"name" : "imu_interface__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface_s__rosidl_typesupport_c-bc9d223134a5cd857f58.json",
+					"name" : "imu_interface_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface_s__rosidl_typesupport_fastrtps_c-5ee88b1c1db341375dba.json",
+					"name" : "imu_interface_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface_s__rosidl_typesupport_introspection_c-4107fd08182f48038ee9.json",
+					"name" : "imu_interface_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "imu_interface_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-imu_interface_uninstall-7007bcda2ba759dce774.json",
+					"name" : "imu_interface_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-18bab76615f0961190de.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/olhamelnyk/colcon_venv/src/build/imu_interface",
+		"source" : "/home/olhamelnyk/colcon_venv/src/imu_interface"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

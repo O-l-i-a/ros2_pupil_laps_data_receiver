@@ -1,0 +1,7 @@
+std_msgs/Header header
+
+uint64 timestamp_unix_ns
+float64 timestamp_unix_seconds
+geometry_msgs/Vector3 acceleration
+geometry_msgs/Vector3 gyroscope
+geometry_msgs/Quaternion quaternion

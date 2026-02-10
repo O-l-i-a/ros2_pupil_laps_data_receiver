@@ -1,0 +1,25 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from imu_interface/msg/ImuData.msg
+// generated code does not contain a copyright notice
+
+#include "geometry_msgs/msg/Quaternion.idl"
+#include "geometry_msgs/msg/Vector3.idl"
+#include "std_msgs/msg/Header.idl"
+
+module imu_interface {
+  module msg {
+    struct ImuData {
+      std_msgs::msg::Header header;
+
+      uint64 timestamp_unix_ns;
+
+      double timestamp_unix_seconds;
+
+      geometry_msgs::msg::Vector3 acceleration;
+
+      geometry_msgs::msg::Vector3 gyroscope;
+
+      geometry_msgs::msg::Quaternion quaternion;
+    };
+  };
+};
