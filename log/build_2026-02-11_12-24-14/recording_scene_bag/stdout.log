@@ -1,0 +1,35 @@
+running egg_info
+creating ../build/recording_scene_bag/recording_scene_bag.egg-info
+writing ../build/recording_scene_bag/recording_scene_bag.egg-info/PKG-INFO
+writing dependency_links to ../build/recording_scene_bag/recording_scene_bag.egg-info/dependency_links.txt
+writing entry points to ../build/recording_scene_bag/recording_scene_bag.egg-info/entry_points.txt
+writing requirements to ../build/recording_scene_bag/recording_scene_bag.egg-info/requires.txt
+writing top-level names to ../build/recording_scene_bag/recording_scene_bag.egg-info/top_level.txt
+writing manifest file '../build/recording_scene_bag/recording_scene_bag.egg-info/SOURCES.txt'
+reading manifest file '../build/recording_scene_bag/recording_scene_bag.egg-info/SOURCES.txt'
+writing manifest file '../build/recording_scene_bag/recording_scene_bag.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/olhamelnyk/colcon_venv/src/build/recording_scene_bag/build
+creating /home/olhamelnyk/colcon_venv/src/build/recording_scene_bag/build/lib
+creating /home/olhamelnyk/colcon_venv/src/build/recording_scene_bag/build/lib/recording_scene_bag
+copying recording_scene_bag/__init__.py -> /home/olhamelnyk/colcon_venv/src/build/recording_scene_bag/build/lib/recording_scene_bag
+copying recording_scene_bag/recording_scene_bag.py -> /home/olhamelnyk/colcon_venv/src/build/recording_scene_bag/build/lib/recording_scene_bag
+running install
+running install_lib
+creating /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/lib/python3.12/site-packages/recording_scene_bag
+copying /home/olhamelnyk/colcon_venv/src/build/recording_scene_bag/build/lib/recording_scene_bag/__init__.py -> /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/lib/python3.12/site-packages/recording_scene_bag
+copying /home/olhamelnyk/colcon_venv/src/build/recording_scene_bag/build/lib/recording_scene_bag/recording_scene_bag.py -> /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/lib/python3.12/site-packages/recording_scene_bag
+byte-compiling /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/lib/python3.12/site-packages/recording_scene_bag/__init__.py to __init__.cpython-312.pyc
+byte-compiling /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/lib/python3.12/site-packages/recording_scene_bag/recording_scene_bag.py to recording_scene_bag.cpython-312.pyc
+running install_data
+creating /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/share/ament_index
+creating /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/share/ament_index/resource_index
+creating /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/share/ament_index/resource_index/packages
+copying resource/recording_scene_bag -> /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/share/ament_index/resource_index/packages
+copying package.xml -> /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/share/recording_scene_bag
+running install_egg_info
+Copying ../build/recording_scene_bag/recording_scene_bag.egg-info to /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/lib/python3.12/site-packages/recording_scene_bag-0.0.0-py3.12.egg-info
+running install_scripts
+Installing recording_scene_bag script to /home/olhamelnyk/colcon_venv/src/install/recording_scene_bag/lib/recording_scene_bag
+writing list of installed files to '/home/olhamelnyk/colcon_venv/src/build/recording_scene_bag/install.log'

@@ -1,0 +1,25 @@
+[1.758s] Invoking command in '/home/olhamelnyk/colcon_venv/src/recording_scene_python': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/olhamelnyk/colcon_venv/src/build/recording_scene_python/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/recording_scene_python build --build-base /home/olhamelnyk/colcon_venv/src/build/recording_scene_python/build install --record /home/olhamelnyk/colcon_venv/src/build/recording_scene_python/install.log --single-version-externally-managed install_data
+[2.307s] running egg_info
+[2.349s] writing ../build/recording_scene_python/recording_scene_python.egg-info/PKG-INFO
+[2.350s] writing dependency_links to ../build/recording_scene_python/recording_scene_python.egg-info/dependency_links.txt
+[2.350s] writing entry points to ../build/recording_scene_python/recording_scene_python.egg-info/entry_points.txt
+[2.350s] writing requirements to ../build/recording_scene_python/recording_scene_python.egg-info/requires.txt
+[2.351s] writing top-level names to ../build/recording_scene_python/recording_scene_python.egg-info/top_level.txt
+[2.439s] reading manifest file '../build/recording_scene_python/recording_scene_python.egg-info/SOURCES.txt'
+[2.439s] adding license file 'LICENSE'
+[2.440s] writing manifest file '../build/recording_scene_python/recording_scene_python.egg-info/SOURCES.txt'
+[2.440s] running build
+[2.441s] running build_py
+[2.441s] copying recording_scene_python/recording_scene.py -> /home/olhamelnyk/colcon_venv/src/build/recording_scene_python/build/lib/recording_scene_python
+[2.441s] running install
+[2.452s] running install_lib
+[2.500s] copying /home/olhamelnyk/colcon_venv/src/build/recording_scene_python/build/lib/recording_scene_python/recording_scene.py -> /home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages/recording_scene_python
+[2.501s] byte-compiling /home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages/recording_scene_python/recording_scene.py to recording_scene.cpython-312.pyc
+[2.504s] running install_data
+[2.504s] running install_egg_info
+[2.576s] removing '/home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages/recording_scene_python-0.0.0-py3.12.egg-info' (and everything under it)
+[2.576s] Copying ../build/recording_scene_python/recording_scene_python.egg-info to /home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages/recording_scene_python-0.0.0-py3.12.egg-info
+[2.580s] running install_scripts
+[2.903s] Installing recording_scene_python script to /home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/recording_scene_python
+[2.903s] writing list of installed files to '/home/olhamelnyk/colcon_venv/src/build/recording_scene_python/install.log'
+[2.984s] Invoked command in '/home/olhamelnyk/colcon_venv/src/recording_scene_python' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/olhamelnyk/colcon_venv/src/build/recording_scene_python/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/recording_scene_python build --build-base /home/olhamelnyk/colcon_venv/src/build/recording_scene_python/build install --record /home/olhamelnyk/colcon_venv/src/build/recording_scene_python/install.log --single-version-externally-managed install_data

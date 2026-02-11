@@ -1,0 +1,23 @@
+running egg_info
+writing ../build/recording_scene_python/recording_scene_python.egg-info/PKG-INFO
+writing dependency_links to ../build/recording_scene_python/recording_scene_python.egg-info/dependency_links.txt
+writing entry points to ../build/recording_scene_python/recording_scene_python.egg-info/entry_points.txt
+writing requirements to ../build/recording_scene_python/recording_scene_python.egg-info/requires.txt
+writing top-level names to ../build/recording_scene_python/recording_scene_python.egg-info/top_level.txt
+reading manifest file '../build/recording_scene_python/recording_scene_python.egg-info/SOURCES.txt'
+adding license file 'LICENSE'
+writing manifest file '../build/recording_scene_python/recording_scene_python.egg-info/SOURCES.txt'
+running build
+running build_py
+copying recording_scene_python/recording_scene.py -> /home/olhamelnyk/colcon_venv/src/build/recording_scene_python/build/lib/recording_scene_python
+running install
+running install_lib
+copying /home/olhamelnyk/colcon_venv/src/build/recording_scene_python/build/lib/recording_scene_python/recording_scene.py -> /home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages/recording_scene_python
+byte-compiling /home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages/recording_scene_python/recording_scene.py to recording_scene.cpython-312.pyc
+running install_data
+running install_egg_info
+removing '/home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages/recording_scene_python-0.0.0-py3.12.egg-info' (and everything under it)
+Copying ../build/recording_scene_python/recording_scene_python.egg-info to /home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/python3.12/site-packages/recording_scene_python-0.0.0-py3.12.egg-info
+running install_scripts
+Installing recording_scene_python script to /home/olhamelnyk/colcon_venv/src/install/recording_scene_python/lib/recording_scene_python
+writing list of installed files to '/home/olhamelnyk/colcon_venv/src/build/recording_scene_python/install.log'

@@ -1,4 +1,5 @@
 #include <rclcpp/rclcpp.hpp>
+#include <rcl_interfaces/msg/set_parameters_result.hpp>
 
 #include <sensor_msgs/msg/image.hpp>
 #include <std_srvs/srv/set_bool.hpp>
@@ -38,6 +39,9 @@ public:
     target_fps_ = declare_parameter<double>("target_fps", 30.0);
     compressed_ = declare_parameter<bool>("compressed", false);
     max_queue_size_ = declare_parameter<int>("max_queue_size", 300);
+    raw_record_mode_ = declare_parameter<bool>("raw_record_mode", true);
+    output_extension_ = declare_parameter<std::string>("output_extension", "avi");
+    csv_flush_interval_frames_ = declare_parameter<int>("csv_flush_interval_frames", 30);
 
     auto qos = rclcpp::SensorDataQoS().keep_last(5).best_effort();
     sub_scene_ = create_subscription<Image>(
@@ -52,14 +56,20 @@ public:
         std::placeholders::_2));
 
     writer_thread_ = std::thread(&PupilSceneRecorderCpp::writerLoop, this);
+    param_cb_handle_ = add_on_set_parameters_callback(
+      std::bind(&PupilSceneRecorderCpp::onParametersSet, this, std::placeholders::_1));
 
     RCLCPP_INFO(get_logger(), "C++ scene recorder subscribed to %s", topic_.c_str());
     RCLCPP_INFO(get_logger(), "Participant name: %s", participant_name_.c_str());
+    RCLCPP_INFO(
+      get_logger(),
+      "Mode: %s (manual post-processing after stop)",
+      raw_record_mode_ ? "raw+csv" : "opencv_videowriter");
   }
 
   ~PupilSceneRecorderCpp() override
   {
-    stopRecordingInternal();
+    stopRecordingAndFlushBlocking();
     running_.store(false);
     queue_cv_.notify_all();
     if (writer_thread_.joinable()) {
@@ -68,6 +78,26 @@ public:
   }
 
 private:
+  rcl_interfaces::msg::SetParametersResult onParametersSet(
+    const std::vector<rclcpp::Parameter> & params)
+  {
+    rcl_interfaces::msg::SetParametersResult result;
+    result.successful = true;
+
+    for (const auto & p : params) {
+      if (p.get_name() == "participant_name") {
+        if (p.get_type() != rclcpp::PARAMETER_STRING) {
+          result.successful = false;
+          result.reason = "participant_name must be a string";
+          return result;
+        }
+        participant_name_ = p.as_string();
+        RCLCPP_INFO(get_logger(), "Updated participant_name to: %s", participant_name_.c_str());
+      }
+    }
+    return result;
+  }
+
   void sceneCallback(const Image::ConstSharedPtr msg)
   {
     if (!recording_.load(std::memory_order_relaxed)) {
@@ -75,9 +105,9 @@ private:
     }
 
     if (first_frame_.load(std::memory_order_relaxed)) {
-      openWriter(static_cast<int>(msg->width), static_cast<int>(msg->height));
+      openOutputs(static_cast<int>(msg->width), static_cast<int>(msg->height));
       first_frame_.store(false, std::memory_order_relaxed);
-      if (!video_writer_.isOpened()) {
+      if (!output_ready_) {
         return;
       }
     }
@@ -142,18 +172,20 @@ private:
   void startRecordingInternal()
   {
     dropped_frames_ = 0;
+    drain_on_stop_.store(false, std::memory_order_relaxed);
+    frame_width_ = 0;
+    frame_height_ = 0;
+    frame_index_ = 0;
+    output_ready_ = false;
     const uint64_t ts = static_cast<uint64_t>(get_clock()->now().seconds());
+    current_recording_ts_ = ts;
     base_dir_ = fs::current_path() / "recordings" / ("recording_" + participant_name_);
     fs::create_directories(base_dir_);
-
-    if (compressed_) {
-      video_path_ = base_dir_ / (std::to_string(ts) + "_scene.mp4");
-    } else {
-      video_path_ = base_dir_ / (std::to_string(ts) + "_scene.avi");
-    }
+    raw_path_ = base_dir_ / (std::to_string(ts) + "_scene.raw");
+    video_path_ = base_dir_ / (std::to_string(ts) + "_scene." + output_extension_);
 
     csv_.open(base_dir_ / (std::to_string(ts) + "_scene_times.csv"));
-    csv_ << "sec,nanosec\n";
+    csv_ << "sec,nanosec,frame_idx\n";
 
     {
       std::lock_guard<std::mutex> lk(queue_mtx_);
@@ -169,41 +201,27 @@ private:
   void stopRecordingInternal()
   {
     recording_.store(false, std::memory_order_relaxed);
-
-    while (true) {
-      bool queue_empty = false;
-      {
-        std::lock_guard<std::mutex> lk(queue_mtx_);
-        queue_empty = queue_.empty();
-      }
-      if (queue_empty) {
-        break;
-      }
-      queue_cv_.notify_one();
-      std::this_thread::sleep_for(std::chrono::milliseconds(2));
-    }
-
-    {
-      std::lock_guard<std::mutex> io_lk(io_mtx_);
-      if (video_writer_.isOpened()) {
-        video_writer_.release();
-      }
-      if (csv_.is_open()) {
-        csv_.close();
-      }
-    }
-
-    if (dropped_frames_ > 0) {
-      RCLCPP_WARN(
-        get_logger(),
-        "Scene recorder dropped %zu frame(s) due to full queue.",
-        dropped_frames_);
-    }
-    RCLCPP_INFO(get_logger(), "Stopped C++ grayscale scene recording.");
+    drain_on_stop_.store(true, std::memory_order_relaxed);
+    queue_cv_.notify_one();
+    RCLCPP_INFO(get_logger(), "Stopping C++ scene recording asynchronously; draining buffer.");
   }
 
-  void openWriter(int width, int height)
+  void openOutputs(int width, int height)
   {
+    frame_width_ = width;
+    frame_height_ = height;
+    output_ready_ = true;
+
+    if (raw_record_mode_) {
+      std::lock_guard<std::mutex> io_lk(io_mtx_);
+      raw_file_.open(raw_path_, std::ios::binary | std::ios::out | std::ios::trunc);
+      if (!raw_file_.is_open()) {
+        output_ready_ = false;
+        RCLCPP_ERROR(get_logger(), "Failed to open raw file: %s", raw_path_.c_str());
+      }
+      return;
+    }
+
     const int fourcc = compressed_
       ? cv::VideoWriter::fourcc('m', 'p', '4', 'v')
       : cv::VideoWriter::fourcc('M', 'J', 'P', 'G');
@@ -218,6 +236,7 @@ private:
     }
 
     if (!video_writer_.isOpened()) {
+      output_ready_ = false;
       RCLCPP_ERROR(get_logger(), "Failed to open video writer: %s", video_path_.c_str());
     }
   }
@@ -229,6 +248,11 @@ private:
       {
         std::unique_lock<std::mutex> lk(queue_mtx_);
         queue_cv_.wait(lk, [this]() { return !running_.load() || !queue_.empty(); });
+        if (drain_on_stop_.load(std::memory_order_relaxed) && queue_.empty()) {
+          lk.unlock();
+          finalizeStop();
+          continue;
+        }
         if (!running_.load() && queue_.empty()) {
           break;
         }
@@ -238,13 +262,75 @@ private:
 
       {
         std::lock_guard<std::mutex> io_lk(io_mtx_);
-        if (video_writer_.isOpened()) {
+        if (raw_record_mode_) {
+          if (raw_file_.is_open()) {
+            if (packet.frame_mono.isContinuous()) {
+              raw_file_.write(
+                reinterpret_cast<const char *>(packet.frame_mono.data),
+                static_cast<std::streamsize>(packet.frame_mono.total()));
+            } else {
+              for (int r = 0; r < packet.frame_mono.rows; ++r) {
+                raw_file_.write(
+                  reinterpret_cast<const char *>(packet.frame_mono.ptr(r)),
+                  packet.frame_mono.cols);
+              }
+            }
+          }
+        } else if (video_writer_.isOpened()) {
           video_writer_.write(packet.frame_mono);
         }
         if (csv_.is_open()) {
-          csv_ << packet.stamp.sec << ',' << packet.stamp.nanosec << '\n';
+          csv_ << packet.stamp.sec << ',' << packet.stamp.nanosec << ',' << frame_index_ << '\n';
+          if (csv_flush_interval_frames_ > 0 &&
+              (frame_index_ % static_cast<uint64_t>(csv_flush_interval_frames_)) == 0) {
+            csv_.flush();
+          }
+        }
+        ++frame_index_;
+      }
+
+      if (drain_on_stop_.load(std::memory_order_relaxed)) {
+        std::lock_guard<std::mutex> lk(queue_mtx_);
+        if (queue_.empty()) {
+          finalizeStop();
         }
       }
+    }
+  }
+
+  void finalizeStop()
+  {
+    if (!drain_on_stop_.exchange(false)) {
+      return;
+    }
+    {
+      std::lock_guard<std::mutex> io_lk(io_mtx_);
+      if (video_writer_.isOpened()) {
+        video_writer_.release();
+      }
+      if (raw_file_.is_open()) {
+        raw_file_.close();
+      }
+      if (csv_.is_open()) {
+        csv_.close();
+      }
+    }
+    if (dropped_frames_ > 0) {
+      RCLCPP_WARN(
+        get_logger(),
+        "Scene recorder dropped %zu frame(s) due to full queue.",
+        dropped_frames_);
+    }
+    RCLCPP_INFO(get_logger(), "Stopped C++ grayscale scene recording.");
+  }
+
+  void stopRecordingAndFlushBlocking()
+  {
+    recording_.store(false, std::memory_order_relaxed);
+    drain_on_stop_.store(true, std::memory_order_relaxed);
+    queue_cv_.notify_all();
+    while (drain_on_stop_.load(std::memory_order_relaxed)) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(2));
     }
   }
 
@@ -254,13 +340,18 @@ private:
   double target_fps_;
   bool compressed_;
   int max_queue_size_;
+  bool raw_record_mode_;
+  std::string output_extension_;
+  int csv_flush_interval_frames_;
 
   rclcpp::Subscription<Image>::SharedPtr sub_scene_;
   rclcpp::Service<SetBool>::SharedPtr srv_record_;
+  rclcpp::node_interfaces::OnSetParametersCallbackHandle::SharedPtr param_cb_handle_;
 
   std::atomic_bool running_{true};
   std::atomic_bool recording_{false};
   std::atomic_bool first_frame_{true};
+  std::atomic_bool drain_on_stop_{false};
 
   std::mutex queue_mtx_;
   std::condition_variable queue_cv_;
@@ -270,9 +361,16 @@ private:
   std::mutex io_mtx_;
 
   cv::VideoWriter video_writer_;
+  std::ofstream raw_file_;
   std::ofstream csv_;
   fs::path base_dir_;
   fs::path video_path_;
+  fs::path raw_path_;
+  uint64_t current_recording_ts_{0};
+  int frame_width_{0};
+  int frame_height_{0};
+  uint64_t frame_index_{0};
+  bool output_ready_{false};
 };
 
 int main(int argc, char ** argv)

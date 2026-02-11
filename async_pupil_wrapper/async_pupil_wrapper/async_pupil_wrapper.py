@@ -95,7 +95,7 @@ class PupilAsync(Node):
         self.blink_pub = self.create_publisher(BlinkData, 'pupil/blink', qos, callback_group=self.cb_group)
         self.imu_pub = self.create_publisher(ImuData, 'pupil/imu', qos, callback_group=self.cb_group)
         self.scene_pub = self.create_publisher(Image, 'pupil/scene/image_raw', qos_scene, callback_group = self.cb_group_scene)
-        self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', qos_scene)
+        #self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', qos_scene)
         self.delayns = 0
         self.calibration = None
         self._scene_k = None
@@ -150,56 +150,60 @@ class PupilAsync(Node):
 
     async def imu_stream(self, url: str):
         self.get_logger().info(f"Starting imu stream: {url}")
-        try:
-            async for imu_data in receive_imu_data(url, run_loop=True):
+        while not self.shutdown_event.is_set():
+            try:
+                async for imu_data in receive_imu_data(url, run_loop=True):
+                    if self.shutdown_event.is_set():
+                        break
+
+                    ts_seconds = getattr(imu_data, "timestamp_unix_seconds", None)
+                    if ts_seconds is not None:
+                        host_ns = int(float(ts_seconds) * 1_000_000_000.0) + self.delayns
+                    else:
+                        # Backward-compatible fallback if API provides ns directly.
+                        host_ns = int(getattr(imu_data, "timestamp_unix_ns")) + self.delayns
+
+                    accel = getattr(imu_data, "accel_data", None)
+                    if accel is None:
+                        accel = getattr(imu_data, "acceleration_data", None)
+
+                    gyro = getattr(imu_data, "gyro_data", None)
+                    if gyro is None:
+                        gyro = getattr(imu_data, "gyroscope_data", None)
+
+                    quat = getattr(imu_data, "quaternion", None)
+                    if accel is None or gyro is None or quat is None:
+                        self.get_logger().warning("Skipping IMU packet with missing fields")
+                        continue
+
+                    msg = ImuData()
+                    msg.header.stamp = unix_ns_to_ros_time(host_ns).to_msg()
+                    msg.header.frame_id = "pupil_imu"
+                    msg.timestamp_unix_ns = int(host_ns)
+                    msg.timestamp_unix_seconds = float(host_ns / 1_000_000_000.0)
+
+                    msg.acceleration.x = float(accel.x)
+                    msg.acceleration.y = float(accel.y)
+                    msg.acceleration.z = float(accel.z)
+
+                    msg.gyroscope.x = float(gyro.x)
+                    msg.gyroscope.y = float(gyro.y)
+                    msg.gyroscope.z = float(gyro.z)
+
+                    msg.quaternion.x = float(quat.x)
+                    msg.quaternion.y = float(quat.y)
+                    msg.quaternion.z = float(quat.z)
+                    msg.quaternion.w = float(quat.w)
+
+                    self.imu_pub.publish(msg)
+            except asyncio.CancelledError:
+                self.get_logger().debug("imu_stream cancelled")
+                raise
+            except Exception as e:
                 if self.shutdown_event.is_set():
                     break
-
-                ts_seconds = getattr(imu_data, "timestamp_unix_seconds", None)
-                if ts_seconds is not None:
-                    host_ns = int(float(ts_seconds) * 1_000_000_000.0) + self.delayns
-                else:
-                    # Backward-compatible fallback if API provides ns directly.
-                    host_ns = int(getattr(imu_data, "timestamp_unix_ns")) + self.delayns
-
-                accel = getattr(imu_data, "accel_data", None)
-                if accel is None:
-                    accel = getattr(imu_data, "acceleration_data", None)
-
-                gyro = getattr(imu_data, "gyro_data", None)
-                if gyro is None:
-                    gyro = getattr(imu_data, "gyroscope_data", None)
-
-                quat = getattr(imu_data, "quaternion", None)
-                if accel is None or gyro is None or quat is None:
-                    self.get_logger().warning("Skipping IMU packet with missing fields")
-                    continue
-
-                msg = ImuData()
-                msg.header.stamp = unix_ns_to_ros_time(host_ns).to_msg()
-                msg.header.frame_id = "pupil_imu"
-                msg.timestamp_unix_ns = int(host_ns)
-                msg.timestamp_unix_seconds = float(host_ns / 1_000_000_000.0)
-
-                msg.acceleration.x = float(accel.x)
-                msg.acceleration.y = float(accel.y)
-                msg.acceleration.z = float(accel.z)
-
-                msg.gyroscope.x = float(gyro.x)
-                msg.gyroscope.y = float(gyro.y)
-                msg.gyroscope.z = float(gyro.z)
-
-                msg.quaternion.x = float(quat.x)
-                msg.quaternion.y = float(quat.y)
-                msg.quaternion.z = float(quat.z)
-                msg.quaternion.w = float(quat.w)
-
-                self.imu_pub.publish(msg)
-        except asyncio.CancelledError:
-            self.get_logger().debug("imu_stream cancelled")
-            raise
-        except Exception as e:
-            self.get_logger().exception(f"imu_stream error: {e}")
+                self.get_logger().warning(f"imu stream dropped ({e}); retrying in 1s")
+                await asyncio.sleep(1.0)
 
     async def scene_stream(self, url: str):
         """
@@ -247,8 +251,8 @@ class PupilAsync(Node):
         self.get_logger().info('Pupil device connected')
         async with Device.from_discovered_device(dev_info) as device:
             self.calibration = await device.get_calibration()
-            self._prepare_scene_calibration()
-            self._write_scene_calibration_file()
+            #self._prepare_scene_calibration()
+            #self._write_scene_calibration_file()
             status = await device.get_status()
             gaze_sensor = status.direct_gaze_sensor()
             world_sensor = status.direct_world_sensor()

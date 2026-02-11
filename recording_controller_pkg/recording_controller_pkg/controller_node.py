@@ -17,6 +17,7 @@ class RecordingController(Node):
 
         # ---------- service clients ----------
         self.pupil_scene_cli = self.create_client(SetBool, 'record_pupil_scene')
+        self.pupil_scene_bag_cli = self.create_client(SetBool, 'record_pupil_scene_bag')
         self.pupil_gaze_cli  = self.create_client(SetBool, 'record_pupil_gaze')
         self.pupil_blink_cli = self.create_client(SetBool, 'record_pupil_blink')
         self.pupil_imu_cli   = self.create_client(SetBool, 'record_pupil_imu')
@@ -28,6 +29,8 @@ class RecordingController(Node):
             '/zed_multi/depth_recorder',
             '/zed_multi/rgb_recorder',
             '/pupil_scene_recorder',
+            'pupil_scene_recorder_cpp',
+            'pupil_scene_bag_recorder',
             'pupil_gaze_recorder',
             'pupil_blink_recorder',
             'pupil_imu_recorder',
@@ -121,33 +124,78 @@ class MainWindow(QMainWindow):
         rclpy.spin_until_future_complete(self.node, fut)
         return getattr(fut.result(), 'success', False)
 
+    def _service_available(self, client, timeout=0.5):
+        return client.wait_for_service(timeout_sec=timeout)
+
+    def _call_scene_service_with_fallback(self, data):
+        # One-of check: use bag scene recorder when available, else classic scene service.
+        if self._service_available(self.node.pupil_scene_bag_cli, timeout=0.4):
+            return self._call_service(self.node.pupil_scene_bag_cli, data), 'record_pupil_scene_bag'
+        if self._service_available(self.node.pupil_scene_cli, timeout=0.4):
+            return self._call_service(self.node.pupil_scene_cli, data), 'record_pupil_scene'
+        return False, 'scene_service_unavailable'
+
     def start_recording(self):
         self.status.setText('Status: Starting…')
         ts = self.node.get_clock().now().to_msg().sec
         base = os.path.expanduser('~/colcon_venv/recordings')
         os.makedirs(os.path.join(base, f'recording_{ts}'), exist_ok=True)
 
-        ok = all([
-            self._call_service(self.node.zed_depth_cli,  True),
-            self._call_service(self.node.zed_rgb_cli,    True),
-            self._call_service(self.node.pupil_scene_cli,True),
-            self._call_service(self.node.pupil_gaze_cli, True),
-            self._call_service(self.node.pupil_blink_cli, True),
-            self._call_service(self.node.pupil_imu_cli,   True),
-        ])
-        self.status.setText('Status: Recording' if ok else '❌ start failed')
+        errors = []
+
+        zed_depth_ok = self._call_service(self.node.zed_depth_cli, True)
+        if not zed_depth_ok:
+            errors.append('zed_depth')
+
+        zed_rgb_ok = self._call_service(self.node.zed_rgb_cli, True)
+        if not zed_rgb_ok:
+            errors.append('zed_rgb')
+
+        scene_ok, scene_used = self._call_scene_service_with_fallback(True)
+        if not scene_ok:
+            errors.append(scene_used)
+
+        gaze_ok = self._call_service(self.node.pupil_gaze_cli, True)
+        if not gaze_ok:
+            errors.append('pupil_gaze')
+
+        blink_ok = self._call_service(self.node.pupil_blink_cli, True)
+        if not blink_ok:
+            errors.append('pupil_blink')
+
+        imu_ok = self._call_service(self.node.pupil_imu_cli, True)
+        if not imu_ok:
+            errors.append('pupil_imu')
+
+        if errors:
+            self.status.setText(f'❌ start failed: {", ".join(errors)}')
+        else:
+            self.status.setText(f'Status: Recording (scene={scene_used})')
 
     def stop_recording(self):
         self.status.setText('Status: Stopping…')
-        ok = all([
-            self._call_service(self.node.zed_depth_cli,  False),
-            self._call_service(self.node.zed_rgb_cli,    False),
-            self._call_service(self.node.pupil_scene_cli,False),
-            self._call_service(self.node.pupil_gaze_cli, False),
-            self._call_service(self.node.pupil_blink_cli, False),
-            self._call_service(self.node.pupil_imu_cli,   False),
-        ])
-        self.status.setText('Status: Stopped' if ok else '❌ stop failed')
+        errors = []
+
+        if not self._call_service(self.node.zed_depth_cli, False):
+            errors.append('zed_depth')
+        if not self._call_service(self.node.zed_rgb_cli, False):
+            errors.append('zed_rgb')
+
+        scene_ok, scene_used = self._call_scene_service_with_fallback(False)
+        if not scene_ok:
+            errors.append(scene_used)
+
+        if not self._call_service(self.node.pupil_gaze_cli, False):
+            errors.append('pupil_gaze')
+        if not self._call_service(self.node.pupil_blink_cli, False):
+            errors.append('pupil_blink')
+        if not self._call_service(self.node.pupil_imu_cli, False):
+            errors.append('pupil_imu')
+
+        if errors:
+            self.status.setText(f'❌ stop failed: {", ".join(errors)}')
+        else:
+            self.status.setText(f'Status: Stopped (scene={scene_used})')
 
 
 # ────────────────────────────────────────────────────────  main

@@ -1,0 +1,13 @@
+package.xml
+setup.cfg
+setup.py
+../build/recording_scene_bag/recording_scene_bag.egg-info/PKG-INFO
+../build/recording_scene_bag/recording_scene_bag.egg-info/SOURCES.txt
+../build/recording_scene_bag/recording_scene_bag.egg-info/dependency_links.txt
+../build/recording_scene_bag/recording_scene_bag.egg-info/entry_points.txt
+../build/recording_scene_bag/recording_scene_bag.egg-info/requires.txt
+../build/recording_scene_bag/recording_scene_bag.egg-info/top_level.txt
+../build/recording_scene_bag/recording_scene_bag.egg-info/zip-safe
+recording_scene_bag/__init__.py
+recording_scene_bag/recording_scene_bag.py
+resource/recording_scene_bag

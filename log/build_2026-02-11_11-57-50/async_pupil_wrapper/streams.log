@@ -1,0 +1,25 @@
+[1.647s] Invoking command in '/home/olhamelnyk/colcon_venv/src/async_pupil_wrapper': AMENT_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/olhamelnyk/colcon_venv/src/build/async_pupil_wrapper/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/olhamelnyk/colcon_venv/src/install/async_pupil_wrapper/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/src/install/imu_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/async_pupil_wrapper build --build-base /home/olhamelnyk/colcon_venv/src/build/async_pupil_wrapper/build install --record /home/olhamelnyk/colcon_venv/src/build/async_pupil_wrapper/install.log --single-version-externally-managed install_data
+[2.216s] running egg_info
+[2.262s] writing ../build/async_pupil_wrapper/async_pupil_wrapper.egg-info/PKG-INFO
+[2.262s] writing dependency_links to ../build/async_pupil_wrapper/async_pupil_wrapper.egg-info/dependency_links.txt
+[2.263s] writing entry points to ../build/async_pupil_wrapper/async_pupil_wrapper.egg-info/entry_points.txt
+[2.263s] writing requirements to ../build/async_pupil_wrapper/async_pupil_wrapper.egg-info/requires.txt
+[2.263s] writing top-level names to ../build/async_pupil_wrapper/async_pupil_wrapper.egg-info/top_level.txt
+[2.352s] reading manifest file '../build/async_pupil_wrapper/async_pupil_wrapper.egg-info/SOURCES.txt'
+[2.352s] adding license file 'LICENSE'
+[2.353s] writing manifest file '../build/async_pupil_wrapper/async_pupil_wrapper.egg-info/SOURCES.txt'
+[2.353s] running build
+[2.353s] running build_py
+[2.354s] copying async_pupil_wrapper/async_pupil_wrapper.py -> /home/olhamelnyk/colcon_venv/src/build/async_pupil_wrapper/build/lib/async_pupil_wrapper
+[2.354s] running install
+[2.364s] running install_lib
+[2.408s] copying /home/olhamelnyk/colcon_venv/src/build/async_pupil_wrapper/build/lib/async_pupil_wrapper/async_pupil_wrapper.py -> /home/olhamelnyk/colcon_venv/src/install/async_pupil_wrapper/lib/python3.12/site-packages/async_pupil_wrapper
+[2.409s] byte-compiling /home/olhamelnyk/colcon_venv/src/install/async_pupil_wrapper/lib/python3.12/site-packages/async_pupil_wrapper/async_pupil_wrapper.py to async_pupil_wrapper.cpython-312.pyc
+[2.415s] running install_data
+[2.415s] running install_egg_info
+[2.459s] removing '/home/olhamelnyk/colcon_venv/src/install/async_pupil_wrapper/lib/python3.12/site-packages/async_pupil_wrapper-0.0.0-py3.12.egg-info' (and everything under it)
+[2.460s] Copying ../build/async_pupil_wrapper/async_pupil_wrapper.egg-info to /home/olhamelnyk/colcon_venv/src/install/async_pupil_wrapper/lib/python3.12/site-packages/async_pupil_wrapper-0.0.0-py3.12.egg-info
+[2.461s] running install_scripts
+[2.731s] Installing async_pupil_wrapper script to /home/olhamelnyk/colcon_venv/src/install/async_pupil_wrapper/lib/async_pupil_wrapper
+[2.731s] writing list of installed files to '/home/olhamelnyk/colcon_venv/src/build/async_pupil_wrapper/install.log'
+[2.811s] Invoked command in '/home/olhamelnyk/colcon_venv/src/async_pupil_wrapper' returned '0': AMENT_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface:${CMAKE_PREFIX_PATH} DEBUGINFOD_URLS=https://debuginfod.ubuntu.com LD_LIBRARY_PATH=/home/olhamelnyk/colcon_venv/src/install/imu_interface/lib:${LD_LIBRARY_PATH} PYTHONPATH=/home/olhamelnyk/colcon_venv/src/build/async_pupil_wrapper/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/olhamelnyk/colcon_venv/src/install/async_pupil_wrapper/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/src/install/imu_interface/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/async_pupil_wrapper build --build-base /home/olhamelnyk/colcon_venv/src/build/async_pupil_wrapper/build install --record /home/olhamelnyk/colcon_venv/src/build/async_pupil_wrapper/install.log --single-version-externally-managed install_data

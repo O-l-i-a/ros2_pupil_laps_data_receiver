@@ -1,0 +1,437 @@
+[0.000000] (-) TimerEvent: {}
+[0.001006] (-) JobUnselected: {'identifier': 'apriltagdetection'}
+[0.001121] (-) JobUnselected: {'identifier': 'async_pupil_wrapper'}
+[0.001237] (-) JobUnselected: {'identifier': 'blink_interface'}
+[0.001311] (-) JobUnselected: {'identifier': 'egocentric_msg'}
+[0.001404] (-) JobUnselected: {'identifier': 'gaze_interface'}
+[0.001505] (-) JobUnselected: {'identifier': 'imu_interface'}
+[0.001600] (-) JobUnselected: {'identifier': 'latency_tools'}
+[0.001706] (-) JobUnselected: {'identifier': 'pupil_labs_wrapper'}
+[0.001802] (-) JobUnselected: {'identifier': 'recording_blink'}
+[0.001872] (-) JobUnselected: {'identifier': 'recording_controller_pkg'}
+[0.001973] (-) JobUnselected: {'identifier': 'recording_gaze'}
+[0.002046] (-) JobUnselected: {'identifier': 'recording_imu'}
+[0.002147] (-) JobUnselected: {'identifier': 'recording_scene'}
+[0.002243] (-) JobUnselected: {'identifier': 'recording_scene_python'}
+[0.002382] (-) JobUnselected: {'identifier': 'recording_zed_depth'}
+[0.002579] (-) JobUnselected: {'identifier': 'recording_zed_depth_rgb'}
+[0.002690] (-) JobUnselected: {'identifier': 'recording_zed_rgb'}
+[0.002762] (-) JobUnselected: {'identifier': 'rviz_plugin_zed_od'}
+[0.002952] (-) JobUnselected: {'identifier': 'tf_recording'}
+[0.003092] (-) JobUnselected: {'identifier': 'zed_aruco_localization'}
+[0.003161] (-) JobUnselected: {'identifier': 'zed_components'}
+[0.003218] (-) JobUnselected: {'identifier': 'zed_depth_to_laserscan'}
+[0.003287] (-) JobUnselected: {'identifier': 'zed_display_rviz2'}
+[0.003413] (-) JobUnselected: {'identifier': 'zed_ipc'}
+[0.003557] (-) JobUnselected: {'identifier': 'zed_mini'}
+[0.003617] (-) JobUnselected: {'identifier': 'zed_msgs'}
+[0.003722] (-) JobUnselected: {'identifier': 'zed_multi_camera'}
+[0.003781] (-) JobUnselected: {'identifier': 'zed_recorder_cpp'}
+[0.004062] (-) JobUnselected: {'identifier': 'zed_rgb_convert'}
+[0.004129] (-) JobUnselected: {'identifier': 'zed_robot_integration'}
+[0.004193] (-) JobUnselected: {'identifier': 'zed_ros2'}
+[0.004249] (-) JobUnselected: {'identifier': 'zed_topic_benchmark'}
+[0.004304] (-) JobUnselected: {'identifier': 'zed_topic_benchmark_component'}
+[0.004541] (-) JobUnselected: {'identifier': 'zed_topic_benchmark_interfaces'}
+[0.004653] (-) JobUnselected: {'identifier': 'zed_tutorial_depth'}
+[0.005505] (-) JobUnselected: {'identifier': 'zed_tutorial_pos_tracking'}
+[0.005579] (-) JobUnselected: {'identifier': 'zed_tutorial_video'}
+[0.005882] (-) JobUnselected: {'identifier': 'zed_wrapper'}
+[0.006001] (recording_scene_cpp) JobQueued: {'identifier': 'recording_scene_cpp', 'dependencies': OrderedDict()}
+[0.006094] (recording_scene_cpp) JobStarted: {'identifier': 'recording_scene_cpp'}
+[0.028478] (recording_scene_cpp) JobProgress: {'identifier': 'recording_scene_cpp', 'progress': 'cmake'}
+[0.029865] (recording_scene_cpp) JobProgress: {'identifier': 'recording_scene_cpp', 'progress': 'build'}
+[0.031098] (recording_scene_cpp) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/olhamelnyk/colcon_venv/src/build/recording_scene_cpp', '--', '-j16', '-l16'], 'cwd': '/home/olhamelnyk/colcon_venv/src/build/recording_scene_cpp', 'env': OrderedDict({'GJS_DEBUG_TOPICS': 'JS ERROR;JS LOG', 'LESSOPEN': '| /usr/bin/lesspipe %s', 'VSCODE_CWD': '/home/olhamelnyk', 'VSCODE_ESM_ENTRYPOINT': 'vs/workbench/api/node/extensionHostProcess', 'CODEX_CI': '1', 'GZ_SIM_RESOURCE_PATH': '/opt/ros/jazzy/share', 'USER': 'olhamelnyk', 'CODEX_INTERNAL_ORIGINATOR_OVERRIDE': 'codex_vscode', 'VSCODE_NLS_CONFIG': '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'VSCODE_HANDLES_UNCAUGHT_ERRORS': 'true', 'XDG_SESSION_TYPE': 'x11', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '0', 'LD_LIBRARY_PATH': '/home/olhamelnyk/colcon_venv/install/zed_ipc/lib:/home/olhamelnyk/colcon_venv/install/zed_rgb_convert/lib:/home/olhamelnyk/colcon_venv/install/zed_recorder_cpp/lib:/home/olhamelnyk/colcon_venv/install/zed_components/lib:/home/olhamelnyk/colcon_venv/install/rviz_plugin_zed_od/lib:/home/olhamelnyk/colcon_venv/install/zed_msgs/lib:/home/olhamelnyk/colcon_venv/install/imu_interface/lib:/home/olhamelnyk/colcon_venv/install/gaze_interface/lib:/home/olhamelnyk/colcon_venv/install/egocentric_msg/lib:/home/olhamelnyk/colcon_venv/install/blink_interface/lib:/home/olhamelnyk/colcon_venv/install/apriltagdetection/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/olhamelnyk', 'CHROME_DESKTOP': 'code.desktop', 'DESKTOP_SESSION': 'ubuntu', 'VSCODE_IPC_HOOK': '/run/user/1001/vscode-2a93de95-1.10-main.sock', 'GIO_LAUNCHED_DESKTOP_FILE': '/usr/share/applications/code.desktop', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'PAGER': 'cat', 'MANAGERPID': '2732', 'LC_CTYPE': 'C.UTF-8', 'SYSTEMD_EXEC_PID': '3061', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'NO_COLOR': '1', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1001/bus', 'COLORTERM': '', 'GIO_LAUNCHED_DESKTOP_FILE_PID': '4475', 'VSCODE_CRASH_REPORTER_PROCESS_TYPE': 'extensionHost', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'COLCON_PREFIX_PATH': '/home/olhamelnyk/colcon_venv/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'olhamelnyk', 'JOURNAL_STREAM': '9:18196', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1001.slice/user@1001.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'RUST_LOG': 'warn', 'USERNAME': 'olhamelnyk', 'TERM': 'dumb', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ISAAC_ROS_WS': '/home/olhamelnyk/isaac_ros_ws', 'FC_FONTATIONS': '1', 'WINDOWPATH': '2', 'PATH': '/home/olhamelnyk/.codex/tmp/arg0/codex-arg0Zv7e0r:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/olhamelnyk/.vscode/extensions/openai.chatgpt-0.4.71-linux-x64/bin/linux-x86_64', 'SESSION_MANAGER': 'local/piplab-X470-AORUS-ULTRA-GAMING:@/tmp/.ICE-unix/3030,unix/piplab-X470-AORUS-ULTRA-GAMING:/tmp/.ICE-unix/3030', 'FASTRTPS_DEFAULT_PROFILES_FILE': '/home/olhamelnyk/colcon_venv/src/fast_dds_conf.xml', 'INVOCATION_ID': 'd0036603c3fb4f33a0060b7bfced4314', 'XDG_MENU_PREFIX': 'gnome-', 'XDG_RUNTIME_DIR': '/run/user/1001', 'GDK_BACKEND': 'x11', 'DISPLAY': ':1', 'CODEX_SANDBOX_NETWORK_DISABLED': '1', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'GH_PAGER': 'cat', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1001/gdm/Xauthority', 'SSH_AUTH_SOCK': '/run/user/1001/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/olhamelnyk/colcon_venv/install/zed_ros2:/home/olhamelnyk/colcon_venv/install/zed_robot_integration:/home/olhamelnyk/colcon_venv/install/zed_ipc:/home/olhamelnyk/colcon_venv/install/zed_multi_camera:/home/olhamelnyk/colcon_venv/install/zed_display_rviz2:/home/olhamelnyk/colcon_venv/install/zed_depth_to_laserscan:/home/olhamelnyk/colcon_venv/install/zed_wrapper:/home/olhamelnyk/colcon_venv/install/zed_tutorial_video:/home/olhamelnyk/colcon_venv/install/zed_tutorial_pos_tracking:/home/olhamelnyk/colcon_venv/install/zed_tutorial_depth:/home/olhamelnyk/colcon_venv/install/zed_topic_benchmark_interfaces:/home/olhamelnyk/colcon_venv/install/zed_rgb_convert:/home/olhamelnyk/colcon_venv/install/zed_recorder_cpp:/home/olhamelnyk/colcon_venv/install/zed_aruco_localization:/home/olhamelnyk/colcon_venv/install/zed_components:/home/olhamelnyk/colcon_venv/install/rviz_plugin_zed_od:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_msgs:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene_cpp:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/home/olhamelnyk/colcon_venv/install/imu_interface:/home/olhamelnyk/colcon_venv/install/gaze_interface:/home/olhamelnyk/colcon_venv/install/egocentric_msg:/home/olhamelnyk/colcon_venv/install/blink_interface:/home/olhamelnyk/colcon_venv/install/apriltagdetection:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'ELECTRON_RUN_AS_NODE': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CODEX_THREAD_ID': '019c4880-ec6d-7171-b3ab-1a35aeefd8e7', 'GPG_AGENT_INFO': '/run/user/1001/gnupg/S.gpg-agent:0:1', 'GJS_DEBUG_OUTPUT': 'stderr', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'GIT_PAGER': 'cat', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/olhamelnyk/colcon_venv/src/build/recording_scene_cpp', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'VSCODE_CODE_CACHE_PATH': '/home/olhamelnyk/.config/Code/CachedData/94e8ae2b28cb5cc932b86e1070569c4463565c37', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/olhamelnyk/colcon_venv/install/recording_controller_pkg/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/zed_msgs/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/zed_mini/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/tf_recording/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_zed_depth/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_scene_python/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_scene/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_imu/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_gaze/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_blink/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/latency_tools/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/imu_interface/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/gaze_interface/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/egocentric_msg/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/blink_interface/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/apriltagdetection/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'CMAKE_PREFIX_PATH': '/home/olhamelnyk/colcon_venv/install/zed_ros2:/home/olhamelnyk/colcon_venv/install/zed_robot_integration:/home/olhamelnyk/colcon_venv/install/zed_ipc:/home/olhamelnyk/colcon_venv/install/zed_multi_camera:/home/olhamelnyk/colcon_venv/install/zed_display_rviz2:/home/olhamelnyk/colcon_venv/install/zed_depth_to_laserscan:/home/olhamelnyk/colcon_venv/install/zed_wrapper:/home/olhamelnyk/colcon_venv/install/zed_tutorial_video:/home/olhamelnyk/colcon_venv/install/zed_tutorial_pos_tracking:/home/olhamelnyk/colcon_venv/install/zed_tutorial_depth:/home/olhamelnyk/colcon_venv/install/zed_topic_benchmark_interfaces:/home/olhamelnyk/colcon_venv/install/zed_rgb_convert:/home/olhamelnyk/colcon_venv/install/zed_recorder_cpp:/home/olhamelnyk/colcon_venv/install/zed_aruco_localization:/home/olhamelnyk/colcon_venv/install/zed_components:/home/olhamelnyk/colcon_venv/install/rviz_plugin_zed_od:/home/olhamelnyk/colcon_venv/install/zed_msgs:/home/olhamelnyk/colcon_venv/install/recording_scene_cpp:/home/olhamelnyk/colcon_venv/install/imu_interface:/home/olhamelnyk/colcon_venv/install/gaze_interface:/home/olhamelnyk/colcon_venv/install/egocentric_msg:/home/olhamelnyk/colcon_venv/install/blink_interface:/home/olhamelnyk/colcon_venv/install/apriltagdetection:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy', 'VSCODE_PID': '4475'}), 'shell': False}
+[0.099596] (-) TimerEvent: {}
+[0.199935] (-) TimerEvent: {}
+[0.242732] (recording_scene_cpp) StdoutLine: {'line': b'[ 50%] Building CXX object CMakeFiles/scene_recorder_node.dir/src/scene_recorder_node.cpp.o\n'}
+[0.300084] (-) TimerEvent: {}
+[0.400495] (-) TimerEvent: {}
+[0.500941] (-) TimerEvent: {}
+[0.601546] (-) TimerEvent: {}
+[0.702103] (-) TimerEvent: {}
+[0.802545] (-) TimerEvent: {}
+[0.903261] (-) TimerEvent: {}
+[1.004848] (-) TimerEvent: {}
+[1.106068] (-) TimerEvent: {}
+[1.206529] (-) TimerEvent: {}
+[1.306922] (-) TimerEvent: {}
+[1.407278] (-) TimerEvent: {}
+[1.508216] (-) TimerEvent: {}
+[1.609261] (-) TimerEvent: {}
+[1.709732] (-) TimerEvent: {}
+[1.810697] (-) TimerEvent: {}
+[1.911386] (-) TimerEvent: {}
+[2.011978] (-) TimerEvent: {}
+[2.112450] (-) TimerEvent: {}
+[2.212965] (-) TimerEvent: {}
+[2.313715] (-) TimerEvent: {}
+[2.414446] (-) TimerEvent: {}
+[2.514989] (-) TimerEvent: {}
+[2.616005] (-) TimerEvent: {}
+[2.716714] (-) TimerEvent: {}
+[2.817086] (-) TimerEvent: {}
+[2.917459] (-) TimerEvent: {}
+[3.017769] (-) TimerEvent: {}
+[3.118106] (-) TimerEvent: {}
+[3.218650] (-) TimerEvent: {}
+[3.319478] (-) TimerEvent: {}
+[3.420469] (-) TimerEvent: {}
+[3.521164] (-) TimerEvent: {}
+[3.621894] (-) TimerEvent: {}
+[3.722400] (-) TimerEvent: {}
+[3.823945] (-) TimerEvent: {}
+[3.924937] (-) TimerEvent: {}
+[4.025384] (-) TimerEvent: {}
+[4.125760] (-) TimerEvent: {}
+[4.226142] (-) TimerEvent: {}
+[4.326859] (-) TimerEvent: {}
+[4.427555] (-) TimerEvent: {}
+[4.528233] (-) TimerEvent: {}
+[4.628641] (-) TimerEvent: {}
+[4.729258] (-) TimerEvent: {}
+[4.830121] (-) TimerEvent: {}
+[4.930836] (-) TimerEvent: {}
+[5.031346] (-) TimerEvent: {}
+[5.131711] (-) TimerEvent: {}
+[5.232645] (-) TimerEvent: {}
+[5.333100] (-) TimerEvent: {}
+[5.433593] (-) TimerEvent: {}
+[5.534026] (-) TimerEvent: {}
+[5.634479] (-) TimerEvent: {}
+[5.734907] (-) TimerEvent: {}
+[5.835247] (-) TimerEvent: {}
+[5.935590] (-) TimerEvent: {}
+[6.036000] (-) TimerEvent: {}
+[6.136600] (-) TimerEvent: {}
+[6.237227] (-) TimerEvent: {}
+[6.338841] (-) TimerEvent: {}
+[6.439697] (-) TimerEvent: {}
+[6.540297] (-) TimerEvent: {}
+[6.640806] (-) TimerEvent: {}
+[6.741546] (-) TimerEvent: {}
+[6.842136] (-) TimerEvent: {}
+[6.942626] (-) TimerEvent: {}
+[7.043229] (-) TimerEvent: {}
+[7.143973] (-) TimerEvent: {}
+[7.244486] (-) TimerEvent: {}
+[7.345026] (-) TimerEvent: {}
+[7.445667] (-) TimerEvent: {}
+[7.546301] (-) TimerEvent: {}
+[7.646674] (-) TimerEvent: {}
+[7.747039] (-) TimerEvent: {}
+[7.847647] (-) TimerEvent: {}
+[7.948150] (-) TimerEvent: {}
+[8.048527] (-) TimerEvent: {}
+[8.149495] (-) TimerEvent: {}
+[8.250836] (-) TimerEvent: {}
+[8.351502] (-) TimerEvent: {}
+[8.452001] (-) TimerEvent: {}
+[8.552422] (-) TimerEvent: {}
+[8.652802] (-) TimerEvent: {}
+[8.753679] (-) TimerEvent: {}
+[8.854642] (-) TimerEvent: {}
+[8.955502] (-) TimerEvent: {}
+[9.056267] (-) TimerEvent: {}
+[9.156904] (-) TimerEvent: {}
+[9.257845] (-) TimerEvent: {}
+[9.358927] (-) TimerEvent: {}
+[9.459471] (-) TimerEvent: {}
+[9.560309] (-) TimerEvent: {}
+[9.660937] (-) TimerEvent: {}
+[9.761620] (-) TimerEvent: {}
+[9.862432] (-) TimerEvent: {}
+[9.963055] (-) TimerEvent: {}
+[10.063797] (-) TimerEvent: {}
+[10.164416] (-) TimerEvent: {}
+[10.264889] (-) TimerEvent: {}
+[10.365197] (-) TimerEvent: {}
+[10.465743] (-) TimerEvent: {}
+[10.566202] (-) TimerEvent: {}
+[10.666656] (-) TimerEvent: {}
+[10.767036] (-) TimerEvent: {}
+[10.867530] (-) TimerEvent: {}
+[10.968255] (-) TimerEvent: {}
+[11.068752] (-) TimerEvent: {}
+[11.169551] (-) TimerEvent: {}
+[11.270411] (-) TimerEvent: {}
+[11.371122] (-) TimerEvent: {}
+[11.472083] (-) TimerEvent: {}
+[11.573017] (-) TimerEvent: {}
+[11.673778] (-) TimerEvent: {}
+[11.774478] (-) TimerEvent: {}
+[11.875438] (-) TimerEvent: {}
+[11.975932] (-) TimerEvent: {}
+[12.076401] (-) TimerEvent: {}
+[12.177131] (-) TimerEvent: {}
+[12.278276] (-) TimerEvent: {}
+[12.379413] (-) TimerEvent: {}
+[12.479937] (-) TimerEvent: {}
+[12.580524] (-) TimerEvent: {}
+[12.680965] (-) TimerEvent: {}
+[12.781420] (-) TimerEvent: {}
+[12.882102] (-) TimerEvent: {}
+[12.983089] (-) TimerEvent: {}
+[13.083498] (-) TimerEvent: {}
+[13.183875] (-) TimerEvent: {}
+[13.284273] (-) TimerEvent: {}
+[13.384816] (-) TimerEvent: {}
+[13.485460] (-) TimerEvent: {}
+[13.585936] (-) TimerEvent: {}
+[13.686865] (-) TimerEvent: {}
+[13.787799] (-) TimerEvent: {}
+[13.888617] (-) TimerEvent: {}
+[13.989154] (-) TimerEvent: {}
+[14.089599] (-) TimerEvent: {}
+[14.190277] (-) TimerEvent: {}
+[14.291099] (-) TimerEvent: {}
+[14.391546] (-) TimerEvent: {}
+[14.491831] (-) TimerEvent: {}
+[14.592222] (-) TimerEvent: {}
+[14.692681] (-) TimerEvent: {}
+[14.793153] (-) TimerEvent: {}
+[14.893975] (-) TimerEvent: {}
+[14.994444] (-) TimerEvent: {}
+[15.094707] (-) TimerEvent: {}
+[15.195028] (-) TimerEvent: {}
+[15.295720] (-) TimerEvent: {}
+[15.396568] (-) TimerEvent: {}
+[15.496993] (-) TimerEvent: {}
+[15.597528] (-) TimerEvent: {}
+[15.698110] (-) TimerEvent: {}
+[15.798583] (-) TimerEvent: {}
+[15.899012] (-) TimerEvent: {}
+[15.999461] (-) TimerEvent: {}
+[16.099931] (-) TimerEvent: {}
+[16.200519] (-) TimerEvent: {}
+[16.300886] (-) TimerEvent: {}
+[16.401150] (-) TimerEvent: {}
+[16.501973] (-) TimerEvent: {}
+[16.602531] (-) TimerEvent: {}
+[16.703659] (-) TimerEvent: {}
+[16.804538] (-) TimerEvent: {}
+[16.905676] (-) TimerEvent: {}
+[17.006836] (-) TimerEvent: {}
+[17.107831] (-) TimerEvent: {}
+[17.208599] (-) TimerEvent: {}
+[17.309195] (-) TimerEvent: {}
+[17.409729] (-) TimerEvent: {}
+[17.510506] (-) TimerEvent: {}
+[17.611679] (-) TimerEvent: {}
+[17.712912] (-) TimerEvent: {}
+[17.813740] (-) TimerEvent: {}
+[17.914221] (-) TimerEvent: {}
+[18.014793] (-) TimerEvent: {}
+[18.115774] (-) TimerEvent: {}
+[18.216921] (-) TimerEvent: {}
+[18.317537] (-) TimerEvent: {}
+[18.418454] (-) TimerEvent: {}
+[18.519103] (-) TimerEvent: {}
+[18.619489] (-) TimerEvent: {}
+[18.720024] (-) TimerEvent: {}
+[18.820957] (-) TimerEvent: {}
+[18.921856] (-) TimerEvent: {}
+[19.022392] (-) TimerEvent: {}
+[19.122814] (-) TimerEvent: {}
+[19.223747] (-) TimerEvent: {}
+[19.324619] (-) TimerEvent: {}
+[19.425430] (-) TimerEvent: {}
+[19.525865] (-) TimerEvent: {}
+[19.626333] (-) TimerEvent: {}
+[19.726680] (-) TimerEvent: {}
+[19.827297] (-) TimerEvent: {}
+[19.927964] (-) TimerEvent: {}
+[20.028541] (-) TimerEvent: {}
+[20.129222] (-) TimerEvent: {}
+[20.230068] (-) TimerEvent: {}
+[20.330943] (-) TimerEvent: {}
+[20.431339] (-) TimerEvent: {}
+[20.531708] (-) TimerEvent: {}
+[20.632110] (-) TimerEvent: {}
+[20.732663] (-) TimerEvent: {}
+[20.833794] (-) TimerEvent: {}
+[20.935099] (-) TimerEvent: {}
+[21.035665] (-) TimerEvent: {}
+[21.136317] (-) TimerEvent: {}
+[21.237138] (-) TimerEvent: {}
+[21.338062] (-) TimerEvent: {}
+[21.438602] (-) TimerEvent: {}
+[21.539604] (-) TimerEvent: {}
+[21.640526] (-) TimerEvent: {}
+[21.741032] (-) TimerEvent: {}
+[21.841378] (-) TimerEvent: {}
+[21.941818] (-) TimerEvent: {}
+[22.042828] (-) TimerEvent: {}
+[22.143786] (-) TimerEvent: {}
+[22.244604] (-) TimerEvent: {}
+[22.345744] (-) TimerEvent: {}
+[22.446650] (-) TimerEvent: {}
+[22.547343] (-) TimerEvent: {}
+[22.647954] (-) TimerEvent: {}
+[22.748394] (-) TimerEvent: {}
+[22.848818] (-) TimerEvent: {}
+[22.949298] (-) TimerEvent: {}
+[23.049880] (-) TimerEvent: {}
+[23.150506] (-) TimerEvent: {}
+[23.251189] (-) TimerEvent: {}
+[23.351930] (-) TimerEvent: {}
+[23.452215] (-) TimerEvent: {}
+[23.552606] (-) TimerEvent: {}
+[23.653089] (-) TimerEvent: {}
+[23.753521] (-) TimerEvent: {}
+[23.854130] (-) TimerEvent: {}
+[23.954679] (-) TimerEvent: {}
+[24.055173] (-) TimerEvent: {}
+[24.155641] (-) TimerEvent: {}
+[24.256027] (-) TimerEvent: {}
+[24.356547] (-) TimerEvent: {}
+[24.457080] (-) TimerEvent: {}
+[24.557894] (-) TimerEvent: {}
+[24.658594] (-) TimerEvent: {}
+[24.758875] (-) TimerEvent: {}
+[24.859257] (-) TimerEvent: {}
+[24.959750] (-) TimerEvent: {}
+[25.060000] (-) TimerEvent: {}
+[25.160242] (-) TimerEvent: {}
+[25.260780] (-) TimerEvent: {}
+[25.361516] (-) TimerEvent: {}
+[25.461976] (-) TimerEvent: {}
+[25.562455] (-) TimerEvent: {}
+[25.662890] (-) TimerEvent: {}
+[25.763460] (-) TimerEvent: {}
+[25.864135] (-) TimerEvent: {}
+[25.964951] (-) TimerEvent: {}
+[26.065539] (-) TimerEvent: {}
+[26.166098] (-) TimerEvent: {}
+[26.266697] (-) TimerEvent: {}
+[26.367126] (-) TimerEvent: {}
+[26.467714] (-) TimerEvent: {}
+[26.568189] (-) TimerEvent: {}
+[26.668841] (-) TimerEvent: {}
+[26.769547] (-) TimerEvent: {}
+[26.870409] (-) TimerEvent: {}
+[26.971881] (-) TimerEvent: {}
+[27.072816] (-) TimerEvent: {}
+[27.173614] (-) TimerEvent: {}
+[27.274280] (-) TimerEvent: {}
+[27.375178] (-) TimerEvent: {}
+[27.475774] (-) TimerEvent: {}
+[27.576491] (-) TimerEvent: {}
+[27.677188] (-) TimerEvent: {}
+[27.777683] (-) TimerEvent: {}
+[27.878130] (-) TimerEvent: {}
+[27.978568] (-) TimerEvent: {}
+[28.079064] (-) TimerEvent: {}
+[28.179756] (-) TimerEvent: {}
+[28.280319] (-) TimerEvent: {}
+[28.380648] (-) TimerEvent: {}
+[28.481028] (-) TimerEvent: {}
+[28.581652] (-) TimerEvent: {}
+[28.682100] (-) TimerEvent: {}
+[28.782585] (-) TimerEvent: {}
+[28.883125] (-) TimerEvent: {}
+[28.983470] (-) TimerEvent: {}
+[29.083761] (-) TimerEvent: {}
+[29.184224] (-) TimerEvent: {}
+[29.285042] (-) TimerEvent: {}
+[29.385725] (-) TimerEvent: {}
+[29.486652] (-) TimerEvent: {}
+[29.588046] (-) TimerEvent: {}
+[29.688745] (-) TimerEvent: {}
+[29.789639] (-) TimerEvent: {}
+[29.890579] (-) TimerEvent: {}
+[29.991751] (-) TimerEvent: {}
+[30.092568] (-) TimerEvent: {}
+[30.193342] (-) TimerEvent: {}
+[30.294354] (-) TimerEvent: {}
+[30.394793] (-) TimerEvent: {}
+[30.495688] (-) TimerEvent: {}
+[30.596659] (-) TimerEvent: {}
+[30.697199] (-) TimerEvent: {}
+[30.797659] (-) TimerEvent: {}
+[30.898210] (-) TimerEvent: {}
+[30.998530] (-) TimerEvent: {}
+[31.099353] (-) TimerEvent: {}
+[31.200147] (-) TimerEvent: {}
+[31.300641] (-) TimerEvent: {}
+[31.400932] (-) TimerEvent: {}
+[31.501297] (-) TimerEvent: {}
+[31.602018] (-) TimerEvent: {}
+[31.702539] (-) TimerEvent: {}
+[31.803481] (-) TimerEvent: {}
+[31.904331] (-) TimerEvent: {}
+[32.004980] (-) TimerEvent: {}
+[32.105477] (-) TimerEvent: {}
+[32.206072] (-) TimerEvent: {}
+[32.307346] (-) TimerEvent: {}
+[32.408151] (-) TimerEvent: {}
+[32.508951] (-) TimerEvent: {}
+[32.576108] (recording_scene_cpp) StdoutLine: {'line': b'[100%] Linking CXX executable scene_recorder_node\n'}
+[32.609073] (-) TimerEvent: {}
+[32.709394] (-) TimerEvent: {}
+[32.809797] (-) TimerEvent: {}
+[32.910634] (-) TimerEvent: {}
+[33.011159] (-) TimerEvent: {}
+[33.112074] (-) TimerEvent: {}
+[33.213603] (-) TimerEvent: {}
+[33.314264] (-) TimerEvent: {}
+[33.414765] (-) TimerEvent: {}
+[33.515299] (-) TimerEvent: {}
+[33.616190] (-) TimerEvent: {}
+[33.717168] (-) TimerEvent: {}
+[33.817857] (-) TimerEvent: {}
+[33.919235] (-) TimerEvent: {}
+[34.020889] (-) TimerEvent: {}
+[34.122790] (-) TimerEvent: {}
+[34.224611] (-) TimerEvent: {}
+[34.325295] (-) TimerEvent: {}
+[34.426247] (-) TimerEvent: {}
+[34.527505] (-) TimerEvent: {}
+[34.628178] (-) TimerEvent: {}
+[34.728792] (-) TimerEvent: {}
+[34.829536] (-) TimerEvent: {}
+[34.930281] (-) TimerEvent: {}
+[35.031016] (-) TimerEvent: {}
+[35.131555] (-) TimerEvent: {}
+[35.232085] (-) TimerEvent: {}
+[35.332807] (-) TimerEvent: {}
+[35.433610] (-) TimerEvent: {}
+[35.534265] (-) TimerEvent: {}
+[35.635523] (-) TimerEvent: {}
+[35.736748] (-) TimerEvent: {}
+[35.837820] (-) TimerEvent: {}
+[35.938302] (-) TimerEvent: {}
+[36.038741] (-) TimerEvent: {}
+[36.139084] (-) TimerEvent: {}
+[36.239939] (-) TimerEvent: {}
+[36.340913] (-) TimerEvent: {}
+[36.441566] (-) TimerEvent: {}
+[36.542234] (-) TimerEvent: {}
+[36.642863] (-) TimerEvent: {}
+[36.743423] (-) TimerEvent: {}
+[36.745291] (recording_scene_cpp) StdoutLine: {'line': b'[100%] Built target scene_recorder_node\n'}
+[36.782869] (recording_scene_cpp) CommandEnded: {'returncode': 0}
+[36.783857] (recording_scene_cpp) JobProgress: {'identifier': 'recording_scene_cpp', 'progress': 'install'}
+[36.821210] (recording_scene_cpp) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/olhamelnyk/colcon_venv/src/build/recording_scene_cpp'], 'cwd': '/home/olhamelnyk/colcon_venv/src/build/recording_scene_cpp', 'env': OrderedDict({'GJS_DEBUG_TOPICS': 'JS ERROR;JS LOG', 'LESSOPEN': '| /usr/bin/lesspipe %s', 'VSCODE_CWD': '/home/olhamelnyk', 'VSCODE_ESM_ENTRYPOINT': 'vs/workbench/api/node/extensionHostProcess', 'CODEX_CI': '1', 'GZ_SIM_RESOURCE_PATH': '/opt/ros/jazzy/share', 'USER': 'olhamelnyk', 'CODEX_INTERNAL_ORIGINATOR_OVERRIDE': 'codex_vscode', 'VSCODE_NLS_CONFIG': '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/usr/share/code/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}', 'GZ_CONFIG_PATH': '/opt/ros/jazzy/opt/gz_sim_vendor/share/gz:/opt/ros/jazzy/opt/sdformat_vendor/share/gz:/opt/ros/jazzy/opt/gz_gui_vendor/share/gz:/opt/ros/jazzy/opt/gz_transport_vendor/share/gz:/opt/ros/jazzy/opt/gz_rendering_vendor/share/gz:/opt/ros/jazzy/opt/gz_plugin_vendor/share/gz:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/share/gz:/opt/ros/jazzy/opt/gz_msgs_vendor/share/gz:/opt/ros/jazzy/opt/gz_common_vendor/share/gz', 'VSCODE_HANDLES_UNCAUGHT_ERRORS': 'true', 'XDG_SESSION_TYPE': 'x11', 'CLUTTER_DISABLE_MIPMAPPED_TEXT': '1', 'SHLVL': '0', 'LD_LIBRARY_PATH': '/home/olhamelnyk/colcon_venv/install/zed_ipc/lib:/home/olhamelnyk/colcon_venv/install/zed_rgb_convert/lib:/home/olhamelnyk/colcon_venv/install/zed_recorder_cpp/lib:/home/olhamelnyk/colcon_venv/install/zed_components/lib:/home/olhamelnyk/colcon_venv/install/rviz_plugin_zed_od/lib:/home/olhamelnyk/colcon_venv/install/zed_msgs/lib:/home/olhamelnyk/colcon_venv/install/imu_interface/lib:/home/olhamelnyk/colcon_venv/install/gaze_interface/lib:/home/olhamelnyk/colcon_venv/install/egocentric_msg/lib:/home/olhamelnyk/colcon_venv/install/blink_interface/lib:/home/olhamelnyk/colcon_venv/install/apriltagdetection/lib:/opt/ros/jazzy/opt/gz_sim_vendor/lib:/opt/ros/jazzy/opt/gz_sensors_vendor/lib:/opt/ros/jazzy/opt/gz_physics_vendor/lib:/opt/ros/jazzy/opt/sdformat_vendor/lib:/opt/ros/jazzy/opt/rviz_ogre_vendor/lib:/opt/ros/jazzy/lib/x86_64-linux-gnu:/opt/ros/jazzy/opt/gz_gui_vendor/lib:/opt/ros/jazzy/opt/gz_transport_vendor/lib:/opt/ros/jazzy/opt/gz_rendering_vendor/lib:/opt/ros/jazzy/opt/gz_plugin_vendor/lib:/opt/ros/jazzy/opt/gz_fuel_tools_vendor/lib:/opt/ros/jazzy/opt/gz_msgs_vendor/lib:/opt/ros/jazzy/opt/gz_common_vendor/lib:/opt/ros/jazzy/opt/gz_math_vendor/lib:/opt/ros/jazzy/opt/gz_utils_vendor/lib:/opt/ros/jazzy/opt/gz_tools_vendor/lib:/opt/ros/jazzy/opt/gz_ogre_next_vendor/lib:/opt/ros/jazzy/opt/gz_dartsim_vendor/lib:/opt/ros/jazzy/opt/gz_cmake_vendor/lib:/opt/ros/jazzy/lib', 'HOME': '/home/olhamelnyk', 'CHROME_DESKTOP': 'code.desktop', 'DESKTOP_SESSION': 'ubuntu', 'VSCODE_IPC_HOOK': '/run/user/1001/vscode-2a93de95-1.10-main.sock', 'GIO_LAUNCHED_DESKTOP_FILE': '/usr/share/applications/code.desktop', 'ROS_PYTHON_VERSION': '3', 'GNOME_SHELL_SESSION_MODE': 'ubuntu', 'GTK_MODULES': 'gail:atk-bridge', 'PAGER': 'cat', 'MANAGERPID': '2732', 'LC_CTYPE': 'C.UTF-8', 'SYSTEMD_EXEC_PID': '3061', 'GSM_SKIP_SSH_AGENT_WORKAROUND': 'true', 'NO_COLOR': '1', 'DBUS_SESSION_BUS_ADDRESS': 'unix:path=/run/user/1001/bus', 'COLORTERM': '', 'GIO_LAUNCHED_DESKTOP_FILE_PID': '4475', 'VSCODE_CRASH_REPORTER_PROCESS_TYPE': 'extensionHost', 'DEBUGINFOD_URLS': 'https://debuginfod.ubuntu.com', 'COLCON_PREFIX_PATH': '/home/olhamelnyk/colcon_venv/install', 'ROS_DISTRO': 'jazzy', 'LOGNAME': 'olhamelnyk', 'JOURNAL_STREAM': '9:18196', '_': '/usr/bin/colcon', 'ROS_VERSION': '2', 'MEMORY_PRESSURE_WATCH': '/sys/fs/cgroup/user.slice/user-1001.slice/user@1001.service/session.slice/org.gnome.Shell@x11.service/memory.pressure', 'XDG_SESSION_CLASS': 'user', 'RUST_LOG': 'warn', 'USERNAME': 'olhamelnyk', 'TERM': 'dumb', 'GNOME_DESKTOP_SESSION_ID': 'this-is-deprecated', 'ISAAC_ROS_WS': '/home/olhamelnyk/isaac_ros_ws', 'FC_FONTATIONS': '1', 'WINDOWPATH': '2', 'PATH': '/home/olhamelnyk/.codex/tmp/arg0/codex-arg0Zv7e0r:/opt/ros/jazzy/opt/gz_msgs_vendor/bin:/opt/ros/jazzy/opt/gz_tools_vendor/bin:/opt/ros/jazzy/opt/gz_ogre_next_vendor/bin:/opt/ros/jazzy/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/olhamelnyk/.vscode/extensions/openai.chatgpt-0.4.71-linux-x64/bin/linux-x86_64', 'SESSION_MANAGER': 'local/piplab-X470-AORUS-ULTRA-GAMING:@/tmp/.ICE-unix/3030,unix/piplab-X470-AORUS-ULTRA-GAMING:/tmp/.ICE-unix/3030', 'FASTRTPS_DEFAULT_PROFILES_FILE': '/home/olhamelnyk/colcon_venv/src/fast_dds_conf.xml', 'INVOCATION_ID': 'd0036603c3fb4f33a0060b7bfced4314', 'XDG_MENU_PREFIX': 'gnome-', 'XDG_RUNTIME_DIR': '/run/user/1001', 'GDK_BACKEND': 'x11', 'DISPLAY': ':1', 'CODEX_SANDBOX_NETWORK_DISABLED': '1', 'LANG': 'en_US.UTF-8', 'XDG_CURRENT_DESKTOP': 'ubuntu:GNOME', 'XMODIFIERS': '@im=ibus', 'GH_PAGER': 'cat', 'XDG_SESSION_DESKTOP': 'ubuntu', 'XAUTHORITY': '/run/user/1001/gdm/Xauthority', 'SSH_AUTH_SOCK': '/run/user/1001/keyring/ssh', 'AMENT_PREFIX_PATH': '/home/olhamelnyk/colcon_venv/install/zed_ros2:/home/olhamelnyk/colcon_venv/install/zed_robot_integration:/home/olhamelnyk/colcon_venv/install/zed_ipc:/home/olhamelnyk/colcon_venv/install/zed_multi_camera:/home/olhamelnyk/colcon_venv/install/zed_display_rviz2:/home/olhamelnyk/colcon_venv/install/zed_depth_to_laserscan:/home/olhamelnyk/colcon_venv/install/zed_wrapper:/home/olhamelnyk/colcon_venv/install/zed_tutorial_video:/home/olhamelnyk/colcon_venv/install/zed_tutorial_pos_tracking:/home/olhamelnyk/colcon_venv/install/zed_tutorial_depth:/home/olhamelnyk/colcon_venv/install/zed_topic_benchmark_interfaces:/home/olhamelnyk/colcon_venv/install/zed_rgb_convert:/home/olhamelnyk/colcon_venv/install/zed_recorder_cpp:/home/olhamelnyk/colcon_venv/install/zed_aruco_localization:/home/olhamelnyk/colcon_venv/install/zed_components:/home/olhamelnyk/colcon_venv/install/rviz_plugin_zed_od:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_msgs:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene_cpp:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/home/olhamelnyk/colcon_venv/install/imu_interface:/home/olhamelnyk/colcon_venv/install/gaze_interface:/home/olhamelnyk/colcon_venv/install/egocentric_msg:/home/olhamelnyk/colcon_venv/install/blink_interface:/home/olhamelnyk/colcon_venv/install/apriltagdetection:/opt/ros/jazzy', 'SHELL': '/bin/bash', 'QT_ACCESSIBILITY': '1', 'ELECTRON_RUN_AS_NODE': '1', 'GDMSESSION': 'ubuntu', 'LESSCLOSE': '/usr/bin/lesspipe %s %s', 'CODEX_THREAD_ID': '019c4880-ec6d-7171-b3ab-1a35aeefd8e7', 'GPG_AGENT_INFO': '/run/user/1001/gnupg/S.gpg-agent:0:1', 'GJS_DEBUG_OUTPUT': 'stderr', 'ROS_AUTOMATIC_DISCOVERY_RANGE': 'SUBNET', 'GIT_PAGER': 'cat', 'QT_IM_MODULE': 'ibus', 'PWD': '/home/olhamelnyk/colcon_venv/src/build/recording_scene_cpp', 'LC_ALL': 'en_US.UTF-8', 'XDG_CONFIG_DIRS': '/etc/xdg/xdg-ubuntu:/etc/xdg', 'VSCODE_CODE_CACHE_PATH': '/home/olhamelnyk/.config/Code/CachedData/94e8ae2b28cb5cc932b86e1070569c4463565c37', 'XDG_DATA_DIRS': '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop', 'PYTHONPATH': '/home/olhamelnyk/colcon_venv/install/recording_controller_pkg/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/zed_msgs/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/zed_mini/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/tf_recording/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_zed_depth/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_scene_python/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_scene/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_imu/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_gaze/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/recording_blink/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/latency_tools/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/imu_interface/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/gaze_interface/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/egocentric_msg/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/blink_interface/lib/python3.12/site-packages:/home/olhamelnyk/colcon_venv/install/apriltagdetection/lib/python3.12/site-packages:/opt/ros/jazzy/lib/python3.12/site-packages', 'COLCON': '1', 'MEMORY_PRESSURE_WRITE': 'c29tZSAyMDAwMDAgMjAwMDAwMAA=', 'CMAKE_PREFIX_PATH': '/home/olhamelnyk/colcon_venv/install/zed_ros2:/home/olhamelnyk/colcon_venv/install/zed_robot_integration:/home/olhamelnyk/colcon_venv/install/zed_ipc:/home/olhamelnyk/colcon_venv/install/zed_multi_camera:/home/olhamelnyk/colcon_venv/install/zed_display_rviz2:/home/olhamelnyk/colcon_venv/install/zed_depth_to_laserscan:/home/olhamelnyk/colcon_venv/install/zed_wrapper:/home/olhamelnyk/colcon_venv/install/zed_tutorial_video:/home/olhamelnyk/colcon_venv/install/zed_tutorial_pos_tracking:/home/olhamelnyk/colcon_venv/install/zed_tutorial_depth:/home/olhamelnyk/colcon_venv/install/zed_topic_benchmark_interfaces:/home/olhamelnyk/colcon_venv/install/zed_rgb_convert:/home/olhamelnyk/colcon_venv/install/zed_recorder_cpp:/home/olhamelnyk/colcon_venv/install/zed_aruco_localization:/home/olhamelnyk/colcon_venv/install/zed_components:/home/olhamelnyk/colcon_venv/install/rviz_plugin_zed_od:/home/olhamelnyk/colcon_venv/install/zed_msgs:/home/olhamelnyk/colcon_venv/install/recording_scene_cpp:/home/olhamelnyk/colcon_venv/install/imu_interface:/home/olhamelnyk/colcon_venv/install/gaze_interface:/home/olhamelnyk/colcon_venv/install/egocentric_msg:/home/olhamelnyk/colcon_venv/install/blink_interface:/home/olhamelnyk/colcon_venv/install/apriltagdetection:/opt/ros/jazzy/opt/gz_sim_vendor:/opt/ros/jazzy/opt/gz_sensors_vendor:/opt/ros/jazzy/opt/gz_physics_vendor:/opt/ros/jazzy/opt/sdformat_vendor:/opt/ros/jazzy/opt/gz_gui_vendor:/opt/ros/jazzy/opt/gz_transport_vendor:/opt/ros/jazzy/opt/gz_rendering_vendor:/opt/ros/jazzy/opt/gz_plugin_vendor:/opt/ros/jazzy/opt/gz_fuel_tools_vendor:/opt/ros/jazzy/opt/gz_msgs_vendor:/opt/ros/jazzy/opt/gz_common_vendor:/opt/ros/jazzy/opt/gz_math_vendor:/opt/ros/jazzy/opt/gz_utils_vendor:/opt/ros/jazzy/opt/gz_tools_vendor:/opt/ros/jazzy/opt/gz_ogre_next_vendor:/opt/ros/jazzy/opt/gz_dartsim_vendor:/opt/ros/jazzy/opt/gz_cmake_vendor:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy', 'VSCODE_PID': '4475'}), 'shell': False}
+[36.843583] (-) TimerEvent: {}
+[36.848820] (recording_scene_cpp) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[36.849759] (recording_scene_cpp) StdoutLine: {'line': b'-- Installing: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/lib/recording_scene_cpp/scene_recorder_node\n'}
+[36.866271] (recording_scene_cpp) StdoutLine: {'line': b'-- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/lib/recording_scene_cpp/scene_recorder_node" to ""\n'}
+[36.867699] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/ament_index/resource_index/package_run_dependencies/recording_scene_cpp\n'}
+[36.868173] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/ament_index/resource_index/parent_prefix_path/recording_scene_cpp\n'}
+[36.868580] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/environment/ament_prefix_path.sh\n'}
+[36.869160] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/environment/ament_prefix_path.dsv\n'}
+[36.869601] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/environment/path.sh\n'}
+[36.870054] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/environment/path.dsv\n'}
+[36.870643] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/local_setup.bash\n'}
+[36.871039] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/local_setup.sh\n'}
+[36.871494] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/local_setup.zsh\n'}
+[36.872398] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/local_setup.dsv\n'}
+[36.872849] (recording_scene_cpp) StdoutLine: {'line': b'-- Installing: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/package.dsv\n'}
+[36.873305] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/ament_index/resource_index/packages/recording_scene_cpp\n'}
+[36.873889] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/cmake/recording_scene_cppConfig.cmake\n'}
+[36.874291] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/cmake/recording_scene_cppConfig-version.cmake\n'}
+[36.874699] (recording_scene_cpp) StdoutLine: {'line': b'-- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/recording_scene_cpp/share/recording_scene_cpp/package.xml\n'}
+[36.879003] (recording_scene_cpp) CommandEnded: {'returncode': 0}
+[36.921483] (recording_scene_cpp) JobEnded: {'identifier': 'recording_scene_cpp', 'rc': 0}
+[36.922977] (-) EventReactorShutdown: {}
