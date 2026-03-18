@@ -90,7 +90,7 @@ class PupilAsync(Node):
         qos_scene = QoSProfile(
             depth= 15,
             history=HistoryPolicy.KEEP_LAST,
-            reliability=ReliabilityPolicy.RELIABLE,
+            reliability=ReliabilityPolicy.BEST_EFFORT,
             durability = DurabilityPolicy.VOLATILE
         )
         self.cb_group = ReentrantCallbackGroup()

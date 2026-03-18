@@ -2,3 +2,13 @@
 *.mp4
 *.avi
 *.csv
+*.db3
+*.mcap
+*.raw
+
+# Colcon / ROS generated artifacts
+build/
+install/
+log/
+runtime_logs/
+recordings/

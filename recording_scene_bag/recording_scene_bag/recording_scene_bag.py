@@ -5,6 +5,7 @@ import shutil
 import signal
 import subprocess
 import threading
+import tempfile
 from pathlib import Path
 
 import cv2
@@ -67,6 +68,7 @@ class SceneBagRecorder(Node):
         self.recording = False
         self.bag_proc = None
         self.bag_dir = None
+        self.qos_override_path = None
         self._convert_thread = None
         self._lock = threading.Lock()
 
@@ -111,6 +113,20 @@ class SceneBagRecorder(Node):
             session_dir = self._session_dir()
             session_dir.mkdir(parents=True, exist_ok=True)
             self.bag_dir = session_dir / f"{ts}_scene_bag"
+            qos_yaml = (
+                f"{self.topic}:\n"
+                "  reliability: best_effort\n"
+                "  history: keep_last\n"
+                "  depth: 20\n"
+                "  durability: volatile\n"
+            )
+            qos_file = tempfile.NamedTemporaryFile(
+                mode="w", suffix="_scene_qos.yaml", delete=False
+            )
+            qos_file.write(qos_yaml)
+            qos_file.flush()
+            qos_file.close()
+            self.qos_override_path = qos_file.name
 
             cmd = [
                 "ros2",
@@ -118,6 +134,8 @@ class SceneBagRecorder(Node):
                 "record",
                 "--storage",
                 "sqlite3",
+                "--qos-profile-overrides-path",
+                self.qos_override_path,
                 "-o",
                 str(self.bag_dir),
                 "--topics",
@@ -128,6 +146,12 @@ class SceneBagRecorder(Node):
             except Exception as e:  # noqa: BLE001
                 self.bag_proc = None
                 self.bag_dir = None
+                if self.qos_override_path:
+                    try:
+                        os.unlink(self.qos_override_path)
+                    except OSError:
+                        pass
+                    self.qos_override_path = None
                 return False, f"Failed to start ros2 bag: {e}"
 
             self.recording = True
@@ -138,8 +162,10 @@ class SceneBagRecorder(Node):
         with self._lock:
             proc = self.bag_proc
             bag_dir = self.bag_dir
+            qos_override_path = self.qos_override_path
             self.bag_proc = None
             self.bag_dir = None
+            self.qos_override_path = None
             self.recording = False
 
         if proc is None or bag_dir is None:
@@ -159,12 +185,12 @@ class SceneBagRecorder(Node):
                 proc.wait(timeout=5.0)
 
         self._convert_thread = threading.Thread(
-            target=self._convert_and_cleanup, args=(Path(bag_dir),), daemon=True
+            target=self._convert_and_cleanup, args=(Path(bag_dir), qos_override_path), daemon=True
         )
         self._convert_thread.start()
         return True, "stopped (conversion started in background)"
 
-    def _convert_and_cleanup(self, bag_dir: Path):
+    def _convert_and_cleanup(self, bag_dir: Path, qos_override_path: str | None):
         try:
             self.get_logger().info(f"Converting bag: {bag_dir}")
             reader = _open_reader(str(bag_dir))
@@ -222,11 +248,19 @@ class SceneBagRecorder(Node):
                 self.get_logger().info(f"Deleted bag directory: {bag_dir}")
         except Exception as e:  # noqa: BLE001
             self.get_logger().error(f"Bag conversion failed: {e}")
+        finally:
+            if qos_override_path:
+                try:
+                    os.unlink(qos_override_path)
+                except OSError:
+                    pass
 
     def destroy_node(self):
         with self._lock:
             proc = self.bag_proc
+            qos_override_path = self.qos_override_path
             self.bag_proc = None
+            self.qos_override_path = None
             self.recording = False
         if proc is not None and proc.poll() is None:
             try:
@@ -234,6 +268,11 @@ class SceneBagRecorder(Node):
                 proc.wait(timeout=5.0)
             except Exception:  # noqa: BLE001
                 proc.kill()
+        if qos_override_path:
+            try:
+                os.unlink(qos_override_path)
+            except OSError:
+                pass
         super().destroy_node()
 
 
