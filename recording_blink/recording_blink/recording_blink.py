@@ -10,13 +10,13 @@ from rcl_interfaces.msg import SetParametersResult
 from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
 from std_srvs.srv import SetBool
 
-from blink_interface.msg import BlinkData
+from blink_interface.msg import EyeStateData
 
 
-class BlinkRecorder(Node):
+class EyeStateRecorder(Node):
     def __init__(self):
-        super().__init__("pupil_blink_recorder")
-        self.get_logger().info("BlinkRecorder has been started!")
+        super().__init__("pupil_eye_state_recorder")
+        self.get_logger().info("EyeStateRecorder has been started!")
 
         self.declare_parameter("participant_name", "default")
         self.declare_parameter("queue_size", 2000)
@@ -35,8 +35,9 @@ class BlinkRecorder(Node):
             durability=DurabilityPolicy.VOLATILE,
         )
         self.subscription = self.create_subscription(
-            BlinkData, "pupil/blink", self.listener_callback, qos
+            EyeStateData, "pupil/eye_state", self.listener_callback, qos
         )
+        self.create_service(SetBool, "record_pupil_eye_state", self._srv_cb)
         self.create_service(SetBool, "record_pupil_blink", self._srv_cb)
 
         self.recording = False
@@ -90,8 +91,22 @@ class BlinkRecorder(Node):
         row = [
             msg.header.stamp.sec,
             msg.header.stamp.nanosec,
+            msg.event_name,
+            int(msg.event_type),
+            bool(msg.has_end_time),
             float(msg.start_time_ns),
             float(msg.end_time_ns),
+            float(msg.rtp_ts_unix_seconds),
+            float(msg.start_gaze_x),
+            float(msg.start_gaze_y),
+            float(msg.end_gaze_x),
+            float(msg.end_gaze_y),
+            float(msg.mean_gaze_x),
+            float(msg.mean_gaze_y),
+            float(msg.amplitude_pixels),
+            float(msg.amplitude_angle_deg),
+            float(msg.mean_velocity),
+            float(msg.max_velocity),
         ]
         try:
             self.msg_received += 1
@@ -137,19 +152,38 @@ class BlinkRecorder(Node):
         session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
         os.makedirs(session_dir, exist_ok=True)
 
-        path = os.path.join(session_dir, f"{prefix}_blink.csv")
+        path = os.path.join(session_dir, f"{prefix}_eye_state.csv")
         with self.file_lock:
             self.csv_file = open(path, "w", newline="")
             self.csv_writer = csv.writer(self.csv_file)
             self.csv_writer.writerow(
-                ["sec", "nanosec", "start_time_ns", "end_time_ns"]
+                [
+                    "sec",
+                    "nanosec",
+                    "event_name",
+                    "event_type",
+                    "has_end_time",
+                    "start_time_ns",
+                    "end_time_ns",
+                    "rtp_ts_unix_seconds",
+                    "start_gaze_x",
+                    "start_gaze_y",
+                    "end_gaze_x",
+                    "end_gaze_y",
+                    "mean_gaze_x",
+                    "mean_gaze_y",
+                    "amplitude_pixels",
+                    "amplitude_angle_deg",
+                    "mean_velocity",
+                    "max_velocity",
+                ]
             )
 
         self.msg_received = 0
         self.msg_written = 0
         self.msg_dropped = 0
         self.recording = True
-        self.get_logger().info(f"Started recording blink to: {path}")
+        self.get_logger().info(f"Started recording eye state to: {path}")
 
     def _stop_file_recording(self):
         self.recording = False
@@ -163,7 +197,7 @@ class BlinkRecorder(Node):
             self.csv_writer = None
 
         self.get_logger().info(
-            f"Stopped blink recording. received={self.msg_received}, "
+            f"Stopped eye state recording. received={self.msg_received}, "
             f"written={self.msg_written}, dropped={self.msg_dropped}"
         )
 
@@ -187,7 +221,7 @@ class BlinkRecorder(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = BlinkRecorder()
+    node = EyeStateRecorder()
     rclpy.spin(node)
     node.destroy_node()
     rclpy.shutdown()

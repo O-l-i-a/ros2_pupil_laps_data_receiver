@@ -1,0 +1,47 @@
+// generated from rosidl_adapter/resource/msg.idl.em
+// with input from blink_interface/msg/EyeStateData.msg
+// generated code does not contain a copyright notice
+
+#include "std_msgs/msg/Header.idl"
+
+module blink_interface {
+  module msg {
+    struct EyeStateData {
+      std_msgs::msg::Header header;
+
+      @verbatim (language="comment", text=
+        "\"blink\", \"fixation\", \"saccade\", \"fixation_onset\", \"saccade_onset\"")
+      string event_name;
+
+      int32 event_type;
+
+      double start_time_ns;
+
+      double end_time_ns;
+
+      double rtp_ts_unix_seconds;
+
+      boolean has_end_time;
+
+      float start_gaze_x;
+
+      float start_gaze_y;
+
+      float end_gaze_x;
+
+      float end_gaze_y;
+
+      float mean_gaze_x;
+
+      float mean_gaze_y;
+
+      float amplitude_pixels;
+
+      float amplitude_angle_deg;
+
+      float mean_velocity;
+
+      float max_velocity;
+    };
+  };
+};

@@ -19,6 +19,7 @@ class RecordingController(Node):
         self.pupil_scene_cli = self.create_client(SetBool, 'record_pupil_scene')
         self.pupil_scene_bag_cli = self.create_client(SetBool, 'record_pupil_scene_bag')
         self.pupil_gaze_cli  = self.create_client(SetBool, 'record_pupil_gaze')
+        self.pupil_eye_state_cli = self.create_client(SetBool, 'record_pupil_eye_state')
         self.pupil_blink_cli = self.create_client(SetBool, 'record_pupil_blink')
         self.pupil_imu_cli   = self.create_client(SetBool, 'record_pupil_imu')
         self.zed_depth_cli   = self.create_client(SetBool, '/zed_multi/record_zed_depth')
@@ -32,6 +33,7 @@ class RecordingController(Node):
             'pupil_scene_recorder_cpp',
             'pupil_scene_bag_recorder',
             'pupil_gaze_recorder',
+            'pupil_eye_state_recorder',
             'pupil_blink_recorder',
             'pupil_imu_recorder',
         ]
@@ -135,6 +137,13 @@ class MainWindow(QMainWindow):
             return self._call_service(self.node.pupil_scene_cli, data), 'record_pupil_scene'
         return False, 'scene_service_unavailable'
 
+    def _call_eye_state_service_with_fallback(self, data):
+        if self._service_available(self.node.pupil_eye_state_cli, timeout=0.4):
+            return self._call_service(self.node.pupil_eye_state_cli, data), 'record_pupil_eye_state'
+        if self._service_available(self.node.pupil_blink_cli, timeout=0.4):
+            return self._call_service(self.node.pupil_blink_cli, data), 'record_pupil_blink'
+        return False, 'eye_state_service_unavailable'
+
     def start_recording(self):
         self.status.setText('Status: Starting…')
         ts = self.node.get_clock().now().to_msg().sec
@@ -159,9 +168,9 @@ class MainWindow(QMainWindow):
         if not gaze_ok:
             errors.append('pupil_gaze')
 
-        blink_ok = self._call_service(self.node.pupil_blink_cli, True)
-        if not blink_ok:
-            errors.append('pupil_blink')
+        eye_ok, eye_used = self._call_eye_state_service_with_fallback(True)
+        if not eye_ok:
+            errors.append(eye_used)
 
         imu_ok = self._call_service(self.node.pupil_imu_cli, True)
         if not imu_ok:
@@ -187,8 +196,9 @@ class MainWindow(QMainWindow):
 
         if not self._call_service(self.node.pupil_gaze_cli, False):
             errors.append('pupil_gaze')
-        if not self._call_service(self.node.pupil_blink_cli, False):
-            errors.append('pupil_blink')
+        eye_ok, eye_used = self._call_eye_state_service_with_fallback(False)
+        if not eye_ok:
+            errors.append(eye_used)
         if not self._call_service(self.node.pupil_imu_cli, False):
             errors.append('pupil_imu')
 

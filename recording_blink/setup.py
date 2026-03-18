@@ -14,12 +14,13 @@ setup(
     zip_safe=True,
     maintainer="olhamelnyk",
     maintainer_email="olgamelnik12@gmail.com",
-    description="Blink recorder node for Pupil ROS streams",
+    description="Eye-state recorder node for Pupil ROS streams",
     license="Apache-2.0",
     tests_require=["pytest"],
     entry_points={
         "console_scripts": [
             "recording_blink = recording_blink.recording_blink:main",
+            "recording_eye_state = recording_blink.recording_blink:main",
         ],
     },
 )

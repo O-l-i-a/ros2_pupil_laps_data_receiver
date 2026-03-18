@@ -1,0 +1,261 @@
+[0.021s] Invoking command in '/home/olhamelnyk/colcon_venv/src/build/blink_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene_bag:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/olhamelnyk/colcon_venv/src/blink_interface /blink_interface  -DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/blink_interface
+[0.151s] -- The C compiler identification is GNU 13.3.0
+[0.450s] -- The CXX compiler identification is GNU 13.3.0
+[0.503s] -- Detecting C compiler ABI info
+[0.688s] -- Detecting C compiler ABI info - done
+[0.713s] -- Check for working C compiler: /usr/bin/cc - skipped
+[0.714s] -- Detecting C compile features
+[0.715s] -- Detecting C compile features - done
+[0.738s] -- Detecting CXX compiler ABI info
+[0.934s] -- Detecting CXX compiler ABI info - done
+[0.945s] -- Check for working CXX compiler: /usr/bin/c++ - skipped
+[0.945s] -- Detecting CXX compile features
+[0.946s] -- Detecting CXX compile features - done
+[0.969s] -- Found ament_cmake: 2.5.4 (/opt/ros/jazzy/share/ament_cmake/cmake)
+[1.271s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter 
+[1.549s] -- Found rosidl_default_generators: 1.6.0 (/opt/ros/jazzy/share/rosidl_default_generators/cmake)
+[1.579s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[1.736s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[1.861s] -- Found rosidl_adapter: 4.6.6 (/opt/ros/jazzy/share/rosidl_adapter/cmake)
+[1.874s] -- Found geometry_msgs: 5.3.6 (/opt/ros/jazzy/share/geometry_msgs/cmake)
+[3.016s] -- Found ament_cmake_ros: 0.12.0 (/opt/ros/jazzy/share/ament_cmake_ros/cmake)
+[3.933s] -- Using all available rosidl_typesupport_c: rosidl_typesupport_fastrtps_c;rosidl_typesupport_introspection_c
+[5.083s] -- Using all available rosidl_typesupport_cpp: rosidl_typesupport_fastrtps_cpp;rosidl_typesupport_introspection_cpp
+[5.109s] -- Found python_cmake_module: 0.11.1 (/opt/ros/jazzy/share/python_cmake_module/cmake)
+[5.351s] -- Found PythonExtra: /usr/bin/python3  
+[6.200s] -- Found Python3: /usr/bin/python3 (found version "3.12.3") found components: Interpreter Development NumPy Development.Module Development.Embed 
+[6.468s] -- Configuring done (6.4s)
+[6.517s] -- Generating done (0.0s)
+[6.530s] -- Build files have been written to: /home/olhamelnyk/colcon_venv/src/build/blink_interface
+[6.540s] Invoked command in '/home/olhamelnyk/colcon_venv/src/build/blink_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene_bag:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake /home/olhamelnyk/colcon_venv/src/blink_interface /blink_interface  -DCMAKE_INSTALL_PREFIX=/home/olhamelnyk/colcon_venv/src/install/blink_interface
+[6.542s] Invoking command in '/home/olhamelnyk/colcon_venv/src/build/blink_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene_bag:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/olhamelnyk/colcon_venv/src/build/blink_interface -- -j16 -l16
+[6.664s] [  2%] Generating type hashes for ROS interfaces
+[6.677s] [  2%] Built target ament_cmake_python_copy_blink_interface
+[6.944s] [  2%] Built target blink_interface__rosidl_generator_type_description
+[6.965s] [  4%] Generating C code for ROS interfaces
+[6.983s] [  6%] Generating C++ code for ROS interfaces
+[6.998s] running egg_info
+[6.999s] creating blink_interface.egg-info
+[7.035s] writing blink_interface.egg-info/PKG-INFO
+[7.036s] writing dependency_links to blink_interface.egg-info/dependency_links.txt
+[7.036s] writing top-level names to blink_interface.egg-info/top_level.txt
+[7.036s] writing manifest file 'blink_interface.egg-info/SOURCES.txt'
+[7.145s] reading manifest file 'blink_interface.egg-info/SOURCES.txt'
+[7.145s] writing manifest file 'blink_interface.egg-info/SOURCES.txt'
+[7.190s] [  6%] Built target ament_cmake_python_build_blink_interface_egg
+[7.347s] [  6%] Built target blink_interface__cpp
+[7.410s] [ 18%] Building C object CMakeFiles/blink_interface__rosidl_generator_c.dir/rosidl_generator_c/blink_interface/msg/detail/eye_state_data__type_support.c.o
+[7.410s] [ 18%] Building C object CMakeFiles/blink_interface__rosidl_generator_c.dir/rosidl_generator_c/blink_interface/msg/detail/eye_state_data__functions.c.o
+[7.410s] [ 18%] Building C object CMakeFiles/blink_interface__rosidl_generator_c.dir/rosidl_generator_c/blink_interface/msg/detail/blink_data__functions.c.o
+[7.410s] [ 18%] Building C object CMakeFiles/blink_interface__rosidl_generator_c.dir/rosidl_generator_c/blink_interface/msg/detail/blink_data__type_support.c.o
+[7.410s] [ 18%] Building C object CMakeFiles/blink_interface__rosidl_generator_c.dir/rosidl_generator_c/blink_interface/msg/detail/blink_data__description.c.o
+[7.411s] [ 20%] Building C object CMakeFiles/blink_interface__rosidl_generator_c.dir/rosidl_generator_c/blink_interface/msg/detail/eye_state_data__description.c.o
+[7.507s] [ 22%] Linking C shared library libblink_interface__rosidl_generator_c.so
+[7.588s] [ 22%] Built target blink_interface__rosidl_generator_c
+[7.608s] [ 25%] Generating C++ type support for eProsima Fast-RTPS
+[7.608s] [ 27%] Generating C++ introspection for ROS interfaces
+[7.610s] [ 31%] Generating C introspection for ROS interfaces
+[7.610s] [ 31%] Generating C++ type support dispatch for ROS interfaces
+[7.612s] [ 34%] Generating C type support dispatch for ROS interfaces
+[7.612s] [ 36%] Generating C type support for eProsima Fast-RTPS
+[7.975s] [ 40%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/blink_interface/msg/blink_data__type_support.cpp.o
+[7.976s] [ 40%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_cpp.dir/rosidl_typesupport_cpp/blink_interface/msg/eye_state_data__type_support.cpp.o
+[7.985s] [ 45%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_c.dir/rosidl_typesupport_c/blink_interface/msg/eye_state_data__type_support.cpp.o
+[7.985s] [ 45%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_c.dir/rosidl_typesupport_c/blink_interface/msg/blink_data__type_support.cpp.o
+[7.994s] [ 54%] Building C object CMakeFiles/blink_interface__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/blink_interface/msg/detail/blink_data__type_support.c.o
+[7.995s] [ 54%] Building C object CMakeFiles/blink_interface__rosidl_typesupport_introspection_c.dir/rosidl_typesupport_introspection_c/blink_interface/msg/detail/eye_state_data__type_support.c.o
+[7.995s] [ 54%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/blink_interface/msg/detail/blink_data__type_support.cpp.o
+[7.995s] [ 54%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_introspection_cpp.dir/rosidl_typesupport_introspection_cpp/blink_interface/msg/detail/eye_state_data__type_support.cpp.o
+[8.055s] [ 56%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/blink_interface/msg/detail/dds_fastrtps/blink_data__type_support.cpp.o
+[8.056s] [ 59%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_fastrtps_cpp.dir/rosidl_typesupport_fastrtps_cpp/blink_interface/msg/detail/dds_fastrtps/eye_state_data__type_support.cpp.o
+[8.067s] [ 61%] Linking CXX shared library libblink_interface__rosidl_typesupport_c.so
+[8.067s] [ 63%] Linking C shared library libblink_interface__rosidl_typesupport_introspection_c.so
+[8.089s] [ 65%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/blink_interface/msg/detail/eye_state_data__type_support_c.cpp.o
+[8.090s] [ 68%] Building CXX object CMakeFiles/blink_interface__rosidl_typesupport_fastrtps_c.dir/rosidl_typesupport_fastrtps_c/blink_interface/msg/detail/blink_data__type_support_c.cpp.o
+[8.127s] [ 68%] Built target blink_interface__rosidl_typesupport_introspection_c
+[8.148s] [ 68%] Built target blink_interface__rosidl_typesupport_c
+[8.447s] [ 70%] Linking CXX shared library libblink_interface__rosidl_typesupport_cpp.so
+[8.507s] [ 72%] Linking CXX shared library libblink_interface__rosidl_typesupport_introspection_cpp.so
+[8.515s] [ 72%] Built target blink_interface__rosidl_typesupport_cpp
+[8.617s] [ 72%] Built target blink_interface__rosidl_typesupport_introspection_cpp
+[8.772s] [ 75%] Linking CXX shared library libblink_interface__rosidl_typesupport_fastrtps_c.so
+[8.775s] [ 77%] Linking CXX shared library libblink_interface__rosidl_typesupport_fastrtps_cpp.so
+[8.908s] [ 77%] Built target blink_interface__rosidl_typesupport_fastrtps_c
+[8.916s] [ 77%] Built target blink_interface__rosidl_typesupport_fastrtps_cpp
+[8.965s] [ 77%] Built target blink_interface
+[9.005s] [ 79%] Generating Python code for ROS interfaces
+[9.493s] [ 79%] Built target blink_interface__py
+[9.528s] [ 81%] Building C object CMakeFiles/blink_interface__rosidl_generator_py.dir/rosidl_generator_py/blink_interface/msg/_blink_data_s.c.o
+[9.539s] [ 84%] Building C object CMakeFiles/blink_interface__rosidl_generator_py.dir/rosidl_generator_py/blink_interface/msg/_eye_state_data_s.c.o
+[9.754s] [ 86%] Linking C shared library libblink_interface__rosidl_generator_py.so
+[9.854s] [ 86%] Built target blink_interface__rosidl_generator_py
+[9.891s] [ 88%] Building C object CMakeFiles/blink_interface_s__rosidl_typesupport_introspection_c.dir/rosidl_generator_py/blink_interface/_blink_interface_s.ep.rosidl_typesupport_introspection_c.c.o
+[9.893s] [ 90%] Building C object CMakeFiles/blink_interface_s__rosidl_typesupport_fastrtps_c.dir/rosidl_generator_py/blink_interface/_blink_interface_s.ep.rosidl_typesupport_fastrtps_c.c.o
+[9.903s] [ 93%] Building C object CMakeFiles/blink_interface_s__rosidl_typesupport_c.dir/rosidl_generator_py/blink_interface/_blink_interface_s.ep.rosidl_typesupport_c.c.o
+[10.025s] [ 95%] Linking C shared module rosidl_generator_py/blink_interface/blink_interface_s__rosidl_typesupport_introspection_c.so
+[10.067s] [ 97%] Linking C shared module rosidl_generator_py/blink_interface/blink_interface_s__rosidl_typesupport_fastrtps_c.so
+[10.068s] [100%] Linking C shared module rosidl_generator_py/blink_interface/blink_interface_s__rosidl_typesupport_c.so
+[10.085s] [100%] Built target blink_interface_s__rosidl_typesupport_introspection_c
+[10.135s] [100%] Built target blink_interface_s__rosidl_typesupport_fastrtps_c
+[10.140s] [100%] Built target blink_interface_s__rosidl_typesupport_c
+[10.184s] Invoked command in '/home/olhamelnyk/colcon_venv/src/build/blink_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene_bag:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/olhamelnyk/colcon_venv/src/build/blink_interface -- -j16 -l16
+[10.199s] Invoking command in '/home/olhamelnyk/colcon_venv/src/build/blink_interface': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene_bag:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/olhamelnyk/colcon_venv/src/build/blink_interface
+[10.215s] -- Install configuration: ""
+[10.216s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/ament_index/resource_index/rosidl_interfaces/blink_interface
+[10.216s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/msg/BlinkData.json
+[10.216s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/msg/EyeStateData.json
+[10.217s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface
+[10.217s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg
+[10.218s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/rosidl_generator_c__visibility_control.h
+[10.218s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail
+[10.219s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__type_support.h
+[10.219s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__struct.h
+[10.220s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__functions.h
+[10.220s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__description.c
+[10.221s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__type_support.c
+[10.221s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__type_support.c
+[10.222s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__functions.h
+[10.222s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__type_support.h
+[10.222s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__functions.c
+[10.222s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__functions.c
+[10.223s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__description.c
+[10.223s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__struct.h
+[10.224s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/eye_state_data.h
+[10.224s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/blink_data.h
+[10.224s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/environment/library_path.sh
+[10.225s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/environment/library_path.dsv
+[10.225s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_generator_c.so
+[10.226s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_generator_c.so" to ""
+[10.226s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface
+[10.226s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg
+[10.227s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail
+[10.227s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__rosidl_typesupport_fastrtps_c.h
+[10.227s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__rosidl_typesupport_fastrtps_c.h
+[10.227s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/rosidl_typesupport_fastrtps_c__visibility_control.h
+[10.228s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_fastrtps_c.so
+[10.228s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_fastrtps_c.so" to ""
+[10.228s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface
+[10.229s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg
+[10.229s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/rosidl_typesupport_introspection_c__visibility_control.h
+[10.230s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail
+[10.230s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__rosidl_typesupport_introspection_c.h
+[10.231s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__type_support.c
+[10.231s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__type_support.c
+[10.231s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__rosidl_typesupport_introspection_c.h
+[10.231s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_introspection_c.so
+[10.231s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_introspection_c.so" to ""
+[10.232s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_c.so
+[10.232s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_c.so" to ""
+[10.232s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface
+[10.232s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg
+[10.232s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail
+[10.233s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__builder.hpp
+[10.233s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__struct.hpp
+[10.233s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__builder.hpp
+[10.233s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__traits.hpp
+[10.233s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__type_support.hpp
+[10.234s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__type_support.hpp
+[10.234s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__struct.hpp
+[10.234s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__traits.hpp
+[10.234s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/eye_state_data.hpp
+[10.234s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/rosidl_generator_cpp__visibility_control.hpp
+[10.234s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/blink_data.hpp
+[10.235s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface
+[10.235s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg
+[10.235s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail
+[10.235s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/dds_fastrtps
+[10.235s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__rosidl_typesupport_fastrtps_cpp.hpp
+[10.236s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__rosidl_typesupport_fastrtps_cpp.hpp
+[10.236s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/rosidl_typesupport_fastrtps_cpp__visibility_control.h
+[10.236s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_fastrtps_cpp.so
+[10.236s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_fastrtps_cpp.so" to ""
+[10.236s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface
+[10.237s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg
+[10.237s] -- Up-to-date: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail
+[10.237s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__rosidl_typesupport_introspection_cpp.hpp
+[10.237s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/blink_data__type_support.cpp
+[10.237s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__rosidl_typesupport_introspection_cpp.hpp
+[10.238s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/include/blink_interface/blink_interface/msg/detail/eye_state_data__type_support.cpp
+[10.238s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_introspection_cpp.so
+[10.238s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_introspection_cpp.so" to ""
+[10.238s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_cpp.so
+[10.238s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_typesupport_cpp.so" to ""
+[10.239s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/environment/pythonpath.sh
+[10.239s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/environment/pythonpath.dsv
+[10.239s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface-0.0.0-py3.12.egg-info
+[10.239s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface-0.0.0-py3.12.egg-info/top_level.txt
+[10.240s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface-0.0.0-py3.12.egg-info/SOURCES.txt
+[10.240s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface-0.0.0-py3.12.egg-info/dependency_links.txt
+[10.240s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface-0.0.0-py3.12.egg-info/PKG-INFO
+[10.240s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface
+[10.240s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/blink_interface_s__rosidl_typesupport_c.so
+[10.241s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/blink_interface_s__rosidl_typesupport_fastrtps_c.so
+[10.241s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg
+[10.241s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg/_eye_state_data_s.c
+[10.241s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg/_eye_state_data.py
+[10.241s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg/_blink_data_s.c
+[10.242s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg/__init__.py
+[10.242s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg/_blink_data.py
+[10.242s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/_blink_interface_s.ep.rosidl_typesupport_fastrtps_c.c
+[10.242s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/__init__.py
+[10.242s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/blink_interface_s__rosidl_typesupport_introspection_c.so
+[10.243s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/_blink_interface_s.ep.rosidl_typesupport_c.c
+[10.243s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/_blink_interface_s.ep.rosidl_typesupport_introspection_c.c
+[10.297s] Listing '/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface'...
+[10.297s] Compiling '/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/__init__.py'...
+[10.297s] Listing '/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg'...
+[10.297s] Compiling '/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg/__init__.py'...
+[10.297s] Compiling '/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg/_blink_data.py'...
+[10.298s] Compiling '/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/msg/_eye_state_data.py'...
+[10.303s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/blink_interface_s__rosidl_typesupport_fastrtps_c.so
+[10.304s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/blink_interface_s__rosidl_typesupport_fastrtps_c.so" to ""
+[10.305s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/blink_interface_s__rosidl_typesupport_introspection_c.so
+[10.305s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/blink_interface_s__rosidl_typesupport_introspection_c.so" to ""
+[10.305s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/blink_interface_s__rosidl_typesupport_c.so
+[10.306s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/python3.12/site-packages/blink_interface/blink_interface_s__rosidl_typesupport_c.so" to ""
+[10.306s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_generator_py.so
+[10.306s] -- Set non-toolchain portion of runtime path of "/home/olhamelnyk/colcon_venv/src/install/blink_interface/lib/libblink_interface__rosidl_generator_py.so" to ""
+[10.307s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/msg/BlinkData.idl
+[10.307s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/msg/EyeStateData.idl
+[10.307s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/msg/BlinkData.msg
+[10.308s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/msg/EyeStateData.msg
+[10.308s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/ament_index/resource_index/package_run_dependencies/blink_interface
+[10.309s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/ament_index/resource_index/parent_prefix_path/blink_interface
+[10.309s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/environment/ament_prefix_path.sh
+[10.310s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/environment/ament_prefix_path.dsv
+[10.310s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/environment/path.sh
+[10.311s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/environment/path.dsv
+[10.311s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/local_setup.bash
+[10.311s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/local_setup.sh
+[10.312s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/local_setup.zsh
+[10.312s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/local_setup.dsv
+[10.312s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/package.dsv
+[10.313s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/ament_index/resource_index/packages/blink_interface
+[10.313s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/export_blink_interface__rosidl_generator_cExport.cmake
+[10.314s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/export_blink_interface__rosidl_generator_cExport-noconfig.cmake
+[10.314s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/export_blink_interface__rosidl_typesupport_fastrtps_cExport.cmake
+[10.314s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/export_blink_interface__rosidl_typesupport_fastrtps_cExport-noconfig.cmake
+[10.315s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interface__rosidl_typesupport_introspection_cExport.cmake
+[10.315s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interface__rosidl_typesupport_introspection_cExport-noconfig.cmake
+[10.315s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interface__rosidl_typesupport_cExport.cmake
+[10.316s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interface__rosidl_typesupport_cExport-noconfig.cmake
+[10.316s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/export_blink_interface__rosidl_generator_cppExport.cmake
+[10.316s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/export_blink_interface__rosidl_typesupport_fastrtps_cppExport.cmake
+[10.316s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/export_blink_interface__rosidl_typesupport_fastrtps_cppExport-noconfig.cmake
+[10.317s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interface__rosidl_typesupport_introspection_cppExport.cmake
+[10.317s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interface__rosidl_typesupport_introspection_cppExport-noconfig.cmake
+[10.317s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interface__rosidl_typesupport_cppExport.cmake
+[10.319s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interface__rosidl_typesupport_cppExport-noconfig.cmake
+[10.319s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/export_blink_interface__rosidl_generator_pyExport.cmake
+[10.319s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/export_blink_interface__rosidl_generator_pyExport-noconfig.cmake
+[10.320s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/rosidl_cmake-extras.cmake
+[10.320s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/ament_cmake_export_dependencies-extras.cmake
+[10.321s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/ament_cmake_export_include_directories-extras.cmake
+[10.321s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/ament_cmake_export_libraries-extras.cmake
+[10.321s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/ament_cmake_export_targets-extras.cmake
+[10.321s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/rosidl_cmake_export_typesupport_targets-extras.cmake
+[10.322s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/rosidl_cmake_export_typesupport_libraries-extras.cmake
+[10.322s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interfaceConfig.cmake
+[10.323s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/cmake/blink_interfaceConfig-version.cmake
+[10.323s] -- Installing: /home/olhamelnyk/colcon_venv/src/install/blink_interface/share/blink_interface/package.xml
+[10.324s] Invoked command in '/home/olhamelnyk/colcon_venv/src/build/blink_interface' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/install/recording_controller_pkg:/home/olhamelnyk/colcon_venv/install/zed_mini:/home/olhamelnyk/colcon_venv/install/tf_recording:/home/olhamelnyk/colcon_venv/install/recording_zed_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth_rgb:/home/olhamelnyk/colcon_venv/install/recording_zed_depth:/home/olhamelnyk/colcon_venv/install/recording_scene_python:/home/olhamelnyk/colcon_venv/install/recording_scene_bag:/home/olhamelnyk/colcon_venv/install/recording_scene:/home/olhamelnyk/colcon_venv/install/recording_imu:/home/olhamelnyk/colcon_venv/install/recording_gaze:/home/olhamelnyk/colcon_venv/install/recording_blink:/home/olhamelnyk/colcon_venv/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/install/latency_tools:/home/olhamelnyk/colcon_venv/install/async_pupil_wrapper:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --install /home/olhamelnyk/colcon_venv/src/build/blink_interface

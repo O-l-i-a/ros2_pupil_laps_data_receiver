@@ -1,0 +1,242 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1
+					],
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-5ff26c074d504ee2a2f3.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				},
+				{
+					"build" : "blink_interface__py",
+					"jsonFile" : "directory-blink_interface__py-984880b16642272c13ba.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.20"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "/home/olhamelnyk/colcon_venv/src/build/blink_interface/blink_interface__py",
+					"targetIndexes" : 
+					[
+						4
+					]
+				}
+			],
+			"name" : "",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "blink_interface",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2,
+						3,
+						4,
+						5,
+						6,
+						7,
+						8,
+						9,
+						10,
+						11,
+						12,
+						13,
+						14,
+						15,
+						16,
+						17,
+						18
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_build_blink_interface_egg::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_build_blink_interface_egg-74d049db21004d0ff80d.json",
+					"name" : "ament_cmake_python_build_blink_interface_egg",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "ament_cmake_python_copy_blink_interface::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-ament_cmake_python_copy_blink_interface-579539a9e8973a887103.json",
+					"name" : "ament_cmake_python_copy_blink_interface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface-5a1a971943e5dd8d895a.json",
+					"name" : "blink_interface",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__cpp-709f2f98845a6601636b.json",
+					"name" : "blink_interface__cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "blink_interface__py::@a6c8face480964999d89",
+					"jsonFile" : "target-blink_interface__py-b2447148ae04d65db735.json",
+					"name" : "blink_interface__py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__rosidl_generator_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__rosidl_generator_c-95c4f45e3645bc660e58.json",
+					"name" : "blink_interface__rosidl_generator_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__rosidl_generator_py::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__rosidl_generator_py-4c7891bab7234b7c13d1.json",
+					"name" : "blink_interface__rosidl_generator_py",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__rosidl_generator_type_description::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__rosidl_generator_type_description-3aaf3859ca6690f42934.json",
+					"name" : "blink_interface__rosidl_generator_type_description",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__rosidl_typesupport_c-183b6bcb55aa4ff44a87.json",
+					"name" : "blink_interface__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__rosidl_typesupport_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__rosidl_typesupport_cpp-8544b38494fb208d358c.json",
+					"name" : "blink_interface__rosidl_typesupport_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__rosidl_typesupport_fastrtps_c-a443fd0c4fe5720e48aa.json",
+					"name" : "blink_interface__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__rosidl_typesupport_fastrtps_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__rosidl_typesupport_fastrtps_cpp-2d3ef0c73f57732d8f4a.json",
+					"name" : "blink_interface__rosidl_typesupport_fastrtps_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__rosidl_typesupport_introspection_c-32097943f6194a47ef1c.json",
+					"name" : "blink_interface__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface__rosidl_typesupport_introspection_cpp::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface__rosidl_typesupport_introspection_cpp-0ad0ba3fa3223f868062.json",
+					"name" : "blink_interface__rosidl_typesupport_introspection_cpp",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface_s__rosidl_typesupport_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface_s__rosidl_typesupport_c-6ce9e06029b27a64292c.json",
+					"name" : "blink_interface_s__rosidl_typesupport_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface_s__rosidl_typesupport_fastrtps_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface_s__rosidl_typesupport_fastrtps_c-e3360ec2ae30745a5249.json",
+					"name" : "blink_interface_s__rosidl_typesupport_fastrtps_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface_s__rosidl_typesupport_introspection_c::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface_s__rosidl_typesupport_introspection_c-f95bdb0693a4fb08f52c.json",
+					"name" : "blink_interface_s__rosidl_typesupport_introspection_c",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "blink_interface_uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-blink_interface_uninstall-b5b8bf854cb1d83ed8e3.json",
+					"name" : "blink_interface_uninstall",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "uninstall::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-uninstall-2301b856f3633103b19c.json",
+					"name" : "uninstall",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/home/olhamelnyk/colcon_venv/src/build/blink_interface",
+		"source" : "/home/olhamelnyk/colcon_venv/src/blink_interface /blink_interface "
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

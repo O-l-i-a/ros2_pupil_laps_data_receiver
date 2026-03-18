@@ -52,7 +52,7 @@ class SceneBagRecorder(Node):
         self.declare_parameter("participant_name", "default")
         self.declare_parameter("topic", "/pupil/scene/image_raw")
         self.declare_parameter("target_fps", 30.0)
-        self.declare_parameter("output_codec", "mp4v")
+        self.declare_parameter("output_codec", "MJPG")
         self.declare_parameter("delete_bag_after_convert", True)
 
         self.participant_name = self.get_parameter("participant_name").value
@@ -116,8 +116,11 @@ class SceneBagRecorder(Node):
                 "ros2",
                 "bag",
                 "record",
+                "--storage",
+                "sqlite3",
                 "-o",
                 str(self.bag_dir),
+                "--topics",
                 self.topic,
             ]
             try:

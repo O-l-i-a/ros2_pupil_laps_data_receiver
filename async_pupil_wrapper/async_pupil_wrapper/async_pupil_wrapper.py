@@ -6,6 +6,7 @@ import json
 import cv2
 import threading
 import numpy as np
+from urllib.parse import urlparse, urlunparse
 
 import rclpy
 from rclpy.node import Node
@@ -26,7 +27,7 @@ from pupil_labs.realtime_api import (
     FixationOnsetEventData,
 )
 from gaze_interface.msg import GazeDataAsync  
-from blink_interface.msg import BlinkData
+from blink_interface.msg import EyeStateData
 from imu_interface.msg import ImuData
 from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
 from rclpy.callback_groups import ReentrantCallbackGroup
@@ -52,8 +53,10 @@ class PupilAsync(Node):
         # Publisher für Gaze- und Scene-Daten
         self.declare_parameter("participant_name", "default")
         self.declare_parameter("opencv_num_threads", 4)
+        self.declare_parameter("rtsp_transport", "udp")
         self.shutdown_event = asyncio.Event()
         self.participant_name = self.get_parameter("participant_name").value
+        self.rtsp_transport = str(self.get_parameter("rtsp_transport").value).lower()
         #self.get_logger().info(f"Participant name: {self.participant_name}")
 
         # OpenCV CPU tuning for high-rate BGR->gray conversion.
@@ -64,6 +67,7 @@ class PupilAsync(Node):
         self.get_logger().info(
             f"OpenCV optimized={cv2.useOptimized()} threads={cv2.getNumThreads()}"
         )
+        self.get_logger().info(f"RTSP transport={self.rtsp_transport}")
 
         base_dir = "recordings"
         #self.session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
@@ -92,7 +96,7 @@ class PupilAsync(Node):
         self.cb_group = ReentrantCallbackGroup()
         self.cb_group_scene = ReentrantCallbackGroup()
         self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', qos, callback_group=self.cb_group)
-        self.blink_pub = self.create_publisher(BlinkData, 'pupil/blink', qos, callback_group=self.cb_group)
+        self.eye_state_pub = self.create_publisher(EyeStateData, 'pupil/eye_state', qos, callback_group=self.cb_group)
         self.imu_pub = self.create_publisher(ImuData, 'pupil/imu', qos, callback_group=self.cb_group)
         self.scene_pub = self.create_publisher(Image, 'pupil/scene/image_raw', qos_scene, callback_group = self.cb_group_scene)
         #self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', qos_scene)
@@ -106,6 +110,15 @@ class PupilAsync(Node):
         self._scene_cy = 0.0
         self._scene_calib_valid = False
         self.get_logger().info('PupilAsync bereit. Warte auf /record Service…')
+
+    def _stream_url(self, url: str) -> str:
+        # aiortsp uses UDP for rtsp:// and TCP interleaved for rtspt://.
+        parsed = urlparse(url)
+        if self.rtsp_transport == "tcp" and parsed.scheme == "rtsp":
+            parsed = parsed._replace(scheme="rtspt")
+        elif self.rtsp_transport == "udp" and parsed.scheme == "rtspt":
+            parsed = parsed._replace(scheme="rtsp")
+        return urlunparse(parsed)
 
     async def gaze_stream(self, url: str):
         self.get_logger().info(f'Starting gaze stream: {url}')
@@ -133,15 +146,57 @@ class PupilAsync(Node):
                 if self.shutdown_event.is_set():
                     break
 
+                msg = EyeStateData()
+
                 if isinstance(eye_event, BlinkEventData):
-                    msg = BlinkData()
                     start_ns = eye_event.start_time_ns + self.delayns
                     end_ns = eye_event.end_time_ns + self.delayns
                     msg.header.stamp = unix_ns_to_ros_time(start_ns).to_msg()
-                    msg.header.frame_id = "pupil_blink"
+                    msg.header.frame_id = "pupil_eye_state"
+                    msg.event_name = "blink"
+                    msg.event_type = int(eye_event.event_type)
                     msg.start_time_ns = float(start_ns)
                     msg.end_time_ns = float(end_ns)
-                    self.blink_pub.publish(msg)
+                    msg.rtp_ts_unix_seconds = float(eye_event.rtp_ts_unix_seconds)
+                    msg.has_end_time = True
+                    self.eye_state_pub.publish(msg)
+                    continue
+
+                if isinstance(eye_event, FixationOnsetEventData):
+                    start_ns = eye_event.start_time_ns + self.delayns
+                    msg.header.stamp = unix_ns_to_ros_time(start_ns).to_msg()
+                    msg.header.frame_id = "pupil_eye_state"
+                    msg.event_type = int(eye_event.event_type)
+                    msg.start_time_ns = float(start_ns)
+                    msg.end_time_ns = float(start_ns)
+                    msg.rtp_ts_unix_seconds = float(eye_event.rtp_ts_unix_seconds)
+                    msg.has_end_time = False
+                    msg.event_name = "fixation_onset" if int(eye_event.event_type) == 3 else "saccade_onset"
+                    self.eye_state_pub.publish(msg)
+                    continue
+
+                if isinstance(eye_event, FixationEventData):
+                    start_ns = eye_event.start_time_ns + self.delayns
+                    end_ns = eye_event.end_time_ns + self.delayns
+                    msg.header.stamp = unix_ns_to_ros_time(start_ns).to_msg()
+                    msg.header.frame_id = "pupil_eye_state"
+                    msg.event_type = int(eye_event.event_type)
+                    msg.start_time_ns = float(start_ns)
+                    msg.end_time_ns = float(end_ns)
+                    msg.rtp_ts_unix_seconds = float(eye_event.rtp_ts_unix_seconds)
+                    msg.has_end_time = True
+                    msg.event_name = "fixation" if int(eye_event.event_type) == 1 else "saccade"
+                    msg.start_gaze_x = float(eye_event.start_gaze_x)
+                    msg.start_gaze_y = float(eye_event.start_gaze_y)
+                    msg.end_gaze_x = float(eye_event.end_gaze_x)
+                    msg.end_gaze_y = float(eye_event.end_gaze_y)
+                    msg.mean_gaze_x = float(eye_event.mean_gaze_x)
+                    msg.mean_gaze_y = float(eye_event.mean_gaze_y)
+                    msg.amplitude_pixels = float(eye_event.amplitude_pixels)
+                    msg.amplitude_angle_deg = float(eye_event.amplitude_angle_deg)
+                    msg.mean_velocity = float(eye_event.mean_velocity)
+                    msg.max_velocity = float(eye_event.max_velocity)
+                    self.eye_state_pub.publish(msg)
         except asyncio.CancelledError:
             self.get_logger().debug("eye_events_stream cancelled")
             raise
@@ -272,19 +327,23 @@ class PupilAsync(Node):
 
             # --- spawn both coroutines as background tasks ---
             offset_task = asyncio.create_task(self._offset_loop(status))
-            gaze_task  = asyncio.create_task(self.gaze_stream(gaze_sensor.url))
-            scene_task = asyncio.create_task(self.scene_stream(world_sensor.url))
+            gaze_url = self._stream_url(gaze_sensor.url)
+            scene_url = self._stream_url(world_sensor.url)
+            gaze_task  = asyncio.create_task(self.gaze_stream(gaze_url))
+            scene_task = asyncio.create_task(self.scene_stream(scene_url))
             eye_events_task = None
             imu_task = None
             if eye_events_sensor is not None and eye_events_sensor.connected:
-                eye_events_task = asyncio.create_task(self.eye_events_stream(eye_events_sensor.url))
+                eye_events_url = self._stream_url(eye_events_sensor.url)
+                eye_events_task = asyncio.create_task(self.eye_events_stream(eye_events_url))
             else:
                 self.get_logger().warning(
                     "Eye events sensor unavailable or not connected. Blink publishing disabled "
                     '(enable "Compute fixations" in Companion Device).'
                 )
             if imu_sensor is not None and imu_sensor.connected:
-                imu_task = asyncio.create_task(self.imu_stream(imu_sensor.url))
+                imu_url = self._stream_url(imu_sensor.url)
+                imu_task = asyncio.create_task(self.imu_stream(imu_url))
             else:
                 self.get_logger().warning("IMU sensor unavailable or not connected. IMU publishing disabled.")
 

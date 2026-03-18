@@ -3,7 +3,7 @@
 <package format="3">
   <name>recording_blink</name>
   <version>0.0.0</version>
-  <description>Blink recorder node for Pupil ROS streams</description>
+  <description>Eye-state recorder node for Pupil ROS streams</description>
   <maintainer email="olgamelnik12@gmail.com">olhamelnyk</maintainer>
   <license>Apache-2.0</license>
 
