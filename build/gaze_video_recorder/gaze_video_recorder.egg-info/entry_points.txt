@@ -1,2 +1,0 @@
-[console_scripts]
-gaze_video_recorder = gaze_video_recorder.gaze_video_recorder:main

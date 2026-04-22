@@ -2,8 +2,7 @@ import rclpy
 from rclpy.node import Node
 from rclpy.parameter import Parameter
 from rcl_interfaces.msg import SetParametersResult  # Correct import
-from cv_bridge import CvBridge
-from sensor_msgs.msg import Image, CompressedImage
+from sensor_msgs.msg import CompressedImage
 from std_srvs.srv import SetBool
 import cv2
 import csv
@@ -11,6 +10,9 @@ import os
 import threading
 import queue
 import collections
+import numpy as np
+from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
+
 
 class SceneRecorder(Node):
     def __init__(self):
@@ -30,20 +32,8 @@ class SceneRecorder(Node):
         self.frame_queue = collections.deque(maxlen=self.queue_size)
         self.queue_lock = threading.Lock()
         self.queue_cv = threading.Condition(self.queue_lock)
-        self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
-        self.writer_thread.start()
 
-        # Subscription and service
-        self.subscription = self.create_subscription(
-            Image,
-            '/pupil/scene/image_raw',
-            self.listener_callback,
-            15
-        )
-        self.create_service(SetBool, 'record_pupil_scene', self._srv_cb)
-
-        # Members for recording
-        self.bridge = CvBridge()
+        # Members shared with writer thread must be initialized before thread start.
         self.video_writer = None
         self.csv_writer = None
         self.csv_file = None
@@ -56,6 +46,23 @@ class SceneRecorder(Node):
         self.frames_received = 0
         self.frames_written = 0
         self.frames_dropped = 0
+
+        self.writer_thread = threading.Thread(target=self._writer_loop, daemon=True)
+        self.writer_thread.start()
+        qos_scene = QoSProfile(
+            depth= 5,
+            history=HistoryPolicy.KEEP_LAST,
+            reliability=ReliabilityPolicy.BEST_EFFORT,
+            durability = DurabilityPolicy.VOLATILE
+        )
+        # Subscription and service
+        self.subscription = self.create_subscription(
+            CompressedImage,
+            '/pupil/scene/image_raw/compressed',
+            self.listener_callback,
+            qos_scene
+        )
+        self.create_service(SetBool, 'record_pupil_scene', self._srv_cb)
 
     def _parameter_callback(self, params):
         """Callback für Parameter Updates"""
@@ -117,7 +124,11 @@ class SceneRecorder(Node):
                         continue
                     msg = self.frame_queue.popleft()
 
-                cv_image = self.bridge.imgmsg_to_cv2(msg, desired_encoding='mono8')
+                buf = np.frombuffer(msg.data, dtype=np.uint8)
+                cv_image = cv2.imdecode(buf, cv2.IMREAD_GRAYSCALE)
+                if cv_image is None:
+                    self.get_logger().warning('Failed to decode compressed scene frame')
+                    continue
                 stamp = msg.header.stamp
                 if self.video_writer is None and self.video_path is not None:
                     h, w = cv_image.shape[:2]

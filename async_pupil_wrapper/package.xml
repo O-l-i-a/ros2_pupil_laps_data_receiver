@@ -29,6 +29,8 @@
   <exec_depend>std_msgs</exec_depend>
   <build_depend>sensor_msgs</build_depend>
   <exec_depend>sensor_msgs</exec_depend>
+  <build_depend>builtin_interfaces</build_depend>
+  <exec_depend>builtin_interfaces</exec_depend>
   <build_depend>blink_interface</build_depend>
   <exec_depend>blink_interface</exec_depend>
   <build_depend>imu_interface</build_depend>

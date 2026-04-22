@@ -1,6 +1,0 @@
-setup.py
-gaze_interface/__init__.py
-gaze_interface.egg-info/PKG-INFO
-gaze_interface.egg-info/SOURCES.txt
-gaze_interface.egg-info/dependency_links.txt
-gaze_interface.egg-info/top_level.txt

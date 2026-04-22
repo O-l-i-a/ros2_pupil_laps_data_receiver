@@ -183,6 +183,7 @@ private:
     fs::create_directories(base_dir_);
     raw_path_ = base_dir_ / (std::to_string(ts) + "_scene.raw");
     video_path_ = base_dir_ / (std::to_string(ts) + "_scene." + output_extension_);
+    meta_path_ = base_dir_ / (std::to_string(ts) + "_scene_meta.csv");
 
     csv_.open(base_dir_ / (std::to_string(ts) + "_scene_times.csv"));
     csv_ << "sec,nanosec,frame_idx\n";
@@ -211,6 +212,16 @@ private:
     frame_width_ = width;
     frame_height_ = height;
     output_ready_ = true;
+
+    {
+      std::ofstream meta(meta_path_, std::ios::out | std::ios::trunc);
+      if (meta.is_open()) {
+        meta << "width,height,fps\n";
+        meta << width << ',' << height << ',' << target_fps_ << '\n';
+      } else {
+        RCLCPP_WARN(get_logger(), "Failed to write metadata file: %s", meta_path_.c_str());
+      }
+    }
 
     if (raw_record_mode_) {
       std::lock_guard<std::mutex> io_lk(io_mtx_);
@@ -366,6 +377,7 @@ private:
   fs::path base_dir_;
   fs::path video_path_;
   fs::path raw_path_;
+  fs::path meta_path_;
   uint64_t current_recording_ts_{0};
   int frame_width_{0};
   int frame_height_{0};

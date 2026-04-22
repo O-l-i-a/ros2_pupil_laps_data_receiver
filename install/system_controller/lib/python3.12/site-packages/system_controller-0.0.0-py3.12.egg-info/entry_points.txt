@@ -1,2 +1,0 @@
-[console_scripts]
-system_controller = system_controller.system_controller_node:main

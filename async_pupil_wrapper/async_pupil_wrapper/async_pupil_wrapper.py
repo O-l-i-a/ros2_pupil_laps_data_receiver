@@ -7,6 +7,8 @@ import cv2
 import threading
 import numpy as np
 from urllib.parse import urlparse, urlunparse
+import concurrent.futures
+
 
 import rclpy
 from rclpy.node import Node
@@ -48,12 +50,13 @@ def unix_ns_to_ros_time(unix_ns: int) -> Time:
 class PupilAsync(Node):
     def __init__(self):
         super().__init__('pupil_async')
+        self._encode_pool = concurrent.futures.ThreadPoolExecutor(max_workers=2, thread_name_prefix="scene_enc")
         self.bridge = CvBridge()
         self._gray_img = None
         # Publisher für Gaze- und Scene-Daten
         self.declare_parameter("participant_name", "default")
         self.declare_parameter("opencv_num_threads", 4)
-        self.declare_parameter("rtsp_transport", "udp")
+        self.declare_parameter("rtsp_transport", "tcp")
         self.shutdown_event = asyncio.Event()
         self.participant_name = self.get_parameter("participant_name").value
         self.rtsp_transport = str(self.get_parameter("rtsp_transport").value).lower()
@@ -88,17 +91,17 @@ class PupilAsync(Node):
             durability = DurabilityPolicy.VOLATILE
         )
         qos_scene = QoSProfile(
-            depth= 15,
+            depth= 10,
             history=HistoryPolicy.KEEP_LAST,
-            reliability=ReliabilityPolicy.BEST_EFFORT,
+            reliability=ReliabilityPolicy.RELIABLE,
             durability = DurabilityPolicy.VOLATILE
         )
         self.cb_group = ReentrantCallbackGroup()
-        self.cb_group_scene = ReentrantCallbackGroup()
+        #self.cb_group_scene = ReentrantCallbackGroup()
         self.gaze_pub = self.create_publisher(GazeDataAsync, 'pupil/gaze', qos, callback_group=self.cb_group)
         self.eye_state_pub = self.create_publisher(EyeStateData, 'pupil/eye_state', qos, callback_group=self.cb_group)
         self.imu_pub = self.create_publisher(ImuData, 'pupil/imu', qos, callback_group=self.cb_group)
-        self.scene_pub = self.create_publisher(Image, 'pupil/scene/image_raw', qos_scene, callback_group = self.cb_group_scene)
+        self.scene_pub = self.create_publisher(CompressedImage, '/pupil/scene/image_raw/compressed', qos_scene)
         #self.scene_info_pub = self.create_publisher(CameraInfo, 'pupil/scene/camera_info', qos_scene)
         self.delayns = 0
         self.calibration = None
@@ -111,14 +114,7 @@ class PupilAsync(Node):
         self._scene_calib_valid = False
         self.get_logger().info('PupilAsync bereit. Warte auf /record Service…')
 
-    def _stream_url(self, url: str) -> str:
-        # aiortsp uses UDP for rtsp:// and TCP interleaved for rtspt://.
-        parsed = urlparse(url)
-        if self.rtsp_transport == "tcp" and parsed.scheme == "rtsp":
-            parsed = parsed._replace(scheme="rtspt")
-        elif self.rtsp_transport == "udp" and parsed.scheme == "rtspt":
-            parsed = parsed._replace(scheme="rtsp")
-        return urlunparse(parsed)
+
 
     async def gaze_stream(self, url: str):
         self.get_logger().info(f'Starting gaze stream: {url}')
@@ -261,26 +257,48 @@ class PupilAsync(Node):
                 await asyncio.sleep(1.0)
 
     async def scene_stream(self, url: str):
-        """
-        Asynchronous iterator for scene frames.
-        Publishes CompressedImage and CameraInfo.
-        """
         self.get_logger().info(f'Starting scene stream: {url}')
         try:
-            async for frame in receive_video_frames(url, run_loop=True):
+            async for frame in receive_video_frames(
+                url, run_loop=True, transport=self.rtsp_transport
+            ):
                 img = frame.bgr_buffer()
+                img = frame.bgr_buffer()
+                if img is None or img.size == 0:
+                    continue
+                expected_pixels = 1600 * 1200
+                if img.shape[0] * img.shape[1] != expected_pixels:
+                    self.get_logger().warning(f"Bad frame shape: {img.shape}, skipping")
+                    continue
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+                # RViz expects the ROS Image metadata to match the true buffer layout.
+                # Some decoded frames may have padded rows, so don't assume step == width * 3.
+                if not img.flags["C_CONTIGUOUS"]:
+                    img = np.ascontiguousarray(img)
                 h, w = img.shape[:2]
-                if self._gray_img is None or self._gray_img.shape != (h, w):
-                    self._gray_img = np.empty((h, w), dtype=np.uint8)
-                cv2.cvtColor(img, cv2.COLOR_BGR2GRAY, dst=self._gray_img)
+                step = int(img.strides[0])
+
                 host_ns = frame.timestamp_unix_ns + self.delayns
                 stamp = unix_ns_to_ros_time(host_ns).to_msg()
-                # --- Image ---
-                #ros_img = self.bridge.cv2_to_compressed_imgmsg(img)
-                ros_img = self.bridge.cv2_to_imgmsg(self._gray_img, encoding='mono8')
+
+                loop = asyncio.get_event_loop()
+                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                def encode_frame(gray):
+                    cv2.setNumThreads(2)  # isolate from ZED's OpenCV
+                    return cv2.imencode('.jpg', gray, [cv2.IMWRITE_JPEG_QUALITY, 75])
+
+                ok, enc = await loop.run_in_executor(self._encode_pool, encode_frame, gray)
+                if not ok:
+                    self.get_logger().warning("JPEG encode failed")
+                    continue
+
+                ros_img = CompressedImage()
                 ros_img.header.stamp = stamp
-                
                 ros_img.header.frame_id = "pupil_scene"
+                ros_img.format = "jpeg"
+                ros_img.data = enc.tobytes()
+
                 self.scene_pub.publish(ros_img)
 
         except asyncio.CancelledError:
@@ -288,7 +306,6 @@ class PupilAsync(Node):
             raise
         except Exception as e:
             self.get_logger().exception(f"scene_stream error: {e}")
-
 
 
     async def run(self):
@@ -305,14 +322,14 @@ class PupilAsync(Node):
         
         self.get_logger().info('Pupil device connected')
         async with Device.from_discovered_device(dev_info) as device:
-            self.calibration = await device.get_calibration()
+            
             #self._prepare_scene_calibration()
             #self._write_scene_calibration_file()
             status = await device.get_status()
             gaze_sensor = status.direct_gaze_sensor()
             world_sensor = status.direct_world_sensor()
-            eye_events_sensor = None
-            imu_sensor = None
+            
+            
             if hasattr(status, "direct_eye_events_sensor"):
                 eye_events_sensor = status.direct_eye_events_sensor()
             if hasattr(status, "direct_imu_sensor"):
@@ -327,22 +344,23 @@ class PupilAsync(Node):
 
             # --- spawn both coroutines as background tasks ---
             offset_task = asyncio.create_task(self._offset_loop(status))
-            gaze_url = self._stream_url(gaze_sensor.url)
-            scene_url = self._stream_url(world_sensor.url)
+            gaze_url = gaze_sensor.url
+            scene_url = world_sensor.url
             gaze_task  = asyncio.create_task(self.gaze_stream(gaze_url))
             scene_task = asyncio.create_task(self.scene_stream(scene_url))
             eye_events_task = None
             imu_task = None
             if eye_events_sensor is not None and eye_events_sensor.connected:
-                eye_events_url = self._stream_url(eye_events_sensor.url)
+                eye_events_url = eye_events_sensor.url
                 eye_events_task = asyncio.create_task(self.eye_events_stream(eye_events_url))
             else:
                 self.get_logger().warning(
                     "Eye events sensor unavailable or not connected. Blink publishing disabled "
                     '(enable "Compute fixations" in Companion Device).'
                 )
+            
             if imu_sensor is not None and imu_sensor.connected:
-                imu_url = self._stream_url(imu_sensor.url)
+                imu_url = imu_sensor.url
                 imu_task = asyncio.create_task(self.imu_stream(imu_url))
             else:
                 self.get_logger().warning("IMU sensor unavailable or not connected. IMU publishing disabled.")
@@ -459,21 +477,17 @@ class PupilAsync(Node):
 def main():
     rclpy.init()
     node = PupilAsync()
-    executor = SingleThreadedExecutor()
+    executor = MultiThreadedExecutor(num_threads=4)
     executor.add_node(node)
 
-    async def ros_spin():
-        while rclpy.ok():
-            executor.spin_once(timeout_sec=0.001)
-            await asyncio.sleep(0.0)
+    # ROS spins in its own thread — never touches the asyncio loop
+    ros_thread = threading.Thread(target=executor.spin, daemon=True)
+    ros_thread.start()
 
     async def main_async():
-        ros_task = asyncio.create_task(ros_spin())
         try:
-            await node.run()      # starts your gaze + scene + offset tasks
+            await node.run()
         finally:
-            ros_task.cancel()
-            await asyncio.gather(ros_task, return_exceptions=True)
             executor.shutdown()
             node.destroy_node()
             rclpy.shutdown()
@@ -483,6 +497,7 @@ def main():
     except KeyboardInterrupt:
         pass
 
+    ros_thread.join(timeout=5.0)
 
 if __name__ == '__main__':
     main()

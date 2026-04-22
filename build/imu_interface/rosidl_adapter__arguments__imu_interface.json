@@ -1,6 +1,0 @@
-{
-  "package_name": "imu_interface",
-  "non_idl_tuples": [
-    "/home/olhamelnyk/colcon_venv/src/imu_interface:msg/ImuData.msg"
-  ]
-}

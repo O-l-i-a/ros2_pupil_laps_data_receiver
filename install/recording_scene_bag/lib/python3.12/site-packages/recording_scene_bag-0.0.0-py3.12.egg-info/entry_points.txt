@@ -1,2 +1,0 @@
-[console_scripts]
-recording_scene_bag = recording_scene_bag.recording_scene_bag:main

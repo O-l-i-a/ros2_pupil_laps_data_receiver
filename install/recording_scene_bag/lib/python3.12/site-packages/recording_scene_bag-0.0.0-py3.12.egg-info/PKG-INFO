@@ -1,7 +1,0 @@
-Metadata-Version: 2.1
-Name: recording-scene-bag
-Version: 0.0.0
-Summary: Scene recorder via ros2 bag with post-conversion to mp4+csv
-Maintainer: olhamelnyk
-Maintainer-email: olgamelnik12@gmail.com
-License: Apache-2.0

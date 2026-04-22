@@ -1,2 +1,0 @@
-[console_scripts]
-recording_scene = recording_scene.recording_scene:main

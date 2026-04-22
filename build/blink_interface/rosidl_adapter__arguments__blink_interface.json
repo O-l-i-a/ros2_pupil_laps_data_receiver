@@ -1,7 +1,0 @@
-{
-  "package_name": "blink_interface",
-  "non_idl_tuples": [
-    "/home/olhamelnyk/colcon_venv/src/blink_interface /blink_interface :msg/BlinkData.msg",
-    "/home/olhamelnyk/colcon_venv/src/blink_interface /blink_interface :msg/EyeStateData.msg"
-  ]
-}

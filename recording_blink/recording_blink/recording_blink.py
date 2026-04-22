@@ -11,7 +11,7 @@ from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPo
 from std_srvs.srv import SetBool
 
 from blink_interface.msg import EyeStateData
-
+import shutil
 
 class EyeStateRecorder(Node):
     def __init__(self):
@@ -39,7 +39,8 @@ class EyeStateRecorder(Node):
         )
         self.create_service(SetBool, "record_pupil_eye_state", self._srv_cb)
         self.create_service(SetBool, "record_pupil_blink", self._srv_cb)
-
+        self.temp_path = None
+        self.final_path = None
         self.recording = False
         self.csv_file = None
         self.csv_writer = None
@@ -148,11 +149,17 @@ class EyeStateRecorder(Node):
     def _start_file_recording(self):
         ts = self.get_clock().now().to_msg()
         prefix = f"{ts.sec}"
-        base_dir = "recordings"
-        session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
-        os.makedirs(session_dir, exist_ok=True)
+        
+        ram_dir = f"/home/olhamelnyk/colcon_venv/ramdisk/recording_{self.participant_name}"
+        final_dir = os.path.join("recordings", f"recording_{self.participant_name}")
 
-        path = os.path.join(session_dir, f"{prefix}_eye_state.csv")
+        os.makedirs(ram_dir, exist_ok=True)
+        os.makedirs(final_dir, exist_ok=True)
+
+        self.temp_path = os.path.join(ram_dir, f"{prefix}_eye_state.csv")
+        self.final_path = os.path.join(final_dir, f"{prefix}_eye_state.csv")
+
+        path = self.temp_path
         with self.file_lock:
             self.csv_file = open(path, "w", newline="")
             self.csv_writer = csv.writer(self.csv_file)
@@ -195,6 +202,11 @@ class EyeStateRecorder(Node):
                 self.csv_file.close()
             self.csv_file = None
             self.csv_writer = None
+        if self.temp_path and self.final_path:
+            shutil.move(self.temp_path, self.final_path)
+
+        self.temp_path = None
+        self.final_path = None
 
         self.get_logger().info(
             f"Stopped eye state recording. received={self.msg_received}, "

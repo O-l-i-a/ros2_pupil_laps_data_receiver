@@ -1,2 +1,0 @@
-[console_scripts]
-recording_scene_python = recording_scene_python.recording_scene:main

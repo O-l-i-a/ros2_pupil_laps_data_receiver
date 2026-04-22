@@ -1,3 +1,0 @@
-pupil-labs-realtime-api
-setuptools
-setuptools

@@ -21,7 +21,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'async_pupil_wrapper = async_pupil_wrapper.async_pupil_wrapper:main'
+            'async_pupil_wrapper = async_pupil_wrapper.async_pupil_wrapper:main',
+            'scene_time_publisher = async_pupil_wrapper.scene_time_publisher:main',
         ],
     },
 )

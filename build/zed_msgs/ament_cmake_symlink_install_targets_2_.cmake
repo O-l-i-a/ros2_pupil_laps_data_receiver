@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/olhamelnyk/colcon_venv/src/build/zed_msgs/rosidl_generator_py/zed_msgs/zed_msgs_s__rosidl_typesupport_c.so" "TARGETS" "zed_msgs_s__rosidl_typesupport_c" "DESTINATION" "lib/python3.12/site-packages/zed_msgs")

@@ -1,6 +1,0 @@
-{
-  "package_name": "egocentric_msg",
-  "non_idl_tuples": [
-    "/home/olhamelnyk/colcon_venv/src/egocentric_msg:msg/GazeData.msg"
-  ]
-}

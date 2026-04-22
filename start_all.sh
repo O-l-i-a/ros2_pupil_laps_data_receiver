@@ -2,7 +2,14 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-WS_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+if [[ -d "$SCRIPT_DIR/install" && -d "$SCRIPT_DIR/src" ]]; then
+  WS_ROOT="$SCRIPT_DIR"
+elif [[ -d "$SCRIPT_DIR/../install" && -d "$SCRIPT_DIR/../src" ]]; then
+  WS_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+else
+  echo "Could not detect workspace root from SCRIPT_DIR=$SCRIPT_DIR" >&2
+  exit 1
+fi
 
 LOG_DIR="$WS_ROOT/runtime_logs"
 PID_FILE="$WS_ROOT/.recording_stack.pids"
@@ -22,7 +29,7 @@ launch_node() {
   local command="$2"
 
   echo "Launching $name"
-  nohup bash -lc "$command" >"$LOG_DIR/$name.log" 2>&1 &
+  nohup setsid bash -lc "$command" >"$LOG_DIR/$name.log" 2>&1 </dev/null &
   local pid=$!
   echo "$name $pid" >>"$PID_FILE"
   sleep 0.6
@@ -32,7 +39,7 @@ launch_node() {
 launch_node "zed_ipc" "
   cd '$WS_ROOT' &&
   source '$WS_ROOT/install/setup.bash' &&
-  taskset -c 0-7 ros2 launch zed_ipc zed_ipc.launch.py cam_names:=[myzed2i] cam_models:=[zed2i] cam_serials:=[37866365] cam_ids:=[0]
+  exec taskset -c 0-5 ros2 launch zed_ipc zed_ipc.launch.py cam_names:=[myzed2i] cam_models:=[zed2i] cam_serials:=[37866365] cam_ids:=[0]
 "
 
 # 2) Pupil wrapper
@@ -42,39 +49,39 @@ launch_node "async_pupil_wrapper" "
   source /opt/ros/jazzy/setup.bash &&
   export PYTHONPATH='$WS_ROOT/venv/lib/python3.12/site-packages':\$PYTHONPATH &&
   source '$WS_ROOT/install/setup.bash' &&
-  taskset -c 8-11 ros2 run async_pupil_wrapper async_pupil_wrapper
+  exec taskset -c 6-9 ros2 run async_pupil_wrapper async_pupil_wrapper
 "
 
 # 3) Scene bag recorder + other recorders
 launch_node "recording_scene_bag" "
   cd '$WS_ROOT' &&
   source '$WS_ROOT/install/setup.bash' &&
-  taskset -c 12-15 ros2 run recording_scene_bag recording_scene_bag
+  exec taskset -c 10-15 ros2 run recording_scene_bag recording_scene_bag
 "
 
 launch_node "recording_gaze" "
   cd '$WS_ROOT' &&
   source '$WS_ROOT/install/setup.bash' &&
-  taskset -c 12-15 ros2 run recording_gaze recording_gaze
+  exec taskset -c 10-15 ros2 run recording_gaze recording_gaze
 "
 
 launch_node "recording_blink" "
   cd '$WS_ROOT' &&
   source '$WS_ROOT/install/setup.bash' &&
-  taskset -c 12-15 ros2 run recording_blink recording_blink
+  exec taskset -c 10-15 ros2 run recording_blink recording_blink
 "
 
 launch_node "recording_imu" "
   cd '$WS_ROOT' &&
   source '$WS_ROOT/install/setup.bash' &&
-  taskset -c 12-15 ros2 run recording_imu recording_imu
+  exec taskset -c 10-15 ros2 run recording_imu recording_imu
 "
 
 # 4) Controller GUI
 launch_node "recording_controller" "
   cd '$WS_ROOT' &&
   source '$WS_ROOT/install/setup.bash' &&
-  taskset -c 12-15 ros2 run recording_controller_pkg controller_node
+  exec taskset -c 10-15 ros2 run recording_controller_pkg controller_node
 "
 
 echo

@@ -9,6 +9,7 @@ from gaze_interface.msg import GazeDataAsync
 from std_srvs.srv import SetBool
 from rclpy.qos import QoSProfile, HistoryPolicy, ReliabilityPolicy, DurabilityPolicy
 import collections # For deque
+import shutil
 
 class GazeRecorder(Node):
     def __init__(self):
@@ -19,7 +20,8 @@ class GazeRecorder(Node):
         self.declare_parameter('participant_name', 'default')
         self.participant_name = self.get_parameter('participant_name').get_parameter_value().string_value
         self.get_logger().info(f'Participant name: {self.participant_name}')
-
+        self.temp_path = None
+        self.final_path = None
         # Parameter callback für dynamische Updates
         self.add_on_set_parameters_callback(self._parameter_callback)
 
@@ -42,7 +44,7 @@ class GazeRecorder(Node):
         self.csv_file = None
         self.csv_writer = None
         self.gaze_buffer = collections.deque(maxlen=5000) # Buffer for gaze data
-        self.buffer_size_threshold = 500 # Write to file every 500 messages
+        self.buffer_size_threshold = 700 # Write to file every 500 messages
         self.flush_timer = self.create_timer(1.0, self._flush_buffer) # Flush every 1 second
 
     def _parameter_callback(self, params):
@@ -96,16 +98,24 @@ class GazeRecorder(Node):
                 self.get_logger().error(f"Failed to flush gaze buffer: {e}")
 
     def _start_file_recording(self):
+
         ts = self.get_clock().now().to_msg()
         prefix = f"{ts.sec}"
-        base_dir = 'recordings'
-        # Verwende participant name für Ordnername
-        session_dir = os.path.join(base_dir, f"recording_{self.participant_name}")
-        os.makedirs(session_dir, exist_ok=True)
-        self.csv_file = open(os.path.join(session_dir, f"{prefix}_gaze.csv"), 'w', newline='')
+        
+        ram_dir = f"/home/olhamelnyk/colcon_venv/ramdisk/recording_{self.participant_name}"
+        final_dir = os.path.join("recordings", f"recording_{self.participant_name}")
+
+        os.makedirs(ram_dir, exist_ok=True)
+        os.makedirs(final_dir, exist_ok=True)
+
+        self.temp_path = os.path.join(ram_dir, f"{prefix}_gaze.csv")
+        self.final_path = os.path.join(final_dir, f"{prefix}_gaze.csv")
+        
+        self.csv_file = open(self.temp_path, 'w', newline='')
+
         self.csv_writer = csv.writer(self.csv_file)
         self.csv_writer.writerow(['sec','nanosec', "x", "y"])
-        self.get_logger().info(f"Started recording gaze to {os.path.join(session_dir, f'{prefix}_gaze.csv')}")
+        self.get_logger().info(f"Started recording gaze to {os.path.join(ram_dir, f'{self.temp_path}')}")
 
     def _stop_file_recording(self):
         self._flush_buffer() # Flush any remaining data before closing
@@ -113,6 +123,11 @@ class GazeRecorder(Node):
             self.csv_file.close()
             self.csv_file = None
         self.get_logger().info("Stopped recording gaze.")
+        if self.temp_path and self.final_path:
+            shutil.move(self.temp_path, self.final_path)
+
+        self.temp_path = None
+        self.final_path = None
 
 def main(args=None):
     rclpy.init(args=args)

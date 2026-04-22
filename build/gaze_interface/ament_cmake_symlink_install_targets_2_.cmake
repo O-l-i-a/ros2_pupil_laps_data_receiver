@@ -1,1 +1,0 @@
-ament_cmake_symlink_install_targets("TARGET_FILES" "/home/olhamelnyk/colcon_venv/src/build/gaze_interface/rosidl_generator_py/gaze_interface/gaze_interface_s__rosidl_typesupport_c.so" "TARGETS" "gaze_interface_s__rosidl_typesupport_c" "DESTINATION" "lib/python3.12/site-packages/gaze_interface")

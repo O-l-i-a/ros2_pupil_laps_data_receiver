@@ -1,8 +1,0 @@
-[0.016s] Invoking command in '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/src/install/system_controller:/home/olhamelnyk/colcon_venv/src/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/src/install/gaze_video_recorder:/home/olhamelnyk/colcon_venv/src/install/controller_with_gui:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/olhamelnyk/colcon_venv/src/build/egocentric_msg -- -j16 -l16
-[0.100s] failed to create symbolic link '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg/ament_cmake_python/egocentric_msg/egocentric_msg' because existing path cannot be removed: Is a directory
-[0.102s] gmake[2]: *** [CMakeFiles/ament_cmake_python_symlink_egocentric_msg.dir/build.make:70: CMakeFiles/ament_cmake_python_symlink_egocentric_msg] Error 1
-[0.102s] gmake[1]: *** [CMakeFiles/Makefile2:452: CMakeFiles/ament_cmake_python_symlink_egocentric_msg.dir/all] Error 2
-[0.102s] gmake[1]: *** Waiting for unfinished jobs....
-[0.109s] [  2%] Built target egocentric_msg__rosidl_generator_type_description
-[0.112s] gmake: *** [Makefile:146: all] Error 2
-[0.113s] Invoked command in '/home/olhamelnyk/colcon_venv/src/build/egocentric_msg' returned '2': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/olhamelnyk/colcon_venv/src/install/system_controller:/home/olhamelnyk/colcon_venv/src/install/pupil_labs_wrapper:/home/olhamelnyk/colcon_venv/src/install/gaze_video_recorder:/home/olhamelnyk/colcon_venv/src/install/controller_with_gui:/opt/ros/jazzy DEBUGINFOD_URLS=https://debuginfod.ubuntu.com /usr/bin/cmake --build /home/olhamelnyk/colcon_venv/src/build/egocentric_msg -- -j16 -l16

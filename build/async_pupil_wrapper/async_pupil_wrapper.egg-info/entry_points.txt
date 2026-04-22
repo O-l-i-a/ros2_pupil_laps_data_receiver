@@ -1,2 +1,0 @@
-[console_scripts]
-async_pupil_wrapper = async_pupil_wrapper.async_pupil_wrapper:main

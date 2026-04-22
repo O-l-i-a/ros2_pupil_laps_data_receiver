@@ -1,3 +1,0 @@
-[console_scripts]
-recording_blink = recording_blink.recording_blink:main
-recording_eye_state = recording_blink.recording_blink:main

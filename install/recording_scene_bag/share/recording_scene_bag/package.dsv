@@ -1,6 +1,0 @@
-source;share/recording_scene_bag/hook/pythonpath.ps1
-source;share/recording_scene_bag/hook/pythonpath.dsv
-source;share/recording_scene_bag/hook/pythonpath.sh
-source;share/recording_scene_bag/hook/ament_prefix_path.ps1
-source;share/recording_scene_bag/hook/ament_prefix_path.dsv
-source;share/recording_scene_bag/hook/ament_prefix_path.sh
