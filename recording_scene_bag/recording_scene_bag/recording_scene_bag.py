@@ -6,6 +6,7 @@ import signal
 import subprocess
 import threading
 import tempfile
+import time
 from pathlib import Path
 
 import cv2
@@ -177,6 +178,9 @@ class SceneBagRecorder(Node):
                 self.get_logger().warning("ros2 bag terminate timeout, killing...")
                 proc.kill()
                 proc.wait(timeout=5.0)
+
+        # Allow time for OS to flush the bag file to disk
+        time.sleep(2.0)
 
         self._convert_thread = threading.Thread(
             target=self._convert_and_cleanup, args=(Path(bag_dir), qos_override_path), daemon=True
