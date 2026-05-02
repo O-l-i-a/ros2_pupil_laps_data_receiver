@@ -207,12 +207,7 @@ class PupilAsync(Node):
                     if self.shutdown_event.is_set():
                         break
 
-                    ts_seconds = getattr(imu_data, "timestamp_unix_seconds", None)
-                    if ts_seconds is not None:
-                        host_ns = int(float(ts_seconds) * 1_000_000_000.0) + self.delayns
-                    else:
-                        # Backward-compatible fallback if API provides ns directly.
-                        host_ns = int(getattr(imu_data, "timestamp_unix_ns")) + self.delayns
+                    host_ns = imu_data.timestamp_unix_ns + self.delayns
 
                     accel = getattr(imu_data, "accel_data", None)
                     if accel is None:
