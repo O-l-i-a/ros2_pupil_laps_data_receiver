@@ -3,9 +3,9 @@
 // ZED *depth* recorder (ROS 2 Jazzy).
 // Writes Depthimage directly from Callback – because of 
 // **intra-process-zero-copy** is the sensor\_msgs::Image not copied.  
-// The 32-bit-Float-depth (0‒5 m) is scaled to 8-bit and is written as BGR-Frame
-// in the MP4- (H.264/mp4v) or AVI-Datei (MJPG). A CSV File with timestamps of
-// the header of the received ROS Image are written.
+// The 32-bit-Float-depth (0‒3 m) is converted to 16-bit grayscale and written
+// as raw binary frames (gray16le format). A CSV File with timestamps and a
+// metadata file with frame information are written.
 // -----------------------------------------------------------------------------
 
 #include <rclcpp/rclcpp.hpp>
@@ -29,7 +29,7 @@ using std_srvs::srv::SetBool;
 namespace zed_recorder_cpp
 {
 // ─────────────────────────────────────────────────────────────────────────────
-static constexpr float kDepthRangeMeters = 3.0f;   // 0-5 m → 0-255 TODO edit to 3
+static constexpr float kDepthRangeMeters = 3.0f;   // 0-3 m → 0-65535 (16-bit)
 
 class DepthRecorder : public rclcpp::Node
 {
@@ -50,7 +50,9 @@ private:
   // helpers -----------------------------------------------------------------
   void startRecording();
   void stopRecording();
-  void openWriter(int width, int height);
+  void openRawWriter(int width, int height);
+  void writeMetadataFile(int width, int height, uint64_t start_timestamp);
+  void convertRawToMKV(const fs::path & raw_file);
 
   // parameters --------------------------------------------------------------
   std::string topic_;
@@ -67,9 +69,12 @@ private:
   std::atomic<bool> recording_   {false};
   bool              first_frame_ {true};
 
-  cv::VideoWriter video_writer_;
+  std::ofstream depth_raw_file_;  // Raw 16-bit grayscale frames
   std::ofstream   csv_file_;
   fs::path        output_base_;
+  fs::path        current_raw_file_;  // Path to current raw file for conversion
+  int             frame_width_  {0};
+  int             frame_height_ {0};
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -141,14 +146,14 @@ void DepthRecorder::depthCallback(const Image::ConstSharedPtr & msg)
 {
   if (!recording_) return;
 
-  // first Frame → open VideoWriter -----------------------------------------
+  // first Frame → open raw writer -----------------------------------------
   if (first_frame_) {
-    openWriter(static_cast<int>(msg->width), static_cast<int>(msg->height));
+    openRawWriter(static_cast<int>(msg->width), static_cast<int>(msg->height));
     first_frame_ = false;
-    if (!video_writer_.isOpened()) return;
+    if (!depth_raw_file_.is_open()) return;
   }
 
-  // 32FC1 → 8U → BGR ----------------------------------------------------------
+  // 32FC1 → 16U (grayscale) --------------------------------------------------
   cv_bridge::CvImageConstPtr cv_ptr;
   try {
     cv_ptr = cv_bridge::toCvShare(msg, "32FC1");
@@ -161,11 +166,16 @@ void DepthRecorder::depthCallback(const Image::ConstSharedPtr & msg)
   cv::Mat depth32 = cv_ptr->image;
   if (depth32.empty()) return;
 
-  cv::Mat depth8, depthBGR;
-  depth32.convertTo(depth8, CV_8U, 255.f / kDepthRangeMeters);
-  cv::cvtColor(depth8, depthBGR, cv::COLOR_GRAY2BGR);
+  // Convert 32-bit float to 16-bit unsigned integer
+  // Scale: 0-kDepthRangeMeters meters → 0-65535
+  cv::Mat depth16u;
+  depth32.convertTo(depth16u, CV_16U, 65535.f / kDepthRangeMeters);
 
-  video_writer_.write(depthBGR);
+  // Write raw 16-bit data (little-endian format)
+  if (depth_raw_file_.is_open()) {
+    depth_raw_file_.write(reinterpret_cast<const char*>(depth16u.data),
+                         depth16u.total() * depth16u.elemSize());
+  }
 
   if (csv_file_.is_open())
     csv_file_ << msg->header.stamp.sec << ',' << msg->header.stamp.nanosec << '\n';
@@ -206,38 +216,119 @@ void DepthRecorder::startRecording()
   csv_file_ << "sec,nanosec\n";
 
   first_frame_ = true;
+  current_raw_file_.clear();  // Reset for new recording
   RCLCPP_INFO(get_logger(), "Recording depth to %s", output_base_.c_str());
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
 void DepthRecorder::stopRecording()
 {
-  if (video_writer_.isOpened()) video_writer_.release();
-  if (csv_file_.is_open())      csv_file_.close();
+  fs::path raw_file_to_convert;
+
+  if (depth_raw_file_.is_open()) {
+    depth_raw_file_.close();
+    raw_file_to_convert = current_raw_file_;
+  }
+
+  if (csv_file_.is_open()) csv_file_.close();
+
   recording_ = false;
   RCLCPP_INFO(get_logger(), "Depth recording stopped.");
+
+  // Convert raw to MKV after closing files
+  if (!raw_file_to_convert.empty() && fs::exists(raw_file_to_convert)) {
+    RCLCPP_INFO(get_logger(), "Starting MKV conversion for: %s", raw_file_to_convert.c_str());
+    convertRawToMKV(raw_file_to_convert);
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-void DepthRecorder::openWriter(int width, int height)
+void DepthRecorder::openRawWriter(int width, int height)
 {
   const uint64_t ts = get_clock()->now().seconds();
-  fs::path file;
-  int      fourcc;
+  frame_width_  = width;
+  frame_height_ = height;
 
-  if (compressed_) {
-    file   = output_base_ / (std::to_string(ts) + "_depth.mp4");
-    fourcc = cv::VideoWriter::fourcc('m','p','4','v'); // oder 'a','v','c','1'
-  } else {
-    file   = output_base_ / (std::to_string(ts) + "_depth.avi");
-    fourcc = cv::VideoWriter::fourcc('M','J','P','G');
+  // Open raw depth file (16-bit grayscale frames)
+  fs::path raw_file = output_base_ / (std::to_string(ts) + "_depth.raw16le");
+  depth_raw_file_.open(raw_file, std::ios::binary);
+
+  if (!depth_raw_file_.is_open()) {
+    RCLCPP_ERROR(get_logger(), "Cannot open %s", raw_file.c_str());
+    return;
   }
 
-  video_writer_.open(file.string(), fourcc, target_fps_,
-                     cv::Size(width, height), /*isColor=*/true);
+  current_raw_file_ = raw_file;  // Store for later conversion
 
-  if (!video_writer_.isOpened())
-    RCLCPP_ERROR(get_logger(), "Cannot open %s", file.c_str());
+  // Write metadata file with frame information
+  writeMetadataFile(width, height, ts);
+  RCLCPP_INFO(get_logger(), "Opened raw 16-bit depth writer: %s", raw_file.c_str());
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+void DepthRecorder::writeMetadataFile(int width, int height, uint64_t start_timestamp)
+{
+  fs::path metadata_file = output_base_ / (std::to_string(start_timestamp) + "_depth.metadata");
+  std::ofstream meta(metadata_file);
+
+  if (!meta.is_open()) {
+    RCLCPP_ERROR(get_logger(), "Cannot open metadata file: %s", metadata_file.c_str());
+    return;
+  }
+
+  meta << "# 16-bit Grayscale Little-Endian Depth Video Metadata\n";
+  meta << "width=" << width << "\n";
+  meta << "height=" << height << "\n";
+  meta << "depth_range_meters=" << kDepthRangeMeters << "\n";
+  meta << "format=gray16le\n";
+  meta << "bytes_per_pixel=2\n";
+  meta << "frame_size_bytes=" << (width * height * 2) << "\n";
+  meta << "fps=" << target_fps_ << "\n";
+  meta << "participant=" << participant_ << "\n";
+  meta.close();
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+void DepthRecorder::convertRawToMKV(const fs::path & raw_file)
+{
+  const fs::path mkv_file = raw_file.parent_path() / 
+                            (raw_file.stem().string() + ".mkv");
+
+  // Build FFmpeg command
+  // FFV1 level 3 is lossless with best compression
+  std::string cmd = "ffmpeg -f rawvideo "
+                    "-pixel_format gray16le "
+                    "-video_size " + std::to_string(frame_width_) + "x" + 
+                                     std::to_string(frame_height_) + " "
+                    "-framerate " + std::to_string(static_cast<int>(target_fps_)) + " "
+                    "-i \"" + raw_file.string() + "\" "
+                    "-c:v ffv1 "
+                    "-level 3 "
+                    "-y "  // Overwrite output file
+                    "\"" + mkv_file.string() + "\" "
+                    "2>&1";  // Capture stderr to stdout
+
+  RCLCPP_INFO(get_logger(), "Converting raw to MKV with FFV1...");
+
+  // Execute FFmpeg command
+  int ret = system(cmd.c_str());
+
+  if (ret != 0) {
+    RCLCPP_ERROR(get_logger(), "FFmpeg conversion failed with return code: %d", ret);
+    return;
+  }
+
+  RCLCPP_INFO(get_logger(), "MKV conversion completed: %s", mkv_file.c_str());
+
+  // Delete raw file after successful conversion
+  try {
+    if (fs::exists(raw_file)) {
+      fs::remove(raw_file);
+      RCLCPP_INFO(get_logger(), "Removed raw file: %s", raw_file.c_str());
+    }
+  } catch (const fs::filesystem_error & e) {
+    RCLCPP_ERROR(get_logger(), "Failed to remove raw file: %s", e.what());
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
