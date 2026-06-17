@@ -3,7 +3,7 @@
 // ZED *depth* recorder (ROS 2 Jazzy).
 // Writes Depthimage directly from Callback – because of 
 // **intra-process-zero-copy** is the sensor\_msgs::Image not copied.  
-// The 32-bit-Float-depth (0‒3 m) is converted to 16-bit grayscale and written
+// The 32-bit-Float-depth (0.9-1.9 m) is converted to 16-bit grayscale and written
 // as raw binary frames (gray16le format). A CSV File with timestamps and a
 // metadata file with frame information are written.
 // -----------------------------------------------------------------------------
@@ -29,7 +29,9 @@ using std_srvs::srv::SetBool;
 namespace zed_recorder_cpp
 {
 // ─────────────────────────────────────────────────────────────────────────────
-static constexpr float kDepthRangeMeters = 3.0f;   // 0-3 m → 0-65535 (16-bit)
+static constexpr float kMinDepthMeters = 0.7f;
+static constexpr float kMaxDepthMeters = 2.0f;
+static constexpr float kDepthRangeMeters = kMaxDepthMeters - kMinDepthMeters;
 
 class DepthRecorder : public rclcpp::Node
 {
@@ -166,10 +168,13 @@ void DepthRecorder::depthCallback(const Image::ConstSharedPtr & msg)
   cv::Mat depth32 = cv_ptr->image;
   if (depth32.empty()) return;
 
-  // Convert 32-bit float to 16-bit unsigned integer
-  // Scale: 0-kDepthRangeMeters meters → 0-65535
+  // Convert 32-bit float to 16-bit unsigned integer.
+  // Scale: kMinDepthMeters-kMaxDepthMeters meters -> 0-65535.
   cv::Mat depth16u;
-  depth32.convertTo(depth16u, CV_16U, 65535.f / kDepthRangeMeters);
+  cv::Mat depth_scaled = (depth32 - kMinDepthMeters) * (65535.f / kDepthRangeMeters);
+  cv::threshold(depth_scaled, depth_scaled, 0.0, 0.0, cv::THRESH_TOZERO);
+  cv::threshold(depth_scaled, depth_scaled, 65535.0, 65535.0, cv::THRESH_TRUNC);
+  depth_scaled.convertTo(depth16u, CV_16U);
 
   // Write raw 16-bit data (little-endian format)
   if (depth_raw_file_.is_open()) {
@@ -279,6 +284,8 @@ void DepthRecorder::writeMetadataFile(int width, int height, uint64_t start_time
   meta << "# 16-bit Grayscale Little-Endian Depth Video Metadata\n";
   meta << "width=" << width << "\n";
   meta << "height=" << height << "\n";
+  meta << "min_depth_meters=" << kMinDepthMeters << "\n";
+  meta << "max_depth_meters=" << kMaxDepthMeters << "\n";
   meta << "depth_range_meters=" << kDepthRangeMeters << "\n";
   meta << "format=gray16le\n";
   meta << "bytes_per_pixel=2\n";
