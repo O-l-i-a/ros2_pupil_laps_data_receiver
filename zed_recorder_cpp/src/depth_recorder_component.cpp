@@ -29,7 +29,7 @@ using std_srvs::srv::SetBool;
 namespace zed_recorder_cpp
 {
 // ─────────────────────────────────────────────────────────────────────────────
-static constexpr float kMinDepthMeters = 0.7f;
+static constexpr float kMinDepthMeters = 0.4f;
 static constexpr float kMaxDepthMeters = 2.0f;
 static constexpr float kDepthRangeMeters = kMaxDepthMeters - kMinDepthMeters;
 
